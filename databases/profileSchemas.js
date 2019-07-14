@@ -83,15 +83,4 @@ export const addFunds = amount => new Promise((resolve, reject) => { //functia p
         }).catch(error => reject(error))
 })
 
-export const payBill = billPrice => new Promise((resolve, reject) => { //functia de scadere a pretului facturii din fonduri
-    Realm.open(databaseOptions)
-        .then(realm => {
-            realm.write(() => {
-                let updatingProfile = realm.objectForPrimaryKey('Profile', 1)
-                updatingProfile.funds -= billPrice
-                resolve()
-            })
-        })
-})
-
 export default new Realm(databaseOptions)

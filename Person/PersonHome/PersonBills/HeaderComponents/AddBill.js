@@ -1,0 +1,248 @@
+import React, {Component} from 'react'
+import {View, Image, TextInput, DatePickerAndroid, TouchableOpacity, Button, Modal, StyleSheet,Text, TimePickerAndroid} from 'react-native'
+import {addBill} from '../../../../databases/billSchemas'
+import Ionicon from 'react-native-vector-icons/Ionicons'
+import AntDesign from 'react-native-vector-icons/AntDesign'
+
+export default class AddBill extends Component{
+    constructor(props) {
+        super(props)
+        this.state = {
+            name: '',
+            price: '',
+            payDateYear: ``,
+            payDateMonth: ``,
+            payDateDay: ``,
+            payDateHour: null,
+            payDateMinute: null,
+            addVisible: false,
+            currency: '€',
+        }
+        this.onLayoutChange = this.onLayoutChange.bind(this)
+    }
+
+    setDateAndroid = async () => { //alegerea datei pentru plata facturii
+        try {
+          const {
+            action, year, month, day,
+          } = await DatePickerAndroid.open({
+                date: new Date(),
+                minDate: new Date(),
+          });
+          if (action !== DatePickerAndroid.dismissedAction) {
+            this.setState({
+                payDateYear: year,
+                payDateMonth: month,
+                payDateDay: day
+            });
+          }
+        } catch ({ code, message }) {
+          console.warn('Cannot open date picker', message);
+        }
+      };
+
+      setTimeAndroid = async () => { //alegerea orei pentru plata facturii
+        try {
+          const { action, hour, minute } = await TimePickerAndroid.open({
+            hour: 18,
+            minute: 0,
+            is24Hour: true
+          });
+          if (action !== TimePickerAndroid.dismissedAction) {
+            this.setState({ 
+                payDateHour: hour,
+                payDateMinute: minute
+             });
+          }
+        } catch ({ code, message }) {
+          console.warn('Cannot open time picker', message);
+        }
+      };
+
+      onLayoutChange(event) { //dimensiunile in functie de modul de orientare a ecranului
+        const {width, height} = event.nativeEvent.layout;
+        this.setState({width,height})
+    }
+    render() {
+        return(
+            <View onLayout={this.onLayoutChange} style = {{justifyContent: 'center', alignItems: 'center'}}>
+                <TouchableOpacity
+                    onPress = {() => this.setState({addVisible: true}) /* deschiderea modului de adaugare a facturii */}
+                    style = {{marginRight: 10}}
+                >
+                    <Image 
+                        source = {require('../images/add-icon.png')}
+                        style = {styles.addButtonImage} 
+                    />
+                </TouchableOpacity>
+                <Modal
+                    visible = {this.state.addVisible} 
+                    animationType = "slide" 
+                    style = {[styles.modalView]}
+                    onRequestClose = {() => this.setState({
+                        name: '',
+                        price: '',
+                        payDateYear: ``,
+                        payDateMonth: ``,
+                        payDateDay: ``,
+                        payDateHour: null,
+                        payDateMinute: null,
+                        addVisible: false,
+                        currency: '€',
+                        width: '',
+                        height: '',
+                    })}
+                    transparent = {true}
+                >
+                    <View style = {[styles.modalView]}>
+                        <View  style = {{alignItems: 'center', justifyContent: 'center'}}>
+                            <Text style = {{fontSize: 22, color:'#05295B', top: '3%'}}>Add bill</Text>
+                        </View>
+                        <View style = {styles.addFormView}>
+                            <View style = {{alignItems: 'center', justifyContent: 'space-around', flexDirection: 'row'}}>
+                                <Text style = {{fontSize: 16, color:'#05295B', right: '40%'}}>Bill's name:</Text>
+                                <TextInput
+                                    value = {this.state.name} 
+                                    placeholder = "Type a name..."
+                                    onChangeText = {name => this.setState({name})}
+                                    maxLength = {18}
+                                />
+                            </View>
+                            <View style = {{alignItems: 'center', justifyContent: 'space-evenly', flexDirection: 'row'}}>
+                                <Text style = {{fontSize: 16, color:'#05295B', right: '40%'}}>Bill's price:</Text>
+                                <TextInput
+                                    keyboardType = "numeric"
+                                    placeholder = "Type a price..."
+                                    value = {this.state.price}
+                                    onChangeText = {price => this.setState({price})}
+                                    maxLength = {15}
+                                />
+                            </View>
+                            <View style = {{flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center'}}>
+                                <TouchableOpacity
+                                    style = {styles.timeAndDateButton}  
+                                    onPress = {this.setDateAndroid}
+                                >
+                                    <AntDesign
+                                        name = 'calendar' 
+                                        size = {35}
+                                        color = '#0489B1'
+                                    />
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style = {styles.timeAndDateButton} 
+                                    onPress = {this.setTimeAndroid}
+                                >
+                                    <Ionicon
+                                        name = 'md-clock'
+                                        size = {35}
+                                        color = '#0489B1'
+                                    />
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                        <View style = {{alignItems: 'center', justifyContent: 'space-around', flexDirection: 'row',top: '8%'}}>
+                                <TouchableOpacity onPress = {() => {
+                                    const newBill = {
+                                        id: Math.floor(Date.now() / 100),
+                                        name: this.state.name,
+                                        price: parseFloat(this.state.price),
+                                        payDate: new Date(this.state.payDateYear,this.state.payDateMonth,this.state.payDateDay,this.state.payDateHour,this.state.payDateMinute,0,0),
+                                    }   
+                                        if(newBill.name == ''){ //verificarea numelui pentru factura
+                                            alert('Please choose a name for the bill')
+                                        }else if(isNaN(newBill.price) == true){ //verificarea pretului pentru factura (sa fie un numar valid)
+                                            alert('Please choose a valid price')
+                                        }else if(newBill.price <= 0){ //verificarea pretului pentru factura (sa fie pozitiv)
+                                            alert('Do not forget to enter a price higher than 0!')
+                                        }else if(this.state.payDateDay == null){ //verificarea datei pentru factura
+                                            alert('Please choose a pay date!')
+                                        }else if(this.state.payDateHour == null){ //verificarea orei pentru factura
+                                            alert('Please choose a pay time!')
+                                        }
+                                        else {
+                                            //adaugarea facturii in baza de date
+                                            addBill(newBill).then().catch(error => {})
+                                            this.setState({
+                                                name: '',
+                                                price: '',
+                                                payDateYear: ``,
+                                                payDateMonth: ``,
+                                                payDateDay: ``,
+                                                payDateHour: null,
+                                                payDateMinute: null,
+                                                addVisible: false,
+                                                currency: '€',
+                                                width: '',
+                                                height: '',
+                                            })
+                                        }
+                                }}>
+                                    <Text style = {styles.buttonText}>Add</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity  style = {styles.cancelButton} onPress = {() => {
+                                    this.setState({
+                                        name: '',
+                                        price: '',
+                                        payDateYear: ``,
+                                        payDateMonth: ``,
+                                        payDateDay: ``,
+                                        payDateHour: null,
+                                        payDateMinute: null,
+                                        addVisible: false,
+                                        currency: '€',
+                                        width: '',
+                                        height: '',
+                                    })
+                                }}>
+                                    <Text style = {styles.buttonText}>Cancel</Text>
+                                </TouchableOpacity>
+                            </View>
+                    </View>
+                </Modal>
+            </View>
+        )
+    }
+}
+
+const styles = StyleSheet.create({
+    modalView: {
+        height: 220,
+        width: 300,
+        backgroundColor: 'white',
+        alignSelf: 'center',
+        borderRadius: 15,
+        backgroundColor: '#D4E6FF',
+        borderColor: '#05295B',
+        borderWidth: 1.5,
+        top: '25%',
+        bottom: '25%',
+    },
+    addFormView: {
+        justifyContent: 'flex-start',
+        alignItems: 'center'
+    },
+    cancelButton: {
+        justifyContent: 'center',
+        marginTop: 3,
+    },  
+    addButtonImage: {
+        height: 40,
+        width: 40,
+        tintColor: '#0489B1'
+    },
+    timeAndDateImage: {
+        width: 35,
+        height: 35,
+        tintColor: '#0489B1'
+    },
+    timeAndDateButton: {
+        marginHorizontal: 20
+    },
+    buttonText: {
+        fontSize: 20,
+        color: '#0489B1'
+    }
+})
+
+
