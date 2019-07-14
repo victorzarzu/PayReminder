@@ -26,7 +26,7 @@ export default class App extends Component {
     //daca nu este salvata nicio valuta, in baza de date este implicit euro. Se salveaza
     queryProfile().then(profile => {
       if(profile == null){
-        saveProfile({currency: '€'}).then().catch(error => alert(`Can not load your currency: ${error}`))
+        saveProfile({currency: '€', lastMonthIncomeGiven: new Date().getMonth()}).then().catch(error => alert(`Can not load your currency: ${error}`))
       }
     })
   }

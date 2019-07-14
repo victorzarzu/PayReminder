@@ -12,7 +12,8 @@ export const ProfileSchema = { //crearea schemei pentru profil
         incomeAmount: {type:'double', default: 0},
         currency: {type: 'string', default: '€'},
         funds: {type: 'double', default: 0},
-        incomeGiven: {type: 'bool', default: false}
+        incomeGiven: {type: 'bool', default: false},
+        lastMonthIncomeGiven: {type: 'int'}
     }
 }
 
@@ -45,17 +46,19 @@ export const addIncome = () => new Promise((resolve, reject) => { //functia de a
             realm.write(() => {
                 const nowDate = new Date()
                 let updatingProfile = realm.objectForPrimaryKey('Profile', 1)
-                if(nowDate.getDate() > updatingProfile.incomeDay && updatingProfile.incomeGiven === false){
-                    updatingProfile.funds += updatingProfile.incomeAmount
-                    realm.create('Profile', updatingProfile, true)
-                }
-                else if(nowDate.getDate() === 1 && updatingProfile.incomeGiven === true){
-                    updatingProfile.incomeGiven = false
+                if(updatingProfile.incomeGiven === false && updatingProfile.lastMonthIncomeGiven != nowDate.getMonth()){
+                   if(updatingProfile.lastMonthIncomeGiven > nowDate.getMonth){
+                        updatingProfile.funds += ((11 - updatingProfile.lastMonthIncomeGiven) + 1 + nowDate.getMonth())*updatingProfile.incomeAmount
+                    }else {
+                        updatingProfile.funds += ( + nowDate.getMonth() - updatingProfile.lastMonthIncomeGiven)*updatingProfile.incomeAmount
+                    }
+                    updatingProfile.incomeGiven = true
                     realm.create('Profile', updatingProfile, true)
                 }
                 else if(updatingProfile.incomeGiven === false && nowDate.getDate() == updatingProfile.incomeDay ){
                     updatingProfile.funds += updatingProfile.incomeAmount
                     updatingProfile.incomeGiven = true
+                    lastMonthIncomeGiven = nowDate.getMonth()
                     realm.create('Profile', updatingProfile, true)
                 }
                 resolve()

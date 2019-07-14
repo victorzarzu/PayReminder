@@ -1,6 +1,10 @@
 import React from 'react'
 import {View, Text, StyleSheet, Image, ScrollView, KeyboardAvoidingView, TouchableOpacity} from 'react-native'
 
+import Funds from '../PersonHome/PersonHomeComponents/Funds'
+import AddFunds from '../PersonHome/PersonHomeComponents/AddFunds'
+import profileRealm, {queryProfile} from '../../databases/profileSchemas'
+
 export default class PersonHome extends React.Component {
     static navigationOptions = {
         headerTitle: "Home"
@@ -22,6 +26,27 @@ export default class PersonHome extends React.Component {
         this.setState({width,height})
     }
 
+    loadData(){
+        queryProfile().then(profile => {
+            this.setState({
+                currency: profile.currency,
+                funds: profile.funds,
+                size: 46 - String(profile.funds).length
+            })
+        }).catch(error => {
+            alert(`Could not load your funds data: ${error}`)
+        })
+    }
+
+    componentWillMount(){
+        this.onLayoutChange
+        this.loadData()
+        profileRealm.addListener('change', () => this.loadData())
+    }
+
+    componentWillUnmount(){
+        profileRealm.removeAllListeners()
+    }
 
     render() {
         return(
@@ -41,6 +66,12 @@ export default class PersonHome extends React.Component {
                                 </TouchableOpacity>                               
                             </View>
                     </View>
+                    <Funds 
+                        currency = {this.state.currency}
+                        funds = {this.state.funds}
+                        size = {this.state.size}
+                    />
+                    <AddFunds />
                 </KeyboardAvoidingView>
             </ScrollView>
         )
