@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {View, Text, TouchableOpacity, StyleSheet, Alert, Image, Platform} from 'react-native'
+import ImageView from 'react-native-image-view'
 
 import profileRealm ,{ queryProfile} from '../../../../databases/profileSchemas'
 
@@ -33,6 +34,15 @@ export default class Bill extends Component{
     }
     render(){
         const leftDays = (this.props.bill.payDate - new Date())/86400000
+        const image = [
+            {
+                source: {
+                    uri: this.props.bill.image.uri,
+                },
+                height: this.props.bill.image.originalRotation == 90 || this.props.bill.image.originalRotation == 270 ? this.props.bill.image.width : this.props.bill.image.height,
+                width: this.props.bill.image.originalRotation == 0 || this.props.bill.image.originalRotation == 180 ? this.props.bill.image.width : this.props.bill.image.height,
+            },
+        ];
         const price = this.state.currency === 'Fr' ? this.props.bill.price + '\xa0' + this.state.currency : this.state.currency === 'Lei' ? this.props.bill.price + '\xa0' + this.state.currency : this.state.currency + '\xa0' + this.props.bill.price
         return(
             <View style = {styles.billView}>
@@ -51,6 +61,14 @@ export default class Bill extends Component{
                         </View>
                     </View>
                     <View style = {styles.buttonView}>
+                        <TouchableOpacity
+                            onPress = {() => this.setState({imageModal: true})} //deschiderea modului de vizualizare extins al imaginii
+                        >
+                            <Image 
+                                source = {{uri: this.props.bill.image.uri}}
+                                style = {{width: 30, height: 30, borderRadius: 25, borderColor: leftDays<=0 ? '#D34354' : leftDays>=7 ? '#98C2E9' : leftDays>=3 ?  '#6A62C6' : '#D67FA3', borderWidth: 1.25}}
+                            />
+                        </TouchableOpacity>
                         <TouchableOpacity>
                             <Image 
                                 source = {require('../images/delete-icon.png')}
@@ -65,6 +83,15 @@ export default class Bill extends Component{
                         </TouchableOpacity>
                     </View>
                 </View>
+                <ImageView //modul de vizualizare extins al imaginii
+                    images={image}
+                    imageIndex={0}
+                    isVisible={this.state.imageModal}
+                    isPinchZoomEnabled={false}
+                    isTapZoomEnabled= {false}
+                    isSwipeCloseEnabled = {false}
+                    onClose = {() => this.setState({imageModal: false})}
+                />
             </View>
         )
     }

@@ -1,8 +1,17 @@
 import Realm from 'realm'
 
-import {queryProfile} from './profileSchemas'
+import {payBill, queryProfile} from './profileSchemas'
 import {Alert} from 'react-native'
 
+export const BillImageSchema = {  // crearea schemei pentru imaginea facturii neplatite
+    name: 'BillImage',
+    properties: {
+        uri: 'string',
+        height: 'int',
+        width: 'int',
+        originalRotation: 'int'
+    }
+}
 
 export const BillSchema = { // crearea schemei pentru factura neplatita
     name: 'Bill',
@@ -12,12 +21,13 @@ export const BillSchema = { // crearea schemei pentru factura neplatita
         name: {type: 'string', default: 'Bill', indexed: true},
         price: {type: 'double', default: 0},
         payDate: {type: 'date', default: new Date(), indexed: true},
+        image: 'BillImage'
     }
 }
 
 export const databaseOptions = {
     path: 'payReminderAppBills.realm',
-    schema: [BillSchema],
+    schema: [BillSchema, BillImageSchema],
     schemaVersion: 0,
 };
 

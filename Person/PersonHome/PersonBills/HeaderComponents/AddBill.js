@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {View, Image, TextInput, DatePickerAndroid, TouchableOpacity, Button, Modal, StyleSheet,Text, TimePickerAndroid} from 'react-native'
 import {addBill} from '../../../../databases/billSchemas'
+import ImagePicker from 'react-native-image-picker'
 import Ionicon from 'react-native-vector-icons/Ionicons'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 
@@ -17,6 +18,9 @@ export default class AddBill extends Component{
             payDateMinute: null,
             addVisible: false,
             currency: '€',
+            width: '',
+            height: '',
+            photo: {uri: '', width: 0, height: 0}
         }
         this.onLayoutChange = this.onLayoutChange.bind(this)
     }
@@ -63,6 +67,24 @@ export default class AddBill extends Component{
         const {width, height} = event.nativeEvent.layout;
         this.setState({width,height})
     }
+
+    handleChoosePhoto() { //alegrea pozei pentru codul de bare
+        const options = {
+          noData: true
+        }
+        ImagePicker.showImagePicker(options,response => {
+          if (response.didCancel) {
+            console.log('User cancelled image picker');
+          } else if (response.error) {
+            console.log('ImagePicker Error: ', response.error);
+          } else if (response.customButton) {
+            console.log('User tapped custom button: ', response.customButton);
+          } else {
+            this.setState({photo: response})
+            console.log('response',response)
+          }
+        });
+      }
     render() {
         return(
             <View onLayout={this.onLayoutChange} style = {{justifyContent: 'center', alignItems: 'center'}}>
@@ -91,6 +113,7 @@ export default class AddBill extends Component{
                         currency: '€',
                         width: '',
                         height: '',
+                        photo: {uri: '', width: 0, height: 0}
                     })}
                     transparent = {true}
                 >
@@ -139,6 +162,16 @@ export default class AddBill extends Component{
                                         color = '#0489B1'
                                     />
                                 </TouchableOpacity>
+                                <TouchableOpacity
+                                    style = {styles.timeAndDateButton} 
+                                    onPress = {() => this.handleChoosePhoto()}
+                                >
+                                    <Ionicon
+                                        name = 'md-barcode'
+                                        size = {35}
+                                        color = '#0489B1'
+                                    />
+                                </TouchableOpacity>
                             </View>
                         </View>
                         <View style = {{alignItems: 'center', justifyContent: 'space-around', flexDirection: 'row',top: '8%'}}>
@@ -148,6 +181,7 @@ export default class AddBill extends Component{
                                         name: this.state.name,
                                         price: parseFloat(this.state.price),
                                         payDate: new Date(this.state.payDateYear,this.state.payDateMonth,this.state.payDateDay,this.state.payDateHour,this.state.payDateMinute,0,0),
+                                        image: {uri: this.state.photo.uri, height: this.state.photo.height, width: this.state.photo.width, originalRotation: this.state.photo.originalRotation}
                                     }   
                                         if(newBill.name == ''){ //verificarea numelui pentru factura
                                             alert('Please choose a name for the bill')
@@ -159,6 +193,8 @@ export default class AddBill extends Component{
                                             alert('Please choose a pay date!')
                                         }else if(this.state.payDateHour == null){ //verificarea orei pentru factura
                                             alert('Please choose a pay time!')
+                                        }else if(newBill.image.uri == ''){ //verificarea imaginii cu codul de bare pentru factura
+                                            alert("Please enter a photo for the bill's bar code ")
                                         }
                                         else {
                                             //adaugarea facturii in baza de date
@@ -175,6 +211,7 @@ export default class AddBill extends Component{
                                                 currency: '€',
                                                 width: '',
                                                 height: '',
+                                                photo: {uri: '', width: 0, height: 0}
                                             })
                                         }
                                 }}>
@@ -193,6 +230,7 @@ export default class AddBill extends Component{
                                         currency: '€',
                                         width: '',
                                         height: '',
+                                        photo: {uri: '', width: 0, height: 0}
                                     })
                                 }}>
                                     <Text style = {styles.buttonText}>Cancel</Text>
