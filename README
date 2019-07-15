@@ -1,1 +1,34 @@
+Tehnologii si labrarii folosite folosite:
+
+-react-native (https://facebook.github.io/react-native/)
+•	Realizarea aplicatiei pentru telefon
+-realm (https://realm.io)
+•	Baza de date locala
+-react-native-background-task (https://github.com/jamesisaac/react-native-background-task) 
+•	Pentru a realiza functii in background
+-react-native-image-picker (https://github.com/react-native-community/react-native-image-picker)
+•	Pentru a alege o imagine pentru codul de bare
+-react-native-image-view (https://www.npmjs.com/package/react-native-image-view)
+•	Pentru a vedea intr-un mod responsive imaginea cu codul de bare
+-react-native-vector-icons (https://github.com/oblador/react-native-vector-icons)
+•	Pentru a avea la dispozitie iconite specifice
+-react-native-svg (https://github.com/react-native-community/react-native-svg)
+•	Functionalitatea diagramei
+-react-native-chart-kit  (https://www.npmjs.com/package/react-native-chart-kit)
+•	Diagrama
+-react-navigation (https://reactnavigation.org)
+•	Navigare intre componente
+
+Fotografii folosite: 
+
+-buton adaugare factura : https://www.freepik.com/free-icon/round-add-button_778713.htm
+-buton pentru a plati toate facturile: https://www.onlinewebfonts.com/icon/281585
+-buton stergere factura: https://www.onlinewebfonts.com/icon/435633
+-buton platire factura: https://www.freepik.com/free-icon/pay-per-click_754629.htm
+-buton pentru a sterge toate facturile: https://www.flaticon.com/free-icon/delete_141966
+-buton de navigare inapoi: https://www.freepik.com/free-icon/left-arrow_887187.htm
+-background logo: https://www.pngsee.com/m/xbRwx_falling-money-png-money-rain-gif-transparent-png/
+-font logo" https://www.dafont.com/third-rail.font?text=PA
+-poza barbat profil: https://www.sccpre.cat/show/iTRJwx_male-avatar-icons-png-free-and-downloads-clipart/
+-poza femeie profil: https://www.kisspng.com/png-female-avatar-cartoon-clip-art-user-avatar-882481/
 
