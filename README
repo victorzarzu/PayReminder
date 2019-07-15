@@ -34,3 +34,70 @@ Fotografii folosite:
 -poza unpaid bills home pentru navigatie: https://iconscout.com/icon/product-bill-invoice-purchase-receipt-document-file
 -poza paid bills home pentru navigatie: https://iconscout.com/icon/online-site-ecommerce-product-bill-paid-status
 
+- Functia pentru alegerea timpului de plata pentru Android: 
+"
+try {
+  const {action, hour, minute} = await TimePickerAndroid.open({
+    hour: 14,
+    minute: 0,
+    is24Hour: false, // Will display '2 PM'
+  });
+  if (action !== TimePickerAndroid.dismissedAction) {
+    // Selected hour (0-23), minute (0-59)
+  }
+} catch ({code, message}) {
+  console.warn('Cannot open time picker', message);
+}
+"
+extrasa de pe site-ul: https://facebook.github.io/react-native/docs/timepickerandroid
+
+- Functia pentru alegerea datei de plata pentru Android: 
+"
+try {
+  const {action, year, month, day} = await DatePickerAndroid.open({
+    // Use `new Date()` for current date.
+    // May 25 2020. Month 0 is January.
+    date: new Date(2020, 4, 25),
+  });
+  if (action !== DatePickerAndroid.dismissedAction) {
+    // Selected year, month (0-11), day
+  }
+} catch ({code, message}) {
+  console.warn('Cannot open date picker', message);
+}
+"
+extrasa de pe site-ul: https://facebook.github.io/react-native/docs/datepickerandroid.html
+
+- Functia pentru alegerea datei de plata pentru IOS: 
+"
+  setDate(newDate) {
+    this.setState({chosenDate: newDate});
+  }
+"
+extrasa de pe site-ul: https://facebook.github.io/react-native/docs/datepickerios
+
+- Functia pentru alegerea pozei pentru codul de bare: 
+"
+ImagePicker.showImagePicker(options, (response) => {
+  console.log('Response = ', response);
+
+  if (response.didCancel) {
+    console.log('User cancelled image picker');
+  } else if (response.error) {
+    console.log('ImagePicker Error: ', response.error);
+  } else if (response.customButton) {
+    console.log('User tapped custom button: ', response.customButton);
+  } else {
+    const source = { uri: response.uri };
+
+    // You can also display the image using data:
+    // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+
+    this.setState({
+      avatarSource: source,
+    });
+  }
+});
+"
+
+extrasa de pe site-ul: https://github.com/react-native-community/react-native-image-picker
