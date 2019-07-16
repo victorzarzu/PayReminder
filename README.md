@@ -1,6 +1,6 @@
 # Tehnologii si labrarii folosite:
 
--react (https://reactjs.org)
+[react](https://reactjs.org)
 •	JSX
 -react-native (https://facebook.github.io/react-native/)
 •	Realizarea aplicatiei pentru telefon
