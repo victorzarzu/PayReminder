@@ -8,19 +8,19 @@
 
 [react-native-background-task](https://github.com/jamesisaac/react-native-background-task) -Background tasks
 
-[react-native-image-pickerhttps://github.com/react-native-community/react-native-image-picker) -Choose the image for the bar code
+[react-native-image-picker]https://github.com/react-native-community/react-native-image-picker) -Choose the image for the bar code
 
--react-native-image-view (https://www.npmjs.com/package/react-native-image-view)
-•	Pentru a vedea intr-un mod responsive imaginea cu codul de bare
--react-native-vector-icons (https://github.com/oblador/react-native-vector-icons)
-•	Pentru a avea la dispozitie iconite specifice
--react-native-svg (https://github.com/react-native-community/react-native-svg)
-•	Functionalitatea diagramei
--react-native-chart-kit  (https://www.npmjs.com/package/react-native-chart-kit)
-•	Diagrama
--react-navigation (https://reactnavigation.org)
-•	Navigare intre componente
--react-native-gesture-handler (https://github.com/kmagiera/react-native-gesture-handler)
+[react-native-image-view](https://www.npmjs.com/package/react-native-image-view) -View for the bar code
+
+[react-native-vector-icons](https://github.com/oblador/react-native-vector-icons) -Icons for different features
+
+[react-native-svg](https://github.com/react-native-community/react-native-svg) -SVG support
+
+[react-native-chart-kit](https://www.npmjs.com/package/react-native-chart-kit) -Charts
+
+[react-navigation](https://reactnavigation.org) -Navaigation between components
+
+[react-native-gesture-handler](https://github.com/kmagiera/react-native-gesture-handler)
 
 # Fotografii folosite care nu imi apartin: 
 
