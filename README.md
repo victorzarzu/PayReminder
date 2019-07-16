@@ -1,6 +1,6 @@
 # Pay Assistant
 
-## Tehnologii si labrarii folosite:
+## Built with
 
 [react](https://reactjs.org) -JSX
 
@@ -24,35 +24,35 @@
 
 [react-native-gesture-handler](https://github.com/kmagiera/react-native-gesture-handler)
 
-## Fotografii si fonturi folosite care nu imi apartin: 
+## Photos and fonts that are not mine
 
-[Buton adaugare factura](https://www.freepik.com/free-icon/round-add-button_778713.htm)
+[Add bill button](https://www.freepik.com/free-icon/round-add-button_778713.htm)
 
-[Buton pentru a plati toate facturile](https://www.onlinewebfonts.com/icon/281585)
+[Pay all bills button](https://www.onlinewebfonts.com/icon/281585)
 
-[Buton stergere factura](https://icons8.com/icon/10657/eliminar-propiedad)
+[Delete bill button](https://icons8.com/icon/10657/eliminar-propiedad)
 
-[Buton platire factura](https://www.freepik.com/free-icon/pay-per-click_754629.htm)
+[Pay bill button](https://www.freepik.com/free-icon/pay-per-click_754629.htm)
 
-[Buton pentru a sterge toate facturile](https://www.flaticon.com/free-icon/delete_141966)
+[Delete all bills button](https://www.flaticon.com/free-icon/delete_141966)
 
-[Buton de navigare inapoi](https://www.freepik.com/free-icon/left-arrow_887187.htm)
+[Back button](https://www.freepik.com/free-icon/left-arrow_887187.htm)
 
-[Background logo](https://www.pngsee.com/m/xbRwx_falling-money-png-money-rain-gif-transparent-png/)
+[Logo - background image](https://www.pngsee.com/m/xbRwx_falling-money-png-money-rain-gif-transparent-png/)
 
 [Font logo](https://www.dafont.com/third-rail.font?text=PA)
 
-[Poza barbat profil](https://www.sccpre.cat/show/iTRJwx_male-avatar-icons-png-free-and-downloads-clipart/)
+[Male avatar](https://www.sccpre.cat/show/iTRJwx_male-avatar-icons-png-free-and-downloads-clipart/)
 
-[Poza femeie profil](https://www.kisspng.com/png-female-avatar-cartoon-clip-art-user-avatar-882481/)
+[Female avatar](https://www.kisspng.com/png-female-avatar-cartoon-clip-art-user-avatar-882481/)
 
-[Poza unpaid bills home pentru navigatie](https://iconscout.com/icon/product-bill-invoice-purchase-receipt-document-file)
+[Navigate to unpaid bills](https://iconscout.com/icon/product-bill-invoice-purchase-receipt-document-file)
 
-[Poza paid bills home pentru navigatie](https://iconscout.com/icon/online-site-ecommerce-product-bill-paid-status)
+[Navigate to paid bills](https://iconscout.com/icon/online-site-ecommerce-product-bill-paid-status)
 
-## Functii folosite care nu imi apartin
+## Functions that are not mine
 
-- Functia pentru alegerea timpului de plata pentru Android: 
+Choose time function for Android from [docs](https://facebook.github.io/react-native/docs/timepickerandroid)
 ```
 try {
   const {action, hour, minute} = await TimePickerAndroid.open({
@@ -67,9 +67,9 @@ try {
   console.warn('Cannot open time picker', message);
 }
 ```
-extrasa de pe site-ul: https://facebook.github.io/react-native/docs/timepickerandroid
 
-- Functia pentru alegerea datei de plata pentru Android: 
+
+Choose date function for Android from [docs](https://facebook.github.io/react-native/docs/datepickerandroid.html)
 ```
 try {
   const {action, year, month, day} = await DatePickerAndroid.open({
@@ -84,17 +84,17 @@ try {
   console.warn('Cannot open date picker', message);
 }
 ```
-extrasa de pe site-ul: https://facebook.github.io/react-native/docs/datepickerandroid.html
 
-- Functia pentru alegerea datei de plata pentru IOS: 
+
+Choose date function for IOS from [docs](https://facebook.github.io/react-native/docs/datepickerios)
 ```
   setDate(newDate) {
     this.setState({chosenDate: newDate});
   }
 ```
-extrasa de pe site-ul: https://facebook.github.io/react-native/docs/datepickerios
 
-- Functia pentru alegerea pozei pentru codul de bare: 
+
+Choose bar code photo from [docs](https://github.com/react-native-community/react-native-image-picker)
 ```
 ImagePicker.showImagePicker(options, (response) => {
   console.log('Response = ', response);
@@ -118,4 +118,4 @@ ImagePicker.showImagePicker(options, (response) => {
 });
 ```
 
-extrasa de pe site-ul: https://github.com/react-native-community/react-native-image-picker
+
