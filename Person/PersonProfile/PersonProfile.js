@@ -113,7 +113,6 @@ class PersonProfile extends React.Component {
                         <SubmitButton
                             onPress = {() => {
                                 this.saveProfile()
-                                addIncome().then().catch(error => {})
                                 saveCurrency({id: 1, currency: this.state.currency}).then().catch(error => alert('Can not save your currency'))
                             }}
                         />

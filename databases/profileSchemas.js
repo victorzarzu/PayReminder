@@ -45,12 +45,13 @@ export const addIncome = () => new Promise((resolve, reject) => { //functia de a
             realm.write(() => {
                 const nowDate = new Date()
                 let updatingProfile = realm.objectForPrimaryKey('Profile', 1)
-                if(nowDate.getDate() > updatingProfile.incomeDay && updatingProfile.incomeGiven === false){
-                    updatingProfile.funds += updatingProfile.incomeAmount
+                if(nowDate.getDate() < updatingProfile.incomeDay && updatingProfile.incomeGiven === true){
+                    updatingProfile.incomeGiven = false
                     realm.create('Profile', updatingProfile, true)
                 }
-                else if(nowDate.getDate() === 1 && updatingProfile.incomeGiven === true){
-                    updatingProfile.incomeGiven = false
+                else if(nowDate.getDate() > updatingProfile.incomeDay && updatingProfile.incomeGiven === false){
+                    updatingProfile.funds += updatingProfile.incomeAmount
+                    updatingProfile.incomeGiven = true
                     realm.create('Profile', updatingProfile, true)
                 }
                 else if(updatingProfile.incomeGiven === false && nowDate.getDate() == updatingProfile.incomeDay ){

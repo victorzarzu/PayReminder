@@ -6,7 +6,7 @@ export default class IncomeAmountInput extends Component{
         return(
                 <TextInput
                     {...this.props}
-                    maxLength = {15}
+                    maxLength = {20}
                     keyboardType = "numeric"
                     style = {styles.textInput}
                     textAlign = 'center'
