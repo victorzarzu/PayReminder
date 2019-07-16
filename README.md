@@ -40,7 +40,7 @@
 # Functii folosite care nu imi apartin
 
 - Functia pentru alegerea timpului de plata pentru Android: 
-"
+```
 try {
   const {action, hour, minute} = await TimePickerAndroid.open({
     hour: 14,
@@ -53,11 +53,11 @@ try {
 } catch ({code, message}) {
   console.warn('Cannot open time picker', message);
 }
-"
+```
 extrasa de pe site-ul: https://facebook.github.io/react-native/docs/timepickerandroid
 
 - Functia pentru alegerea datei de plata pentru Android: 
-"
+```
 try {
   const {action, year, month, day} = await DatePickerAndroid.open({
     // Use `new Date()` for current date.
@@ -70,19 +70,19 @@ try {
 } catch ({code, message}) {
   console.warn('Cannot open date picker', message);
 }
-"
+```
 extrasa de pe site-ul: https://facebook.github.io/react-native/docs/datepickerandroid.html
 
 - Functia pentru alegerea datei de plata pentru IOS: 
-"
+```
   setDate(newDate) {
     this.setState({chosenDate: newDate});
   }
-"
+```
 extrasa de pe site-ul: https://facebook.github.io/react-native/docs/datepickerios
 
 - Functia pentru alegerea pozei pentru codul de bare: 
-"
+```
 ImagePicker.showImagePicker(options, (response) => {
   console.log('Response = ', response);
 
@@ -103,6 +103,6 @@ ImagePicker.showImagePicker(options, (response) => {
     });
   }
 });
-"
+```
 
 extrasa de pe site-ul: https://github.com/react-native-community/react-native-image-picker
