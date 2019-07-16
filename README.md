@@ -1,7 +1,9 @@
 # Tehnologii si labrarii folosite:
 
 [react](https://reactjs.org) - JSX
+
 [react-native] (https://facebook.github.io/react-native/) -mobile app development
+
 [realm](https://realm.io) -local datatbase
 -react-native-background-task (https://github.com/jamesisaac/react-native-background-task) 
 •	Pentru a realiza functii in background
