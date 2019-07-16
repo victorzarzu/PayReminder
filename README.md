@@ -6,6 +6,8 @@
 
 [react-native](https://facebook.github.io/react-native/) -Mobile app development
 
+[gradle](https://gradle.org)
+
 [realm](https://realm.io) -Local database
 
 [react-native-background-task](https://github.com/jamesisaac/react-native-background-task) -Background tasks
