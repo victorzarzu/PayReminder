@@ -26,6 +26,8 @@
 
 [react-native-gesture-handler](https://github.com/kmagiera/react-native-gesture-handler)
 
+
+
 ## Photos and fonts that are not mine
 
 [Add bill button](https://www.freepik.com/free-icon/round-add-button_778713.htm)
@@ -51,6 +53,8 @@
 [Navigate to unpaid bills](https://iconscout.com/icon/product-bill-invoice-purchase-receipt-document-file)
 
 [Navigate to paid bills](https://iconscout.com/icon/online-site-ecommerce-product-bill-paid-status)
+
+
 
 ## Functions that are not mine
 
