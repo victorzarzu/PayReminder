@@ -1,14 +1,15 @@
 # Tehnologii si labrarii folosite:
 
-[react](https://reactjs.org) - JSX
+[react](https://reactjs.org) -JSX
 
-[react-native] (https://facebook.github.io/react-native/) -mobile app development
+[react-native](https://facebook.github.io/react-native/) -Mobile app development
 
-[realm](https://realm.io) -local datatbase
--react-native-background-task (https://github.com/jamesisaac/react-native-background-task) 
-•	Pentru a realiza functii in background
--react-native-image-picker (https://github.com/react-native-community/react-native-image-picker)
-•	Pentru a alege o imagine pentru codul de bare
+[realm](https://realm.io) -Local database
+
+[react-native-background-task](https://github.com/jamesisaac/react-native-background-task) -Background tasks
+
+[react-native-image-pickerhttps://github.com/react-native-community/react-native-image-picker) -Choose the image for the bar code
+
 -react-native-image-view (https://www.npmjs.com/package/react-native-image-view)
 •	Pentru a vedea intr-un mod responsive imaginea cu codul de bare
 -react-native-vector-icons (https://github.com/oblador/react-native-vector-icons)
