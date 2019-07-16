@@ -24,7 +24,7 @@
 
 [react-native-gesture-handler](https://github.com/kmagiera/react-native-gesture-handler)
 
-## Fotografii folosite care nu imi apartin: 
+## Fotografii si fonturi folosite care nu imi apartin: 
 
 [Buton adaugare factura](https://www.freepik.com/free-icon/round-add-button_778713.htm)
 
