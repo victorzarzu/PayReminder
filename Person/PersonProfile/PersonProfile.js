@@ -7,6 +7,7 @@ import SubmitButton from './components/SubmitButton'
 import IncomeDayPicker from './components/inputs/IncomeDayPicker';
 import IncomeAmountInput from './components/inputs/IncomeAmountInput'
 import {saveProfile, queryProfile, addIncome} from '../../databases/profileSchemas'
+import {saveCurrency} from '../../databases/currencySchemas'
 import CurrencyPicker from './components/inputs/CurrencyPicker';
 
 class PersonProfile extends React.Component {
@@ -68,6 +69,7 @@ class PersonProfile extends React.Component {
             incomeDay: this.state.incomeDay,
             incomeAmount: parseFloat(this.state.incomeAmount),
             currency: this.state.currency,
+            lastMonthIncomeGiven: new Date().getMonth(),
             saved: true
         }
         saveProfile(newProfile).then().catch(error => alert(`Can not save the profile: ${error}`))
@@ -110,7 +112,9 @@ class PersonProfile extends React.Component {
                         </View>
                         <SubmitButton
                             onPress = {() => {
-                            this.saveProfile()
+                                this.saveProfile()
+                                addIncome().then().catch(error => {})
+                                saveCurrency({id: 1, currency: this.state.currency}).then().catch(error => alert('Can not save your currency'))
                             }}
                         />
                 </KeyboardAvoidingView>

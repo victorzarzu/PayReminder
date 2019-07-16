@@ -3,6 +3,7 @@ import {View, Text, StyleSheet, Image, ScrollView, KeyboardAvoidingView, Touchab
 
 import Funds from '../PersonHome/PersonHomeComponents/Funds'
 import AddFunds from '../PersonHome/PersonHomeComponents/AddFunds'
+import Diagram from './PersonHomeComponents/Diagram';
 import profileRealm, {queryProfile} from '../../databases/profileSchemas'
 
 export default class PersonHome extends React.Component {
@@ -39,7 +40,6 @@ export default class PersonHome extends React.Component {
     }
 
     componentWillMount(){
-        this.onLayoutChange
         this.loadData()
         profileRealm.addListener('change', () => this.loadData())
     }
@@ -52,7 +52,7 @@ export default class PersonHome extends React.Component {
         return(
             <ScrollView onLayout={this.onLayoutChange}>
                 <KeyboardAvoidingView style = {styles.homeView}>
-                    <View style = {{flexDirection: 'row', width: 320, justifyContent: 'space-around', height: 100, marginVertical: 10}}>
+                    <View style = {{flexDirection: 'row', width: this.state.width, justifyContent: 'space-around', height: 100, marginVertical: 10}}>
                             <View style = {[styles.navigationPart, {backgroundColor: '#5F81B7'}]}>
                                 <TouchableOpacity onPress = {() => this.props.navigation.navigate('Bills') /* navigarea din Home in pagina de facturi neplatite */} style = {{alignItems: 'center', justifyContent: 'center'}}>
                                     <Image source = {require('./PersonHomeComponents/images/bills-icon.png')} style = {styles.image} />
@@ -71,7 +71,11 @@ export default class PersonHome extends React.Component {
                         funds = {this.state.funds}
                         size = {this.state.size}
                     />
-                    <AddFunds />
+                    <AddFunds/>
+                    <Diagram 
+                        width = {this.state.width}
+                        currency = {this.state.currency}
+                    />
                 </KeyboardAvoidingView>
             </ScrollView>
         )

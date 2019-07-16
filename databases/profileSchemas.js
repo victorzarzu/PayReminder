@@ -12,8 +12,7 @@ export const ProfileSchema = { //crearea schemei pentru profil
         incomeAmount: {type:'double', default: 0},
         currency: {type: 'string', default: '€'},
         funds: {type: 'double', default: 0},
-        incomeGiven: {type: 'bool', default: false},
-        lastMonthIncomeGiven: {type: 'int'}
+        incomeGiven: {type: 'bool', default: false}
     }
 }
 
@@ -46,19 +45,17 @@ export const addIncome = () => new Promise((resolve, reject) => { //functia de a
             realm.write(() => {
                 const nowDate = new Date()
                 let updatingProfile = realm.objectForPrimaryKey('Profile', 1)
-                if(updatingProfile.incomeGiven === false && updatingProfile.lastMonthIncomeGiven != nowDate.getMonth()){
-                   if(updatingProfile.lastMonthIncomeGiven > nowDate.getMonth){
-                        updatingProfile.funds += ((11 - updatingProfile.lastMonthIncomeGiven) + 1 + nowDate.getMonth())*updatingProfile.incomeAmount
-                    }else {
-                        updatingProfile.funds += ( + nowDate.getMonth() - updatingProfile.lastMonthIncomeGiven)*updatingProfile.incomeAmount
-                    }
-                    updatingProfile.incomeGiven = true
+                if(nowDate.getDate() > updatingProfile.incomeDay && updatingProfile.incomeGiven === false){
+                    updatingProfile.funds += updatingProfile.incomeAmount
+                    realm.create('Profile', updatingProfile, true)
+                }
+                else if(nowDate.getDate() === 1 && updatingProfile.incomeGiven === true){
+                    updatingProfile.incomeGiven = false
                     realm.create('Profile', updatingProfile, true)
                 }
                 else if(updatingProfile.incomeGiven === false && nowDate.getDate() == updatingProfile.incomeDay ){
                     updatingProfile.funds += updatingProfile.incomeAmount
                     updatingProfile.incomeGiven = true
-                    lastMonthIncomeGiven = nowDate.getMonth()
                     realm.create('Profile', updatingProfile, true)
                 }
                 resolve()
@@ -81,6 +78,17 @@ export const addFunds = amount => new Promise((resolve, reject) => { //functia p
                 }
             })
         }).catch(error => reject(error))
+})
+
+export const payBill = billPrice => new Promise((resolve, reject) => { //functia de scadere a pretului facturii din fonduri
+    Realm.open(databaseOptions)
+        .then(realm => {
+            realm.write(() => {
+                let updatingProfile = realm.objectForPrimaryKey('Profile', 1)
+                updatingProfile.funds -= billPrice
+                resolve()
+            })
+        })
 })
 
 export default new Realm(databaseOptions)

@@ -2,8 +2,11 @@ import React, {Component} from 'react'
 import {View, Text, TouchableOpacity, StyleSheet, Alert, Image, Platform} from 'react-native'
 import ImageView from 'react-native-image-view'
 
-import profileRealm ,{ queryProfile} from '../../../../databases/profileSchemas'
+import {deleteBill, paidBill} from '../../../../databases/billSchemas.js'
+import currencyRealm, {queryCurrency} from '../../../../databases/currencySchemas'
 
+import EditModal from './EditModal'
+import EditModalIOS from './EditModalIOS'
 
 export default class Bill extends Component{
     constructor(props){
@@ -12,28 +15,38 @@ export default class Bill extends Component{
             isEditing: true,
             currency: '€',
             imageModal: false,
-            funds: 0,
         }
+    }
+
+
+
+    reloadData() {
+        queryCurrency().then(currency => { //atribuirea componentului valuta din baza de date
+            if(this.state.currency !== currency.currency){
+                this.setState({currency: currency.currency})
+            }
+        }).catch(error => alert(`Can not change your currency preference: ${error}`))
     }
 
     componentWillMount(){
         this.reloadData()
-        profileRealm.addListener('change', () => this.reloadData()) //adaugarea listener-ului pentru a vedea daca se schimba valuta
+        currencyRealm.addListener('change', () => this.reloadData())
     }
 
     componentWillUnmount(){
-        profileRealm.removeAllListeners() //stergerea listener-ului
-    }
-
-    reloadData() {
-        queryProfile().then(profile => { //atribuirea componentului valuta din baza de date
-            if(this.state.currency !== profile.currency){
-                this.setState({currency: profile.currency, funds: profile.funds})
-            }
-        }).catch(error => alert(`Can not change your currency preference: ${error}`))
+        currencyRealm.removeAllListeners()
     }
     render(){
         const leftDays = (this.props.bill.payDate - new Date())/86400000
+        const edit = Platform.OS == 'android' ?  // verificarea sistemului de operare pe care este rulata aplicatia
+        <EditModal 
+            bill = {this.props.bill} 
+            color = {leftDays<=0 ? '#D34354' : leftDays>=7 ? '#98C2E9' : leftDays>=3 ?  '#6A62C6' : '#D67FA3'}
+        /> : 
+            <EditModalIOS 
+            bill = {this.props.bill} 
+            color = {leftDays<=0 ? '#D34354' : leftDays>=7 ? '#98C2E9' : leftDays>=3 ?  '#6A62C6' : '#D67FA3'}
+        />
         const image = [
             {
                 source: {
@@ -69,13 +82,50 @@ export default class Bill extends Component{
                                 style = {{width: 30, height: 30, borderRadius: 25, borderColor: leftDays<=0 ? '#D34354' : leftDays>=7 ? '#98C2E9' : leftDays>=3 ?  '#6A62C6' : '#D67FA3', borderWidth: 1.25}}
                             />
                         </TouchableOpacity>
-                        <TouchableOpacity>
+                        {edit}
+                        <TouchableOpacity
+                            onPress = {() => {
+                                Alert.alert( //alerta pentru a confirma stergerea
+                                    `Delete ${this.props.bill.name} bill`,
+                                    `Are you sure you want to delete ${this.props.bill.name} bill?`,
+                                    [
+                                        {
+                                            text: 'No',
+                                            onPress: () => {}
+                                        },
+                                        {
+                                            text: 'Yes',
+                                            onPress: () => {deleteBill(this.props.bill).then().catch(error => alert(`The bill wasn't deleted: ${error}`))}
+                                        }
+                                    ],
+                                    { cancelable: true }
+                                )
+                            }}
+                        >
                             <Image 
                                 source = {require('../images/delete-icon.png')}
                                 style = {[styles.button, {tintColor: leftDays<=0 ? '#D34354' : leftDays>=7 ? '#98C2E9' : leftDays>=3 ?  '#6A62C6' : '#D67FA3'}]} 
                             />
                         </TouchableOpacity>
-                        <TouchableOpacity>
+                        <TouchableOpacity
+                            onPress = {() => {
+                                    Alert.alert( //alerta pentru a confirma plata
+                                        `Pay ${this.props.bill.name} bill`,
+                                        `Are you sure you want to pay ${this.props.bill.name} bill? It will reduce your funds with ${this.state.currency + '\xa0' + this.props.bill.price}!`,
+                                        [
+                                            {
+                                                text: 'No',
+                                                onPress: () => {}
+                                            },
+                                            {
+                                                text: 'Yes',
+                                                onPress: () => {paidBill(this.props.bill).then().catch(error => alert(`The bill wasn't paid: ${error}`))}
+                                            }
+                                        ],
+                                        { cancelable: true }
+                                    )
+                            }}
+                        >
                             <Image 
                                 source = {require('../images/paid-icon.png')}
                                 style = {[styles.button, {tintColor: leftDays<=0 ? '#D34354' : leftDays>=7 ? '#98C2E9' : leftDays>=3 ?  '#6A62C6' : '#D67FA3'}]}

@@ -1,6 +1,7 @@
 import Realm from 'realm'
 
 import {payBill, queryProfile} from './profileSchemas'
+import {addPaidBill} from './paidbillSchema'
 import {Alert} from 'react-native'
 
 export const BillImageSchema = {  // crearea schemei pentru imaginea facturii neplatite
@@ -41,6 +42,18 @@ export const addBill = newBill => new Promise((resolve, reject) => { //crearea f
         }).catch(error => reject(error))
 })
 
+export const editBill = editbill => new Promise((resolve, reject) => {    //crearea functiei de editare a unei facturi in tabela pentru facturi neplatite
+    Realm.open(databaseOptions).then(realm => {        
+        realm.write(() => {
+            let editingBill = realm.objectForPrimaryKey('Bill', editbill.id);   
+            editingBill.name = editbill.name
+            editingBill.price = editbill.price
+            editingBill.payDate = editbill.payDate
+            editingBill.image = editbill.image
+            resolve();     
+        });
+    }).catch((error) => reject(error));;
+});
 
 export const deleteBill = deletedBill => new Promise((resolve, reject) => { //crearea functiei de stergere a unei facturi din tabela pentru facturi neplatite
     Realm.open(databaseOptions)
@@ -50,6 +63,64 @@ export const deleteBill = deletedBill => new Promise((resolve, reject) => { //cr
                 realm.delete(deletingBill)
                 resolve();
             })
+        }).catch(error => reject(error))
+})
+
+export const paidBill = paidBill => new Promise((resolve, reject) => { //crearea functiei de platire a unei facturi
+    Realm.open(databaseOptions)
+        .then(realm => {
+            realm.write(() => {
+                let payingBill = realm.objectForPrimaryKey('Bill', paidBill.id)
+                payBill(payingBill.price).then().catch(error => alert(`Can not pay your bill: ${error}`)) // scaderea din fonduri a pretului facturii
+                const paidBill1 = {
+                    id: payingBill.id,
+                    name: payingBill.name,
+                    price: payingBill.price,
+                    paidDate: new Date()
+                }
+                addPaidBill(paidBill1).then().catch(error => alert(`Can not pay your bill: ${error}`)) //adaugarea facturii in tabela pentru facturi platite
+                realm.delete(payingBill)
+                resolve();
+            })
+        }).catch(error => reject(error))
+})
+
+export const paidAllBills = () => new Promise((resolve, reject) => { //functia pentru platirea tututor facturilor din tabela pentru facturi neplatite
+    Realm.open(databaseOptions)
+        .then(realm => {
+            let allBills = realm.objects('Bill')
+            let allBillsPrice = 0
+            allBills.forEach(bill => {
+                allBillsPrice += bill.price
+            })
+            if(allBillsPrice === 0){
+                alert('You do not have any unpaid bills!')
+            } else {
+                let currency = '€'
+                queryProfile().then(profile => {
+                    currency = profile.currency
+                }).catch(error => {})
+                Alert.alert(
+                    `Pay all bills`,
+                    `Are you sure you want to pay all your bills? It will reduce your funds with ${currency + '\xa0' + allBillsPrice}!`,
+                    [
+                        {
+                            text: 'No',
+                            onPress: () => {}
+                        },
+                        {
+                            text: 'Yes',
+                            onPress: () => {
+                                allBills.forEach(bill => {
+                                    paidBill(bill).then().catch(error => {})
+                                })
+                            }
+                        }
+                    ],
+                    { cancelable: true }
+                )
+            }
+            resolve()
         }).catch(error => reject(error))
 })
 

@@ -1,8 +1,8 @@
 import React from 'react'
-import {View, Text, StyleSheet, ScrollView} from 'react-native'
+import {View, Text, StyleSheet, FlatList, ScrollView, Button} from 'react-native'
 
-import billRealm, {queryAllBills, querySortedBills} from '../../../databases/billSchemas.js'
-import Bill from './BillListComponents/Bill'
+import paidBillRealm, {queryAllPaidBills} from '../../../../databases/paidbillSchema'
+import PaidBill from './PaidBill'
 
 
 export default class BillList extends React.Component {
@@ -16,8 +16,8 @@ export default class BillList extends React.Component {
     }
 
     reloadData = () => {
-        //se atribuie variabilei bills din state-ul componentului toate facturile neplatite
-        queryAllBills().then(bills => {
+        //i se atribuie variabilei din state lista facturilor platite
+        queryAllPaidBills().then(bills => {
             this.setState({ bills });
         }).catch(error => {
             this.setState({ bills: [] });
@@ -26,25 +26,24 @@ export default class BillList extends React.Component {
 
     componentWillMount(){
         this.reloadData()
-        billRealm.addListener('change', () => this.reloadData()) // se adauga un listener pentru a actualiza in timp real list facturilor neplatite
+        paidBillRealm.addListener('change', () => this.reloadData()) // se adauga un listener pentru a actualiza in timp real list facturilor platite
     }
 
     componentWillUnmount(){
-        billRealm.removeAllListeners() //eliminarea listenerului
+        paidBillRealm.removeAllListeners() //se sterge listener-ul
     }
 
     render() {
 
         return(
-                    <ScrollView scrollEnabled contentContainerStyle = {{marginBottom: 'auto', marginTop: 4}}>
-                        { //maparea variabilei bills din state sub forma de facturi
+                    <ScrollView scrollEnabled contentContainerStyle = {{marginBottom: 'auto'}}>
+                        {   //se mapeaza liste de facturi platite
                             this.state.bills.map(bill => {
                             return(
-                                <Bill bill = {bill} key = {bill.id} />
+                                <PaidBill bill = {bill} key = {bill.id} />
                             )
                         })}
-                        {   //pentru a arata bine
-                            this.state.bills.length >= 5 && 
+                        {this.state.bills.length >= 5 && 
                             <View>
                                 <Text style = {{fontSize: 25}}>line</Text>
                             </View>

@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {StyleSheet, Picker, View, Text} from 'react-native'
-import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 
 export default class GenderForm extends Component {
     render() {
