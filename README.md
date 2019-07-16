@@ -1,4 +1,6 @@
-# Tehnologii si labrarii folosite:
+#Pay Assistant
+
+## Tehnologii si labrarii folosite:
 
 [react](https://reactjs.org) -JSX
 
@@ -8,7 +10,7 @@
 
 [react-native-background-task](https://github.com/jamesisaac/react-native-background-task) -Background tasks
 
-[react-native-image-picker]https://github.com/react-native-community/react-native-image-picker) -Choose the image for the bar code
+[react-native-image-picker](https://github.com/react-native-community/react-native-image-picker) -Choose the image for the bar code
 
 [react-native-image-view](https://www.npmjs.com/package/react-native-image-view) -View for the bar code
 
@@ -22,7 +24,7 @@
 
 [react-native-gesture-handler](https://github.com/kmagiera/react-native-gesture-handler)
 
-# Fotografii folosite care nu imi apartin: 
+## Fotografii folosite care nu imi apartin: 
 
 -buton adaugare factura : https://www.freepik.com/free-icon/round-add-button_778713.htm
 -buton pentru a plati toate facturile: https://www.onlinewebfonts.com/icon/281585
@@ -37,7 +39,7 @@
 -poza unpaid bills home pentru navigatie: https://iconscout.com/icon/product-bill-invoice-purchase-receipt-document-file
 -poza paid bills home pentru navigatie: https://iconscout.com/icon/online-site-ecommerce-product-bill-paid-status
 
-# Functii folosite care nu imi apartin
+## Functii folosite care nu imi apartin
 
 - Functia pentru alegerea timpului de plata pentru Android: 
 ```
