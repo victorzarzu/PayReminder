@@ -27,16 +27,27 @@
 ## Fotografii folosite care nu imi apartin: 
 
 [Buton adaugare factura](https://www.freepik.com/free-icon/round-add-button_778713.htm)
+
 [Buton pentru a plati toate facturile](https://www.onlinewebfonts.com/icon/281585)
+
 [Buton stergere factura](https://icons8.com/icon/10657/eliminar-propiedad)
+
 [Buton platire factura](https://www.freepik.com/free-icon/pay-per-click_754629.htm)
+
 [Buton pentru a sterge toate facturile](https://www.flaticon.com/free-icon/delete_141966)
+
 [Buton de navigare inapoi](https://www.freepik.com/free-icon/left-arrow_887187.htm)
+
 [Background logo](https://www.pngsee.com/m/xbRwx_falling-money-png-money-rain-gif-transparent-png/)
+
 [Font logo](https://www.dafont.com/third-rail.font?text=PA)
+
 [Poza barbat profil](https://www.sccpre.cat/show/iTRJwx_male-avatar-icons-png-free-and-downloads-clipart/)
+
 [Poza femeie profil](https://www.kisspng.com/png-female-avatar-cartoon-clip-art-user-avatar-882481/)
+
 [Poza unpaid bills home pentru navigatie](https://iconscout.com/icon/product-bill-invoice-purchase-receipt-document-file)
+
 [Poza paid bills home pentru navigatie](https://iconscout.com/icon/online-site-ecommerce-product-bill-paid-status)
 
 ## Functii folosite care nu imi apartin
