@@ -1,11 +1,8 @@
 # Tehnologii si labrarii folosite:
 
-[react](https://reactjs.org)
-•	JSX
--react-native (https://facebook.github.io/react-native/)
-•	Realizarea aplicatiei pentru telefon
--realm (https://realm.io)
-•	Baza de date locala
+[react](https://reactjs.org) - JSX
+[react-native] (https://facebook.github.io/react-native/) -mobile app development
+[realm](https://realm.io) -local datatbase
 -react-native-background-task (https://github.com/jamesisaac/react-native-background-task) 
 •	Pentru a realiza functii in background
 -react-native-image-picker (https://github.com/react-native-community/react-native-image-picker)
