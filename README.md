@@ -131,7 +131,7 @@ Open the project in VS Code or Android Studio and run in the terminal
 npm install
 ```
 
-Then run ``` react-native-run-android ```.If you get an error, you can run ``` adb reverse tcp:8081 tcp:8081 ``` and then ``` react-native start```
+Then run ``` react-native-run-android --version=release```.If you get an error, you can run ``` adb reverse tcp:8081 tcp:8081 ``` and then ``` react-native start```
 
 After that, reload the app and it is working.
 
