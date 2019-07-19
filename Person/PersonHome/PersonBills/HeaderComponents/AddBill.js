@@ -128,7 +128,7 @@ export default class AddBill extends Component{
                                     value = {this.state.name} 
                                     placeholder = "Type a name..."
                                     onChangeText = {name => this.setState({name})}
-                                    maxLength = {18}
+                                    maxLength = {21}
                                 />
                             </View>
                             <View style = {{alignItems: 'center', justifyContent: 'space-evenly', flexDirection: 'row'}}>
