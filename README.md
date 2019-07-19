@@ -8,6 +8,8 @@
 
 [gradle](https://gradle.org)
 
+[node JS](https://nodejs.org/en/)
+
 [realm](https://realm.io) -Local database
 
 [react-native-background-task](https://github.com/jamesisaac/react-native-background-task) -Background tasks
