@@ -19,7 +19,7 @@ class PersonProfile extends React.Component {
             lastName: '',
             gender: '',
             incomeDay: '1',
-            incomeAmount: '',
+            incomeAmount: 0,
             currency: '€',
             appState: AppState.currentState,
         }
