@@ -8,7 +8,7 @@
 
 [gradle](https://gradle.org)
 
-[Node JS](https://nodejs.org/en/)
+[node JS](https://nodejs.org/en/)
 
 [realm](https://realm.io) -Local database
 
