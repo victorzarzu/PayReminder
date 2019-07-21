@@ -120,7 +120,7 @@ export default class Diagram extends Component{
                  : 
             <View style = {{justifyContent: 'center', alignItems: 'center'}}>
                 <Text style = {{color: '#BABABA', fontSize: 24}}> No information given </Text>
-                <Text style = {{color: '#BABABA', fontSize: 14}}> You need to have more than 2 different submitted bills </Text>
+                <Text style = {{color: '#BABABA', fontSize: 12}}> You need to have more than 2 different submitted bills </Text>
             </View> 
         )
     }

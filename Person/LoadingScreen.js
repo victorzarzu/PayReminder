@@ -12,7 +12,7 @@ export default class LoadingScreen extends Component{
                 />
                 <ActivityIndicator size="large" color="#0489B1" />
                 <View style = {{alignItems: 'center', justifyContent: 'space-around', flexDirection: 'row'}}>
-                    <Text style = {{color: '#76ADD2', fontSize: 14, marginRight: 5}}>Do not forget to pay the bills before the deadline</Text>
+                    <Text style = {{color: '#76ADD2', fontSize: 12, marginRight: 5}}>Do not forget to pay the bills before the deadline</Text>
                     <Fontisto name = 'wink' color = '#76ADD2' size = {14}  />
                 </View>
             </View>
