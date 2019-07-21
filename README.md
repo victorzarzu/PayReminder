@@ -128,6 +128,7 @@ ImagePicker.showImagePicker(options, (response) => {
 
 ## Run the app
 
+Activate the USB debugging on your Android phone.
 Open the project in VS Code or Android Studio and run in the terminal
 ```
 npm install
