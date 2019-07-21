@@ -167,7 +167,7 @@ export default class EditModal extends Component{
 
 const styles = StyleSheet.create({
     editModal: {
-        height: 310,
+        height: 330,
         width: 280,
         backgroundColor: 'white',
         alignSelf: 'center',

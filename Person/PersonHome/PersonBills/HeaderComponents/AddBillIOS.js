@@ -184,8 +184,8 @@ export default class AddBillIOS extends Component{
 
 const styles = StyleSheet.create({
     modalView: {
-        height: 220,
-        width: 300,
+        height: 240,
+        width: 290,
         backgroundColor: 'white',
         alignSelf: 'center',
         borderRadius: 15,
