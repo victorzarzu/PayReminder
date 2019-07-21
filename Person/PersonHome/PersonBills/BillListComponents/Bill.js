@@ -61,27 +61,29 @@ export default class Bill extends Component{
             <View style = {styles.billView}>
                 <View style = {{height: 20, backgroundColor: leftDays <= 0 ? '#D34354' : leftDays>=7 ? '#98C2E9' : leftDays>=3 ?  '#6A62C6' : '#D67FA3'}}></View>
                 <View>
-                    <View style = {{flexDirection: 'row'}}>
-                        <View style = {{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+                    <View style = {{flexDirection: 'row', justifyContent: 'flex-start', alignContent: 'flex-start'}}>
+                        <View style = {{justifyContent: 'center', alignItems: 'center', flex: 1, marginLeft: 8}}>
+                            <TouchableOpacity
+                                onPress = {() => this.setState({imageModal: true})} //deschiderea modului de vizualizare extins al imaginii
+                            >
+                                <Image 
+                                    source = {{uri: this.props.bill.image.uri}}
+                                    style = {{width: 50, height: 50, borderRadius: 25, borderColor: leftDays<=0 ? '#D34354' : leftDays>=7 ? '#98C2E9' : leftDays>=3 ?  '#6A62C6' : '#D67FA3', borderWidth: 1.25}}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                        <View style = {{justifyContent: 'center', alignItems: 'center', flex: 4}}>
                             <Text style = {styles.infoText}>Name:</Text>
                             <Text style = {styles.infoText}>Price:</Text>
-                            <Text style = {styles.infoText}>Deadline date:</Text>
+                            <Text style = {styles.infoText}>Deadline:</Text>
                         </View>
-                        <View style = {{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+                        <View style = {{justifyContent: 'center', alignItems: 'center', flex: 4}}>
                             <Text style = {styles.infoText}> {this.props.bill.name} </Text>
                             <Text style = {styles.infoText}> {price} </Text>
                             <Text style = {styles.infoText}> {`${this.props.bill.payDate.getDate()}/${this.props.bill.payDate.getMonth() + 1}/${this.props.bill.payDate.getFullYear()}  ${this.props.bill.payDate.getHours()}:${this.props.bill.payDate.getMinutes() <= 9 ? String('0' + this.props.bill.payDate.getMinutes()) : this.props.bill.payDate.getMinutes()}`} </Text>
                         </View>
                     </View>
                     <View style = {styles.buttonView}>
-                        <TouchableOpacity
-                            onPress = {() => this.setState({imageModal: true})} //deschiderea modului de vizualizare extins al imaginii
-                        >
-                            <Image 
-                                source = {{uri: this.props.bill.image.uri}}
-                                style = {{width: 30, height: 30, borderRadius: 25, borderColor: leftDays<=0 ? '#D34354' : leftDays>=7 ? '#98C2E9' : leftDays>=3 ?  '#6A62C6' : '#D67FA3', borderWidth: 1.25}}
-                            />
-                        </TouchableOpacity>
                         {edit}
                         <TouchableOpacity
                             onPress = {() => {
@@ -153,7 +155,7 @@ const styles = StyleSheet.create({
         marginVertical: 5,
     },
     billView: {
-        height: 115,
+        height: 127,
         marginBottom: 10
     },
     contentBillView: {
@@ -162,7 +164,8 @@ const styles = StyleSheet.create({
     buttonView: {
         flexDirection: 'row',
         justifyContent: 'space-around',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: 3,
     },
     button: {
         height: 33,

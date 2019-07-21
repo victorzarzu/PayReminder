@@ -22,7 +22,7 @@ export default class IncomeAmountInput extends Component{
                     keyboardType = "numeric"
                     textAlign = 'center'
                     textAlignVertical = 'center'
-                    placeholder = "Enter amount of money"
+                    placeholder = "Enter amount"
                 />
                 <TouchableOpacity
                     onPress = {() => {

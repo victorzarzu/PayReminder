@@ -246,7 +246,7 @@ export default class AddBill extends Component{
 const styles = StyleSheet.create({
     modalView: {
         height: 220,
-        width: 300,
+        width: 290,
         backgroundColor: 'white',
         alignSelf: 'center',
         borderRadius: 15,
