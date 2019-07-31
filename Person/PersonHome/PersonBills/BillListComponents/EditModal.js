@@ -182,7 +182,7 @@ export default class EditModal extends Component{
                                     const editbill = {
                                         id: this.state.id,
                                         name: this.state.name,
-                                        price: parseInt(this.state.price),
+                                        price: parseFloat(this.state.price),
                                         payDate: new Date(this.state.payDateYear, this.state.payDateMonth, this.state.payDateDay, this.state.payDateHour, this.state.payDateMinute, 0, 0),
                                         image: {uri: this.state.image.uri, height: this.state.image.height, width: this.state.image.width, originalRotation: this.state.image.originalRotation}
                                     }
