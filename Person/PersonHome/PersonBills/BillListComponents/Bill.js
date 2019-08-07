@@ -79,7 +79,7 @@ export default class Bill extends Component{
                                         <Barcode 
                                             value = {this.props.bill.barcode.value}
                                             format = {format}
-                                            width = {format.includes('CODE') ? 1.9 : 2.5}
+                                            width = {format.includes('CODE') ? 1.9 : 3}
                                             flat
                                             text = {this.props.bill.barcode.value}
                                         />

@@ -68,7 +68,6 @@ export default class EditDialog extends Component{
 
     onBarCodeRead(scanResult) {
         this.setState({barcodeValue: scanResult.data, barcodeFormat: scanResult.type.replace(/[^a-zA-Z0-9]/g, ''), scanVisible: false})
-        console.warn(scanResult.data)
     }
     
     render(){
@@ -209,7 +208,7 @@ export default class EditDialog extends Component{
                                     onPress = {() => this.setState({barcodeVisible: true})}
                                 >
                                         <Barcode 
-                                            value = {this.props.bill.barcode.value}
+                                            value = {this.state.barcodeValue}
                                             format = {this.state.barcodeFormat}
                                             width = {this.state.barcodeFormat.includes('CODE') ? 0.4 : 0.6}
                                             height = {25}
@@ -232,7 +231,7 @@ export default class EditDialog extends Component{
                                         <View style={styles.container}>
                                             <RNCamera
                                                 ref={ref => {
-                                                this.camera = ref;
+                                                    this.camera = ref;
                                                 }}
                                                 defaultTouchToFocus
                                                 flashMode={this.state.camera.flashMode}
