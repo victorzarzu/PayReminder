@@ -4,10 +4,12 @@ import {addBill} from '../../../../databases/billSchemas'
 import Ionicon from 'react-native-vector-icons/Ionicons'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import Dialog, { DialogFooter, DialogButton, DialogContent, DialogTitle, SlideAnimation } from 'react-native-popup-dialog';
+import { RNCamera } from 'react-native-camera';
 
 export default class AddBill extends Component{
     constructor(props) {
         super(props)
+        this.camera = null;
         this.state = {
             name: '',
             price: '',
@@ -20,9 +22,13 @@ export default class AddBill extends Component{
             currency: '€',
             width: '',
             height: '',
-            barcodeValue: '',
-            barcodeFormat: '',
-            scanVisible: false
+            barcodeValue: null,
+            barcodeFormat: null,
+            scanVisible: false,
+            camera: {
+                type: RNCamera.Constants.Type.back,
+                flashMode: RNCamera.Constants.FlashMode.auto,
+              }
         }
         this.onLayoutChange = this.onLayoutChange.bind(this)
     }
@@ -70,6 +76,9 @@ export default class AddBill extends Component{
         this.setState({width,height})
     }
 
+    onBarCodeRead(scanResult) {
+        this.setState({barcodeValue: scanResult.data, barcodeFormat: scanResult.type, scanVisible: false})
+    }
 
     render() {
         return(
@@ -116,6 +125,9 @@ export default class AddBill extends Component{
                                     currency: '€',
                                     width: '',
                                     height: '',
+                                    barcodeValue: null,
+                                    barcodeFormat: null,
+                                    scanVisible: false
                                 })
                             }}
                           />
@@ -130,6 +142,7 @@ export default class AddBill extends Component{
                                     name: this.state.name,
                                     price: parseFloat(this.state.price),
                                     payDate: new Date(this.state.payDateYear,this.state.payDateMonth,this.state.payDateDay,this.state.payDateHour,this.state.payDateMinute,0,0),
+                                    barcode: {value: this.state.barcodeValue, format: this.state.barcodeFormat}
                                 }   
                                     if(newBill.name == ''){ //verificarea numelui pentru factura
                                         alert('Please choose a name for the bill')
@@ -141,6 +154,8 @@ export default class AddBill extends Component{
                                         alert('Please choose a pay date!')
                                     }else if(this.state.payDateHour == null){ //verificarea orei pentru factura
                                         alert('Please choose a pay time!')
+                                    }else if(this.state.barcodeValue == null){
+                                        alert("Please scan the bill's barcode")
                                     }else {
                                         //adaugarea facturii in baza de date
                                         addBill(newBill).then().catch(error => {})
@@ -156,6 +171,9 @@ export default class AddBill extends Component{
                                             currency: '€',
                                             width: '',
                                             height: '',
+                                            barcodeValue: null,
+                                            barcodeFormat: null,
+                                            scanVisible: false
                                         })
                                     }
                             }}
@@ -224,7 +242,30 @@ export default class AddBill extends Component{
                                         onRequestClose = {() => this.setState({scanVisible: false})}
                                         animationType = 'slide'
                                     >
-
+                                        <View style={styles.container}>
+                                            <RNCamera
+                                                ref={ref => {
+                                                this.camera = ref;
+                                                }}
+                                                defaultTouchToFocus
+                                                flashMode={this.state.camera.flashMode}
+                                                mirrorImage={false}
+                                                onBarCodeRead={this.onBarCodeRead.bind(this)}
+                                                style={styles.preview}
+                                                type={this.state.camera.type}
+                                            />
+                                            <View style={[styles.overlay, styles.topOverlay]}>
+                                                <TouchableOpacity
+                                                    onPress = {() => this.setState({scanVisible: false})}
+                                                >
+                                                    <AntDesign 
+                                                        name = 'close'
+                                                        size = {25}
+                                                        color ='white'
+                                                    />
+                                                </TouchableOpacity>
+                                            </View>
+                                        </View>
                                     </Modal>
                                 </View>
                             </View>
@@ -263,6 +304,28 @@ const styles = StyleSheet.create({
     timeAndDateButton: {
         marginHorizontal: 20
     },
+    container: {
+        flex: 1
+      },
+      preview: {
+        flex: 1,
+        justifyContent: 'flex-end',
+        alignItems: 'center'
+      },
+      overlay: {
+        position: 'absolute',
+        padding: 16,
+        right: 0,
+        left: 0,
+        alignItems: 'center'
+      },
+      topOverlay: {
+        top: 0,
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+      },
 })
 
 

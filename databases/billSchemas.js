@@ -8,7 +8,7 @@ export const BarcodeSchema = {  // crearea schemei pentru imaginea facturii nepl
     name: 'Barcode',
     properties: {
         value: 'string',
-        format: 'int',
+        format: 'string',
     }
 }
 
@@ -20,7 +20,7 @@ export const BillSchema = { // crearea schemei pentru factura neplatita
         name: {type: 'string', default: 'Bill', indexed: true},
         price: {type: 'double', default: 0},
         payDate: {type: 'date', default: new Date(), indexed: true},
-        barcode: 'Barcode?'
+        barcode: 'Barcode'
     }
 }
 
@@ -47,7 +47,7 @@ export const editBill = editbill => new Promise((resolve, reject) => {    //crea
             editingBill.name = editbill.name
             editingBill.price = editbill.price
             editingBill.payDate = editbill.payDate
-            editingBill.image = editbill.image
+            editingBill.barcode = editbill.barcode
             resolve();     
         });
     }).catch((error) => reject(error));;

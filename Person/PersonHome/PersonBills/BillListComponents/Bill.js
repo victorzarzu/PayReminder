@@ -5,6 +5,7 @@ import {deleteBill, paidBill} from '../../../../databases/billSchemas.js'
 import currencyRealm, {queryCurrency} from '../../../../databases/currencySchemas'
 import Barcode from 'react-native-barcode-builder';
 import AntDesign from 'react-native-vector-icons/AntDesign'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
 import EditDialog from './EditDialog'
 
@@ -40,6 +41,8 @@ export default class Bill extends Component{
         const leftDays = (this.props.bill.payDate - new Date())/86400000
         const price = this.state.currency === 'Fr' ? this.props.bill.price + '\xa0' + this.state.currency : this.state.currency === 'Lei' ? this.props.bill.price + '\xa0' + this.state.currency : this.state.currency + '\xa0' + this.props.bill.price
         const color = leftDays <= 0 ? '#D34354' : leftDays>=7 ? '#98C2E9' : leftDays>=3 ?  '#6A62C6' : '#D67FA3'
+        const formatDB = this.props.bill.barcode.format
+        const format = formatDB.replace(/[^a-zA-Z0-9]/g, '')
         return(
             <View style = {styles.billView}>
                 <View style = {{height: 20, backgroundColor: color}}></View>
@@ -69,15 +72,16 @@ export default class Bill extends Component{
                                         <AntDesign 
                                             name = 'close'
                                             size = {25}
+                                            color = 'black'
                                         />
                                     </TouchableOpacity>
                                     <View style = {{justifyContent: 'center', alignItems: 'center', flex: 9}}>
                                         <Barcode 
-                                            value = '978020137962'
-                                            format = "EAN13"
-                                            width = {2}
+                                            value = {this.props.bill.barcode.value}
+                                            format = {format}
+                                            width = {format.includes('CODE') ? 1.9 : 2.5}
                                             flat
-                                            text = "978020137962"
+                                            text = {this.props.bill.barcode.value}
                                         />
                                     </View>
                             </View>
@@ -85,15 +89,11 @@ export default class Bill extends Component{
                         <TouchableOpacity
                             onPress = {() => this.setState({barcodeVisible: true})}
                         >
-                            <Barcode 
-                                value = "978020137962" 
-                                format = "EAN13" 
-                                flat 
-                                height = {22} 
-                                width = {0.33} 
-                                background = '#DFDFDF' 
-                                lineColor = {color}
-                                />
+                            <FontAwesome 
+                                color = {color}
+                                size = {33}
+                                name = 'barcode'
+                            />
                         </TouchableOpacity>
                         <EditDialog 
                             bill = {this.props.bill} 
