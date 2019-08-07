@@ -5,7 +5,6 @@ import AddBill from './HeaderComponents/AddBill'
 import DeleteAllBills from './HeaderComponents/DeleteAllBills'
 import NavigateToHome from './HeaderComponents/NavigateToHome';
 import PayAllBills from './HeaderComponents/PayAllBills'
-import AddBillIOS from './HeaderComponents/AddBillIOS'
 
 
 export default class BillHeader extends Component{
@@ -13,7 +12,7 @@ export default class BillHeader extends Component{
         return(
             <View style = {styles.billHeaderView}>
                 <View style = {{flexDirection: 'row-reverse',alignItems: 'center'}}>
-                    {Platform.OS === 'android' ? <AddBill /> : <AddBillIOS /> /* verificarea sistemului de operare si afisarea componentului corespunzator */}
+                    <AddBill /> 
                     <DeleteAllBills />
                     <PayAllBills />
                 </View>

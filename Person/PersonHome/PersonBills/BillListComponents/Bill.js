@@ -1,12 +1,12 @@
 import React, {Component} from 'react'
-import {View, Text, TouchableOpacity, StyleSheet, Alert, Image, Platform} from 'react-native'
-import ImageView from 'react-native-image-view'
+import {View, Text, TouchableOpacity, StyleSheet, Alert, Image, Modal} from 'react-native'
 
 import {deleteBill, paidBill} from '../../../../databases/billSchemas.js'
 import currencyRealm, {queryCurrency} from '../../../../databases/currencySchemas'
+import Barcode from 'react-native-barcode-builder';
+import AntDesign from 'react-native-vector-icons/AntDesign'
 
-import EditModal from './EditModal'
-import EditModalIOS from './EditModalIOS'
+import EditDialog from './EditDialog'
 
 export default class Bill extends Component{
     constructor(props){
@@ -14,7 +14,7 @@ export default class Bill extends Component{
         this.state = {
             isEditing: true,
             currency: '€',
-            imageModal: false,
+            barcodeVisible: false
         }
     }
 
@@ -38,40 +38,13 @@ export default class Bill extends Component{
     }
     render(){
         const leftDays = (this.props.bill.payDate - new Date())/86400000
-        const edit = Platform.OS == 'android' ?  // verificarea sistemului de operare pe care este rulata aplicatia
-        <EditModal 
-            bill = {this.props.bill} 
-            color = {leftDays<=0 ? '#D34354' : leftDays>=7 ? '#98C2E9' : leftDays>=3 ?  '#6A62C6' : '#D67FA3'}
-        /> : 
-            <EditModalIOS 
-            bill = {this.props.bill} 
-            color = {leftDays<=0 ? '#D34354' : leftDays>=7 ? '#98C2E9' : leftDays>=3 ?  '#6A62C6' : '#D67FA3'}
-        />
-        const image = [
-            {
-                source: {
-                    uri: this.props.bill.image.uri,
-                },
-                height: this.props.bill.image.originalRotation == 90 || this.props.bill.image.originalRotation == 270 ? this.props.bill.image.width : this.props.bill.image.height,
-                width: this.props.bill.image.originalRotation == 0 || this.props.bill.image.originalRotation == 180 ? this.props.bill.image.width : this.props.bill.image.height,
-            },
-        ];
         const price = this.state.currency === 'Fr' ? this.props.bill.price + '\xa0' + this.state.currency : this.state.currency === 'Lei' ? this.props.bill.price + '\xa0' + this.state.currency : this.state.currency + '\xa0' + this.props.bill.price
+        const color = leftDays <= 0 ? '#D34354' : leftDays>=7 ? '#98C2E9' : leftDays>=3 ?  '#6A62C6' : '#D67FA3'
         return(
             <View style = {styles.billView}>
-                <View style = {{height: 20, backgroundColor: leftDays <= 0 ? '#D34354' : leftDays>=7 ? '#98C2E9' : leftDays>=3 ?  '#6A62C6' : '#D67FA3'}}></View>
+                <View style = {{height: 20, backgroundColor: color}}></View>
                 <View>
                     <View style = {{flexDirection: 'row', justifyContent: 'flex-start', alignContent: 'flex-start'}}>
-                        <View style = {{justifyContent: 'center', alignItems: 'center', flex: 1, marginLeft: 8}}>
-                            <TouchableOpacity
-                                onPress = {() => this.setState({imageModal: true})} //deschiderea modului de vizualizare extins al imaginii
-                            >
-                                <Image 
-                                    source = {{uri: this.props.bill.image.uri}}
-                                    style = {{width: 50, height: 50, borderRadius: 25, borderColor: leftDays<=0 ? '#D34354' : leftDays>=7 ? '#98C2E9' : leftDays>=3 ?  '#6A62C6' : '#D67FA3', borderWidth: 1.25}}
-                                />
-                            </TouchableOpacity>
-                        </View>
                         <View style = {{justifyContent: 'center', alignItems: 'center', flex: 4}}>
                             <Text style = {styles.infoText}>Name:</Text>
                             <Text style = {styles.infoText}>Price:</Text>
@@ -84,7 +57,48 @@ export default class Bill extends Component{
                         </View>
                     </View>
                     <View style = {styles.buttonView}>
-                        {edit}
+                        <Modal
+                            visible = {this.state.barcodeVisible}
+                            onRequestClose = {() => this.setState({barcodeVisible: false})}
+                        >
+                            <View style = {{flex: 1}}>
+                                    <TouchableOpacity
+                                        onPress = {() => this.setState({barcodeVisible: false})}
+                                        style = {{margin: 10}}
+                                    >
+                                        <AntDesign 
+                                            name = 'close'
+                                            size = {25}
+                                        />
+                                    </TouchableOpacity>
+                                    <View style = {{justifyContent: 'center', alignItems: 'center', flex: 9}}>
+                                        <Barcode 
+                                            value = '978020137962'
+                                            format = "EAN13"
+                                            width = {2}
+                                            flat
+                                            text = "978020137962"
+                                        />
+                                    </View>
+                            </View>
+                        </Modal>
+                        <TouchableOpacity
+                            onPress = {() => this.setState({barcodeVisible: true})}
+                        >
+                            <Barcode 
+                                value = "978020137962" 
+                                format = "EAN13" 
+                                flat 
+                                height = {22} 
+                                width = {0.33} 
+                                background = '#DFDFDF' 
+                                lineColor = {color}
+                                />
+                        </TouchableOpacity>
+                        <EditDialog 
+                            bill = {this.props.bill} 
+                            color = {leftDays<=0 ? '#D34354' : color}
+                        />
                         <TouchableOpacity
                             onPress = {() => {
                                 Alert.alert( //alerta pentru a confirma stergerea
@@ -106,7 +120,7 @@ export default class Bill extends Component{
                         >
                             <Image 
                                 source = {require('../images/delete-icon.png')}
-                                style = {[styles.button, {tintColor: leftDays<=0 ? '#D34354' : leftDays>=7 ? '#98C2E9' : leftDays>=3 ?  '#6A62C6' : '#D67FA3'}]} 
+                                style = {[styles.button, {tintColor: color}]} 
                             />
                         </TouchableOpacity>
                         <TouchableOpacity
@@ -130,20 +144,11 @@ export default class Bill extends Component{
                         >
                             <Image 
                                 source = {require('../images/paid-icon.png')}
-                                style = {[styles.button, {tintColor: leftDays<=0 ? '#D34354' : leftDays>=7 ? '#98C2E9' : leftDays>=3 ?  '#6A62C6' : '#D67FA3'}]}
+                                style = {[styles.button, {tintColor: color}]}
                             />
                         </TouchableOpacity>
                     </View>
                 </View>
-                <ImageView //modul de vizualizare extins al imaginii
-                    images={image}
-                    imageIndex={0}
-                    isVisible={this.state.imageModal}
-                    isPinchZoomEnabled={false}
-                    isTapZoomEnabled= {false}
-                    isSwipeCloseEnabled = {false}
-                    onClose = {() => this.setState({imageModal: false})}
-                />
             </View>
         )
     }

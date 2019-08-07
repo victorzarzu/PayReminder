@@ -114,6 +114,7 @@ class PersonProfile extends React.Component {
                             onPress = {() => {
                                 this.saveProfile()
                                 saveCurrency({id: 1, currency: this.state.currency}).then().catch(error => alert('Can not save your currency'))
+                                addIncome().then().catch(error => {})
                             }}
                         />
                 </KeyboardAvoidingView>

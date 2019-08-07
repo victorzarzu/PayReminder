@@ -7,12 +7,7 @@ import {saveCurrency} from './databases/currencySchemas'
 import LoadingScreen from './Person/LoadingScreen'
 import Person from './Person/Person'
 
-import BackgroundTask from 'react-native-background-task'
- 
-BackgroundTask.define(() => {
-  // un background task pentru a adauga salariul
-  addIncome().then().catch(error => {})
-})
+
 
 export default class App extends Component {
   constructor(props){
@@ -39,9 +34,6 @@ export default class App extends Component {
       this.setState({isLoading: false})
     }, 1000)
     addIncome().then().catch(error => {})
-    BackgroundTask.schedule({
-      period: 900
-    })
   }
 
   render() {

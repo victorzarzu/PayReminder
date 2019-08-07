@@ -4,13 +4,11 @@ import {payBill, queryProfile} from './profileSchemas'
 import {addPaidBill} from './paidbillSchema'
 import {Alert} from 'react-native'
 
-export const BillImageSchema = {  // crearea schemei pentru imaginea facturii neplatite
-    name: 'BillImage',
+export const BarcodeSchema = {  // crearea schemei pentru imaginea facturii neplatite
+    name: 'Barcode',
     properties: {
-        uri: 'string',
-        height: 'int',
-        width: 'int',
-        originalRotation: 'int'
+        value: 'string',
+        format: 'int',
     }
 }
 
@@ -22,13 +20,13 @@ export const BillSchema = { // crearea schemei pentru factura neplatita
         name: {type: 'string', default: 'Bill', indexed: true},
         price: {type: 'double', default: 0},
         payDate: {type: 'date', default: new Date(), indexed: true},
-        image: 'BillImage'
+        barcode: 'Barcode?'
     }
 }
 
 export const databaseOptions = {
     path: 'payReminderAppBills.realm',
-    schema: [BillSchema, BillImageSchema],
+    schema: [BillSchema, BarcodeSchema],
     schemaVersion: 0,
 };
 

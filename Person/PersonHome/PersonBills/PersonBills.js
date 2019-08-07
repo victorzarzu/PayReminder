@@ -21,5 +21,7 @@ const styles = StyleSheet.create({
     billsView: {
         justifyContent: 'center',
         alignContent: 'center',
+        flex: 1,
+        backgroundColor: '#DFDFDF'
     }
 })
