@@ -13,22 +13,22 @@ export default class PersonBills extends React.Component {
             currency: '€',
             language: 'EN'
         }
-        this.reloadData = this.reloadData.bind(this)
+        this.reload = this.reload.bind(this)
     }
 
-    reloadData(){
+    reload(){
         queryProfile().then(profile => {
             this.setState({currency: profile.currency, language: profile.language})
-        }).catch(error => {})
+        })
     }
 
-    componentWillMount(){
-        this.reloadData()
-        profileRealm.addListener('change', this.reloadData)
+    componentDidMount(){
+        this.reload()
+        profileRealm.addListener('change', this.reload)
     }
 
     componentWillUnmount(){
-        profileRealm.removeListener('change', this.reloadData)
+        profileRealm.removeListener('change', this.reload)
     }
 
     render() {

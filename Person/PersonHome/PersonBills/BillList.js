@@ -11,6 +11,7 @@ export default class BillList extends React.Component {
         this.state = {
             bills: [],
         }
+        this.reloadData = this.reloadData.bind(this)
     }
 
     reloadData = () => {
@@ -24,16 +25,14 @@ export default class BillList extends React.Component {
 
     componentWillMount(){
         this.reloadData()
-        billRealm.addListener('change', () => this.reloadData()) // se adauga un listener pentru a actualiza in timp real list facturilor neplatite
+        billRealm.addListener('change', this.reloadData) // se adauga un listener pentru a actualiza in timp real list facturilor neplatite
     }
 
     componentWillUnmount(){
-        billRealm.removeAllListeners() //eliminarea listenerului
+        billRealm.removeListener('change', this.reloadData) //eliminarea listenerului
     }
 
     render() {
-        const language = this.props.language
-        const currency = this.props.currency
         return(
                     <ScrollView scrollEnabled contentContainerStyle = {{marginBottom: 'auto', marginTop: 4}}>
                         { //maparea variabilei bills din state sub forma de facturi
@@ -42,8 +41,8 @@ export default class BillList extends React.Component {
                                 <Bill 
                                     bill = {bill} 
                                     key = {bill.id} 
-                                    language = {language} 
-                                    currency = {currency}   
+                                    language = {this.props.language} 
+                                    currency = {this.props.currency}   
                                 />
                             )
                         })}
