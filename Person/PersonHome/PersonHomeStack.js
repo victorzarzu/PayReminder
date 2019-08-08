@@ -27,6 +27,7 @@ export default createAppContainer(
     },
     navigationOptions: {
         headerTitle: 'Pay Reminder'
-    }
+    },
+    initialRouteName: 'Home'
 }
 ))

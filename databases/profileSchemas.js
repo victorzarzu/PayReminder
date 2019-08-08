@@ -1,5 +1,6 @@
 import Realm from 'realm'
 
+
 export const ProfileSchema = { //crearea schemei pentru profil
     name: 'Profile',
     primaryKey: 'id',
