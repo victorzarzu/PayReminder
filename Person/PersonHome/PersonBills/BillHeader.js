@@ -12,7 +12,9 @@ export default class BillHeader extends Component{
         return(
             <View style = {styles.billHeaderView}>
                 <View style = {{flexDirection: 'row-reverse',alignItems: 'center'}}>
-                    <AddBill /> 
+                    <AddBill 
+                        language = {this.props.language}
+                    /> 
                     <DeleteAllBills />
                     <PayAllBills />
                 </View>

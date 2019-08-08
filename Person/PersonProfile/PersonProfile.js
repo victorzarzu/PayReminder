@@ -76,8 +76,14 @@ class PersonProfile extends React.Component {
             lastMonthIncomeGiven: new Date().getMonth(),
             language: this.state.language
         }
-        this.setState({languageLoaded: this.state.language})
-        saveProfile(newProfile).then().catch(error => alert(`Can not save the profile: ${error}`))
+        if(this.state.incomeAmount <= 0){
+            {this.state.languageLoaded ? alert('Please enter an income amount higher than 0') : alert('Introdu un salariu pozitiv')}
+        }else if(isNaN(this.state.incomeAmount)){
+            {this.state.languageLoaded ? alert('Please enter a valid number for the income amount') : alert('Introdu o valoare valida pentru salariu')}
+        }else{
+            this.setState({languageLoaded: this.state.language})
+            saveProfile(newProfile).then().catch(error => alert(`Can not save the profile: ${error}`))
+        }
     }
 
     render() {

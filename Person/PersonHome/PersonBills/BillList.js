@@ -10,8 +10,6 @@ export default class BillList extends React.Component {
         super(props)
         this.state = {
             bills: [],
-            sortState: 'id',
-            ascendingState: false
         }
     }
 
@@ -34,13 +32,19 @@ export default class BillList extends React.Component {
     }
 
     render() {
-
+        const language = this.props.language
+        const currency = this.props.currency
         return(
                     <ScrollView scrollEnabled contentContainerStyle = {{marginBottom: 'auto', marginTop: 4}}>
                         { //maparea variabilei bills din state sub forma de facturi
                             this.state.bills.map(bill => {
                             return(
-                                <Bill bill = {bill} key = {bill.id} />
+                                <Bill 
+                                    bill = {bill} 
+                                    key = {bill.id} 
+                                    language = {language} 
+                                    currency = {currency}   
+                                />
                             )
                         })}
                         {   //pentru a arata bine

@@ -88,36 +88,36 @@ export const paidAllBills = () => new Promise((resolve, reject) => { //functia p
         .then(realm => {
             let allBills = realm.objects('Bill')
             let allBillsPrice = 0
-            allBills.forEach(bill => {
-                allBillsPrice += bill.price
-            })
-            if(allBillsPrice === 0){
-                alert('You do not have any unpaid bills!')
-            } else {
-                let currency = '€'
-                queryProfile().then(profile => {
-                    currency = profile.currency
-                }).catch(error => {})
-                Alert.alert(
-                    `Pay all bills`,
-                    `Are you sure you want to pay all your bills? It will reduce your funds with ${currency + '\xa0' + allBillsPrice}!`,
-                    [
-                        {
-                            text: 'No',
-                            onPress: () => {}
-                        },
-                        {
-                            text: 'Yes',
-                            onPress: () => {
-                                allBills.forEach(bill => {
-                                    paidBill(bill).then().catch(error => {})
-                                })
+            queryProfile().then(profile => {
+                allBills.forEach(bill => {
+                    allBillsPrice += bill.price
+                })
+                const price = profile.currency === 'Fr' ? allBillsPrice + '\xa0' + profile.currency : profile.currency === 'Lei' ? allBillsPrice + '\xa0' + profile.currency : profile.currency + '\xa0' + allBillsPrice
+                if(allBillsPrice === 0){
+                    alert(profile.language == 'EN' ? 'You do not have any unpaid bills!' : 'Nu exista nicio factura neplatita!')
+                } else {
+                    Alert.alert(
+                        profile.language == 'EN' ? `Pay all bills` : 'Plateste toate facturile',
+                        profile.language == 'EN' ? `Are you sure you want to pay all your bills? It will reduce your funds with ${price}!` : `Esti sigur ca vrei sa platesti toate facturile? Fondurile o sa se reduca cu ${currency + '\xa0' + allBillsPrice}!`,
+                        [
+                            {
+                                text: profile.language == 'EN' ? 'No' : 'Nu',
+                                onPress: () => {}
+                            },
+                            {
+                                text: profile.language == 'EN' ? 'Yes' : 'Da',
+                                onPress: () => {
+                                    allBills.forEach(bill => {
+                                        paidBill(bill).then().catch(error => {})
+                                    })
+                                }
                             }
-                        }
-                    ],
-                    { cancelable: true }
-                )
-            }
+                        ],
+                        { cancelable: true }
+                    )
+                }
+            }).catch(error => {})
+
             resolve()
         }).catch(error => reject(error))
 })
@@ -134,20 +134,24 @@ export const deleteAllBills = () => new Promise((resolve, reject) => { //sterger
     Realm.open(databaseOptions)
         .then(realm => {
             realm.write(() => {
+                let language = ''
+                queryProfile().then(profile => {
+                    language = profile.language
+                }).catch(error => {})
                 let allBills = realm.objects('Bill')
                 if(allBills.length == 0){
-                    alert('You do not have any unpaid bills!')
+                    alert(language == 'EN' ? 'You do not have any unpaid bills!' : 'Nu exista nicio factura neplatita!')
                 }else{
                     Alert.alert(
-                        `Delete all bills`,
-                        `Are you sure you want to delete all your unpaid bills?`,
+                        language == 'EN' ? `Delete all bills` : 'Sterge toate facturile',
+                        language == 'EN' ? `Are you sure you want to delete all your unpaid bills?` : 'Esti sigur ca vrei sa stergi toate facturile?',
                         [
                             {
-                                text: 'No',
+                                text: language == 'EN' ? 'No' : 'Nu',
                                 onPress: () => {}
                             },
                             {
-                                text: 'Yes',
+                                text: language == 'EN' ? 'Yes' : 'Da',
                                 onPress: () => {
                                     allBills.forEach(bill => {
                                         deleteBill(bill).then().catch(error => {})

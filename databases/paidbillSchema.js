@@ -1,5 +1,6 @@
 import Realm from 'realm'
 import {Alert} from 'react-native'
+import {queryProfile} from './profileSchemas'
 
 export const PaidBillSchema = { // crearea schemei pentru factura neplatita
     name: 'PaidBill',
@@ -44,28 +45,31 @@ export const deleteAllPaidBills = () => new Promise((resolve, reject) => { //ste
         .then(realm => {
             realm.write(() => {
                 let allPaidBills = realm.objects('PaidBill')
-                if(allPaidBills.length == 0){
-                    alert('You do not have any paid bills')
-                }else {
-                    Alert.alert(
-                        'Delete all bills',
-                        'Are you sure you want to delete all your paid bills? This will modify your chart',
-                        [
-                            {
-                                text: 'No',
-                                onPress: () => {}
-                            },
-                            {
-                                text: 'Yes',
-                                onPress: () => {
-                                    realm.delete(allPaidBills)
-                                    resolve()
+                queryProfile().then(profile => {
+                    if(allPaidBills.length == 0){
+                        {profile.language == 'EN' ? alert('You do not have any paid bills!') : alert('Nu exista facturi platite!')}
+                    }else {
+                        Alert.alert(
+                            profile.language == 'EN' ? String('Delete all bills') : String('Sterge toate facturile'),
+                            profile.language == 'EN' ? 'Are you sure you want to delete all your paid bills?' : 'Esti sigur ca vrei sa stergi toate facturile?',
+                            [
+                                {
+                                    text: profile.language == 'EN' ? 'No' : 'Nu',
+                                    onPress: () => {}
+                                },
+                                {
+                                    text: profile.language == 'EN' ? 'Yes' : 'Da',
+                                    onPress: () => {
+                                        allBills.forEach(bill => {
+                                            deleteBill(bill).then().catch(error => {})
+                                        })
+                                    }
                                 }
-                            }
-                        ],
-                        { cancelable: true }
-                    )
-                }
+                            ],
+                            { cancelable: true }
+                        )
+                    }
+                }).catch(error => {})
             })
         }).catch(error => reject(error))
 })

@@ -14,21 +14,21 @@ export default class Bill extends Component{
         this.reloadData = this.reloadData.bind(this)
     }
 
-    componentWillMount(){
-        this.reloadData()
-        profileRealm.addListener('change', this.reloadData) // se adauag un listener pentru a actualiza in timp real valuta
-    }
-
-    reloadData() {
-        //se incarca valuta din baza de date in state
+    reloadData(){
         queryProfile().then(profile => {
             this.setState({currency: profile.currency, language: profile.language})
-        }).catch(error => alert(`Can not change your currency preference: ${error}`))
+        }).catch(error => {})
+    }
+
+    componentWillMount(){
+        this.reloadData
+        profileRealm.addListener('change', this.reloadData)
     }
 
     componentWillUnmount(){
         profileRealm.removeListener('change', this.reloadData)
     }
+
     render(){
         const price = this.state.currency === 'Fr' ? this.props.bill.price + '\xa0' + this.state.currency : this.state.currency === 'Lei' ? this.props.bill.price + '\xa0' + this.state.currency : this.state.currency + '\xa0' + this.props.bill.price
         return(

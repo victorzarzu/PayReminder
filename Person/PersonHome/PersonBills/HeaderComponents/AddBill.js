@@ -101,14 +101,19 @@ export default class AddBill extends Component{
                     rounded
                     onTouchOutside = {() => this.setState({addVisible: false})}
                     dialogStyle = {styles.addDialog}
-                    title = {<DialogTitle title = 'Add bill' textStyle = {{color: '#05295B'}} bordered = {false} />}
+                    dialogTitle = {<DialogTitle 
+                        title = {this.props.language == 'EN' ? 'Add bill' : 'Adaugare factura'} 
+                        textStyle = {{color: '#05295B'}}
+                        bordered = {false} 
+                        style = {{backgroundColor: '#D4E6FF'}}
+                         />}
                     footer={
                         <DialogFooter
                             bordered = {false}
                             style = {{height: 25}}
                         >
                           <DialogButton
-                            text="Cancel"
+                            text = {this.props.language == 'EN' ? 'Cancel' : 'Anuleaza'}
                             key = 'cancel'
                             textStyle = {{color: '#0489B1'}}
                             style = {{justifyContent: 'center', alignItems: 'center'}}
@@ -132,7 +137,7 @@ export default class AddBill extends Component{
                             }}
                           />
                           <DialogButton
-                            text="Add"
+                            text = {this.props.language == 'EN' ? 'Add' : 'Adauga'}
                             key = 'add'
                             style = {{justifyContent: 'center', alignItems: 'center'}}
                             textStyle = {{color: '#0489B1'}}
@@ -145,17 +150,20 @@ export default class AddBill extends Component{
                                     barcode: {value: this.state.barcodeValue, format: this.state.barcodeFormat}
                                 }   
                                     if(newBill.name == ''){ //verificarea numelui pentru factura
-                                        alert('Please choose a name for the bill')
+                                        alert(this.props.language == 'EN' ? 'Please enter the name for the bill' : 'Adauga numele facturii')
+                                    }else if(newBill.price < 0){ //verificarea pretului pentru factura (sa fie un numar valid)
+                                        alert(this.props.language == 'EN' ? 'Please enter a price higher than 0' : 'Adauga un pret mai mare decat 0')
                                     }else if(isNaN(newBill.price) == true){ //verificarea pretului pentru factura (sa fie un numar valid)
-                                        alert('Please choose a valid price')
+                                        alert(this.props.language == 'EN' ? 'Please enter a valid price' : 'Adauga un pret valid pentru factura')
                                     }else if(newBill.price <= 0){ //verificarea pretului pentru factura (sa fie pozitiv)
-                                        alert('Do not forget to enter a price higher than 0!')
+                                        alert(this.props.language == 'EN' ? 'Do not forget to enter a price higher than 0' : 'Nu uita sa adaugi un pret mai mare de 0')
                                     }else if(this.state.payDateDay == null){ //verificarea datei pentru factura
-                                        alert('Please choose a pay date!')
+                                        alert(this.props.language == 'EN' ? 'Please choose enter deadline' : 'Alege data scadenta')
                                     }else if(this.state.payDateHour == null){ //verificarea orei pentru factura
-                                        alert('Please choose a pay time!')
+                                        alert(this.props.language == 'EN' ? 'Please choose a pay time!' : 'Adauga ora de plata')
                                     }else if(this.state.barcodeValue == null){
-                                        alert("Please scan the bill's barcode")
+                                        alert(this.props.language == 'EN' ? "Please scan the bill's barcode'" : 'Nu uita sa scanezi codul de bare al facturii')
+                                        alert()
                                     }else {
                                         //adaugarea facturii in baza de date
                                         addBill(newBill).then().catch(error => {})
@@ -183,24 +191,21 @@ export default class AddBill extends Component{
                 >
                     <DialogContent>
                         <View style = {[styles.modalView]}>
-                            <View  style = {{alignItems: 'center', justifyContent: 'center'}}>
-                                <Text style = {{fontSize: 22, color:'#05295B', top: '3%'}}>Add bill</Text>
-                            </View>
                             <View style = {styles.addFormView}>
                                 <View style = {{alignItems: 'center', justifyContent: 'space-around', flexDirection: 'row'}}>
-                                    <Text style = {{fontSize: 16, color:'#05295B', right: '40%'}}>Bill's name:</Text>
+                                    <Text style = {{fontSize: 16, color:'#05295B', right: '40%'}}>{this.props.language == 'EN' ? "Bill's name:" : 'Numele facturii:'}</Text>
                                     <TextInput
                                         value = {this.state.name} 
-                                        placeholder = "Type a name..."
+                                        placeholder = {this.props.language == 'EN' ? "Type a name..." : 'Introdu un nume...'}
                                         onChangeText = {name => this.setState({name})}
                                         maxLength = {21}
                                     />
                                 </View>
                                 <View style = {{alignItems: 'center', justifyContent: 'space-evenly', flexDirection: 'row'}}>
-                                    <Text style = {{fontSize: 16, color:'#05295B', right: '40%'}}>Bill's price:</Text>
+                                    <Text style = {{fontSize: 16, color:'#05295B', right: '40%'}}>{this.props.language == 'EN' ? "Bill's price:" : 'Pretul facturii:'}</Text>
                                     <TextInput
                                         keyboardType = "numeric"
-                                        placeholder = "Type a price..."
+                                        placeholder = {this.props.language == 'EN' ? "Type a price...": 'Introdu un pret...'}
                                         value = {this.state.price}
                                         onChangeText = {price => this.setState({price})}
                                         maxLength = {15}

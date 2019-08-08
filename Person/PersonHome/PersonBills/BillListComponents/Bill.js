@@ -14,33 +14,13 @@ export default class Bill extends Component{
         super(props)
         this.state = {
             isEditing: true,
-            currency: '€',
             barcodeVisible: false,
-            language: 'EN'
         }
-        this.reloadData = this.reloadData.bind(this)
-    }
-
-    reloadData() {
-        queryProfile().then(profile => { //atribuirea componentului valuta din baza de date
-            if(this.state.currency !== profile.currency){
-                this.setState({currency: profile.currency})
-            }
-        }).catch(error => alert(`Can not change your currency preference: ${error}`))
-    }
-
-    componentWillMount(){
-        this.reloadData()
-        profileRealm.addListener('change',  this.reloadData)
-    }
-
-    componentWillUnmount(){
-        profileRealm.removeListener('change', this.reloadData)
     }
     
     render(){
         const leftDays = (this.props.bill.payDate - new Date())/86400000
-        const price = this.state.currency === 'Fr' ? this.props.bill.price + '\xa0' + this.state.currency : this.state.currency === 'Lei' ? this.props.bill.price + '\xa0' + this.state.currency : this.state.currency + '\xa0' + this.props.bill.price
+        const price = this.props.currency === 'Fr' ? this.props.bill.price + '\xa0' + this.props.currency : this.props.currency === 'Lei' ? this.props.bill.price + '\xa0' + this.props.currency : this.props.currency + '\xa0' + this.props.bill.price
         const color = leftDays <= 0 ? '#D34354' : leftDays>=7 ? '#98C2E9' : leftDays>=3 ?  '#6A62C6' : '#D67FA3'
         const formatDB = this.props.bill.barcode.format
         const format = formatDB.replace(/[^a-zA-Z0-9]/g, '')
@@ -50,14 +30,14 @@ export default class Bill extends Component{
                 <View>
                     <View style = {{flexDirection: 'row', justifyContent: 'flex-start', alignContent: 'flex-start'}}>
                         <View style = {{justifyContent: 'center', alignItems: 'center', flex: 4}}>
-                            <Text style = {styles.infoText}>Name:</Text>
-                            <Text style = {styles.infoText}>Price:</Text>
-                            <Text style = {styles.infoText}>Deadline:</Text>
+                            <Text style = {styles.infoText}>{this.props.language == 'EN' ? 'Name:' : 'Nume:'}</Text>
+                            <Text style = {styles.infoText}>{this.props.language == 'EN' ? 'Price:' : 'Pret:'}</Text>
+                            <Text style = {styles.infoText}>{this.props.language == 'EN' ? 'Deadline:' : 'Data scadenta:'}</Text>
                         </View>
                         <View style = {{justifyContent: 'center', alignItems: 'center', flex: 4}}>
                             <Text style = {styles.infoText}> {this.props.bill.name} </Text>
                             <Text style = {styles.infoText}> {price} </Text>
-                            <Text style = {styles.infoText}> {`${this.props.bill.payDate.getDate() > 9 ? this.props.bill.payDate.getDate() : '0' + this.props.bill.payDate.getDate()}/${this.props.bill.payDate.getMonth() + 1 > 9 ? this.props.bill.payDate.getMonth() + 1 : '0' + (this.props.bill.payDate.getMonth() + 1)}/${this.props.bill.payDate.getFullYear()}  ${this.props.bill.payDate.getHours()}:${this.props.bill.payDate.getMinutes() <= 9 ? String('0' + this.props.bill.payDate.getMinutes()) : this.props.bill.payDate.getMinutes()}`} </Text>
+                            <Text style = {styles.infoText}> {`${this.props.bill.payDate.getDate() > 9 ? this.props.bill.payDate.getDate() : '0' + this.props.bill.payDate.getDate()}/${this.props.bill.payDate.getMonth() + 1 > 9 ? this.props.bill.payDate.getMonth() + 1 : '0' + (this.props.bill.payDate.getMonth() + 1)}/${this.props.bill.payDate.getFullYear()}  `} </Text>
                         </View>
                     </View>
                     <View style = {styles.buttonView}>
@@ -99,20 +79,22 @@ export default class Bill extends Component{
                         <EditDialog 
                             bill = {this.props.bill} 
                             color = {leftDays<=0 ? '#D34354' : color}
+                            language = {this.props.language}
+                            currency = {this.props.currency}
                         />
                         <TouchableOpacity
                             onPress = {() => {
-                                Alert.alert( //alerta pentru a confirma stergerea
-                                    `Delete ${this.props.bill.name} bill`,
-                                    `Are you sure you want to delete ${this.props.bill.name} bill?`,
+                                Alert.alert( //alerta pentru a confirma plata
+                                    this.props.language == 'EN' ? `Delete ${this.props.bill.name} bill` : `Sterge factura ${this.props.bill.name}`,
+                                    this.props.language == 'EN' ? `Are you sure you want to delete ${this.props.bill.name} bill?` : `Esti sigur ca vrei sa stergi factura ${this.props.bill.name}?`,
                                     [
                                         {
-                                            text: 'No',
+                                            text: this.props.language == 'EN' ? 'No' : 'Nu',
                                             onPress: () => {}
                                         },
                                         {
-                                            text: 'Yes',
-                                            onPress: () => {deleteBill(this.props.bill).then().catch(error => alert(`The bill wasn't deleted: ${error}`))}
+                                            text: this.props.language == 'EN' ? 'Yes' : 'Da',
+                                            onPress: () => deleteBill(this.props.bill).then().catch(error => alert(this.props.language == 'EN' ? `The bill wasn't deleted` : `Factura nu a fost stearsa`))
                                         }
                                     ],
                                     { cancelable: true }
@@ -126,21 +108,21 @@ export default class Bill extends Component{
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress = {() => {
-                                    Alert.alert( //alerta pentru a confirma plata
-                                        `Pay ${this.props.bill.name} bill`,
-                                        `Are you sure you want to pay ${this.props.bill.name} bill? It will reduce your funds with ${this.state.currency + '\xa0' + this.props.bill.price}!`,
-                                        [
-                                            {
-                                                text: 'No',
-                                                onPress: () => {}
-                                            },
-                                            {
-                                                text: 'Yes',
-                                                onPress: () => {paidBill(this.props.bill).then().catch(error => alert(`The bill wasn't paid: ${error}`))}
-                                            }
-                                        ],
-                                        { cancelable: true }
-                                    )
+                                Alert.alert( //alerta pentru a confirma plata
+                                    this.props.language == 'EN' ? `Pay ${this.props.bill.name} bill` : `Plateste factura ${this.props.bill.name}`,
+                                    this.props.language == 'EN' ? `Are you sure you want to pay ${this.props.bill.name} bill? It will reduce your funds with ${this.props.currency + '\xa0' + this.props.bill.price}!` : `Esti sigur ca vrei sa platesti factura ${this.props.bill.name}? Fondurile o sa se reduca cu ${this.props.currency + '\xa0' + this.props.bill.price}!`  ,
+                                    [
+                                        {
+                                            text: this.props.language == 'EN' ? 'No' : 'Nu',
+                                            onPress: () => {}
+                                        },
+                                        {
+                                            text: this.props.language == 'EN' ? 'Yes' : 'Da',
+                                            onPress: () => {paidBill(this.props.bill).then().catch(error => alert(`The bill wasn't paid: ${error}`))}
+                                        }
+                                    ],
+                                    { cancelable: true }
+                                )
                             }}
                         >
                             <Image 

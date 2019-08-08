@@ -89,37 +89,42 @@ export default class EditDialog extends Component{
                     rounded
                     onTouchOutside = {() => this.setState({isVisible: false})}
                     dialogStyle = {styles.editDialog}
-                    title = {<DialogTitle title = {`Edit ${this.props.bill.name} bill`} textStyle = {{color: '#05295B'}} bordered = {false} />}
+                    dialogTitle = {<DialogTitle 
+                        title = {this.props.language == "EN" ? `Edit ${this.props.bill.name} bill` : `Editeaza factura ${this.props.bill.name}`} 
+                        textStyle = {{color: '#05295B', fontSize: 16}} 
+                        bordered = {false} 
+                        style = {{backgroundColor: '#D4E6FF'}}
+                    />}
                     footer={
                         <DialogFooter
                             bordered = {false}
                             style = {{height: 25}}
                         >
                           <DialogButton
-                            text="Cancel"
+                            text = {this.props.language == 'EN' ? "Cancel" : "Anuleaza"}
                             key = 'cancel'
                             textStyle = {{color: '#0489B1'}}
                             style = {{justifyContent: 'center', alignItems: 'center'}}
                             onPress = {() => this.setState({isVisible: false, barcodeVisible: false}) /* se inchide modul de editare */}
                           />
                           <DialogButton
-                            text="Save"
+                            text = {this.props.language == 'EN' ? "Save" : "Salveaza"}
                             key = 'save'
                             style = {{justifyContent: 'center', alignItems: 'center'}}
                             textStyle = {{color: '#0489B1'}}
                             onPress = {() => {
                                 if(this.state.name == '' ){ // se verifica numele
-                                    alert('Please enter valid name')
+                                    this.props.language == 'EN' ? alert('Please enter valid name fort the bill') : alert('Introdu un nume valid pentru factura')
                                 }else if(isNaN(this.state.price) == true){ // se verifica pretul (sa fie un numar)
-                                    alert('Do not forget to enter a valid price')
+                                    this.props.language == 'EN' ? alert('Do not forget to enter a valid price for the bill') : alert('Introdu un pret valid pentru factura')
                                 }else if(this.state.price <= 0){ // se verifica pretul(sa fie pozitiv)
-                                    alert('Do not forget to enter a price higher than 0')
+                                    this.props.language == 'EN' ? alert('Do not forget to enter a price higher than 0') : alert('Introdu un pret pozitiv pentru factura')
                                 }else if(this.state.payDateDay == ''){ // se verifica ziua de plata
-                                    alert('Please modify the bill with a pay day')
+                                    this.props.language == 'EN' ? alert('Please choose a deadline for the bill') : alert('Alege o data scadenta pentru factura')
                                 }else if(this.state.payDateHour != 0 && this.state.payDateHour == ''){  // se verifica ora de plata
-                                    alert('Please modify the bill with a pay time')
+                                    this.props.language == 'EN' ? alert('Please choose a pay time for the bill') : alert('Alege o ora de plata pentru factura')
                                 }else if(this.state.barcodeValue == null){
-                                    alert('Please scan a valid barcode')
+                                    this.props.language == 'EN' ? alert('Please scan a valid barcode') : alert('Scaneaza un cod de bare valid')
                                 }
                                 else {
                                     //se editeaza in baza de date si se inchide modul de editare
@@ -140,11 +145,10 @@ export default class EditDialog extends Component{
                 >
                     <DialogContent>
                         <KeyboardAvoidingView style = {styles.editModal}>
-                            <Text style = {styles.titleText}> Edit bill </Text>
                             <View style = {[styles.editRowView]}>
-                                <Text style = {{fontSize: 16, color:'#05295B'}}> Bill's name: </Text>
+                                <Text style = {{fontSize: 16, color:'#05295B'}}> {this.props.language == 'EN' ? "Bill's name:" : 'Numele facturii:'} </Text>
                                 <TextInput
-                                    placeholder = "Type a name..."
+                                    placeholder = {this.props.language == 'EN' ? "Type a name..." : 'Introdu un nume...'}
                                     textAlign = 'center'
                                     textAlignVertical = 'center'
                                     maxLength = {18} 
@@ -153,9 +157,9 @@ export default class EditDialog extends Component{
                                 />
                             </View>
                             <View style = {[styles.editRowView]}>
-                                <Text style = {{fontSize: 16, color:'#05295B'}}>Bill's price:</Text>
+                                <Text style = {{fontSize: 16, color:'#05295B'}}>{this.props.language == 'EN' ? "Bill's price:" : 'Pretul facturii:'}</Text>
                                 <TextInput
-                                    placeholder = "Type a price..."
+                                    placeholder = {this.props.language == 'EN' ? "Type a price...": 'Introdu un pret...'}
                                     textAlign = 'center'
                                     textAlignVertical = 'center' 
                                     maxLength = {15}
@@ -163,21 +167,22 @@ export default class EditDialog extends Component{
                                     value = {String(this.state.price)}
                                     onChangeText = {price => this.setState({price})}
                                 />
+                                <Text>{this.props.currency}</Text>
                             </View>
                             <View style = {[styles.editRowView, {marginVertical: 5}]}>
-                                <Text style = {{fontSize: 16, color:'#05295B'}}>Pay date: {`${this.state.payDateDay}/${this.state.payDateMonth}/${this.state.payDateYear}`}</Text>
+                                <Text style = {{fontSize: 16, color:'#05295B'}}>{this.props.language == 'EN' ? "Deadline:" : 'Data scandenta:'} {`${this.state.payDateDay}/${this.state.payDateMonth}/${this.state.payDateYear}`}</Text>
                                 <TouchableOpacity onPress = {this.setDateAndroid}>
-                                    <Text style = {{color: '#0489B1', fontSize: 16}}>Change pay date</Text>
+                                    <Text style = {{color: '#0489B1', fontSize: 16}}>{this.props.language == 'EN' ? "Change deadline" : 'Schimba'}</Text>
                                 </TouchableOpacity>
                             </View>
                             <View style = {[styles.editRowView, {marginVertical: 5}]}>
-                                <Text style = {{fontSize: 16, color:'#05295B'}}>Pay time: {`${this.state.payDateHour}:${this.state.payDateMinute <= 9 ? String('0' + this.state.payDateMinute) : this.state.payDateMinute}`}</Text>
+                                <Text style = {{fontSize: 16, color:'#05295B'}}>{this.props.language == 'EN' ? "Pay time:" : 'Ora de plata:'} {`${this.state.payDateHour}:${this.state.payDateMinute <= 9 ? String('0' + this.state.payDateMinute) : this.state.payDateMinute}`}</Text>
                                 <TouchableOpacity onPress = {this.setTimeAndroid}>
-                                    <Text style = {{color: '#0489B1', fontSize: 16}}>Change pay time</Text>
+                                    <Text style = {{color: '#0489B1', fontSize: 16}}>{this.props.language == 'EN' ? "Change pay time" : 'Schimba ora'}</Text>
                                 </TouchableOpacity>
                             </View>
                             <View style = {{justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row'}}>
-                                <Text style = {{fontSize: 16, color:'#05295B'}}>Bill's barcode:</Text>
+                                <Text style = {{fontSize: 16, color:'#05295B'}}>{this.props.language == 'EN' ? "Bill's barcode" : 'Codul de bare'}</Text>
                                 <Modal
                                     visible = {this.state.barcodeVisible}
                                     onRequestClose = {() => this.setState({barcodeVisible: false})}
@@ -221,7 +226,7 @@ export default class EditDialog extends Component{
                                         this.setState({scanVisible: true})
                                     }}
                                 >
-                                    <Text style = {{color: '#0489B1', fontSize: 16}}>Modify</Text>
+                                    <Text style = {{color: '#0489B1', fontSize: 16}}>{this.props.language == 'EN' ? "Modify" : 'Modifica'}</Text>
                                 </TouchableOpacity>
                                 <Modal
                                         visible = {this.state.scanVisible}
