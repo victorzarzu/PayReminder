@@ -46,12 +46,6 @@ export default class BillList extends React.Component {
                                 />
                             )
                         })}
-                        {   //pentru a arata bine
-                            this.state.bills.length >= 4 && 
-                            <View>
-                                <Text style = {{fontSize: 18}}>line</Text>
-                            </View>
-                        }
                     </ScrollView>
         )
     }

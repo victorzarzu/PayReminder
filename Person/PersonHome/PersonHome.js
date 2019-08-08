@@ -34,7 +34,8 @@ export default class PersonHome extends React.Component {
                 currency: profile.currency,
                 funds: profile.funds,
                 size: 46 - String(profile.funds).length,
-                language: profile.language
+                language: profile.language,
+                isViewed: true
             })
         }).catch(error => {
             alert(`Could not load your funds data: ${error}`)
@@ -43,18 +44,20 @@ export default class PersonHome extends React.Component {
 
     componentWillMount(){
         this.loadData()
+        this.setState({isViewed: true})
         profileRealm.addListener('change', () => this.loadData())
     }
 
     componentWillUnmount(){
+        this.setState({isViewed: false})
         profileRealm.removeAllListeners()
     }
 
     render() {
         return(
-            <ScrollView onLayout={this.onLayoutChange} style = {{flex: 1, backgroundColor: '#DFDFDF'}}>
+            <ScrollView onLayout={this.onLayoutChange} style = {{flex: this.state.isViewed ? 1 : 0, backgroundColor: '#DFDFDF'}}>
                 <KeyboardAvoidingView style = {styles.homeView}>
-                    <View style = {{flexDirection: 'row', width: this.state.width, justifyContent: 'space-around', height: 100, marginBottom: 10}}>
+                    <View style = {{flexDirection: 'row', width: this.state.width, justifyContent: 'space-around', height: 80, marginBottom: 10}}>
                             <View style = {[styles.navigationPart, {backgroundColor: '#5F81B7'}]}>
                                 <TouchableOpacity onPress = {() => this.props.navigation.navigate('Bills') /* navigarea din Home in pagina de facturi neplatite */} style = {{alignItems: 'center', justifyContent: 'center'}}>
                                     <Image source = {require('./PersonHomeComponents/images/bills-icon.png')} style = {styles.image} />
@@ -100,8 +103,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     image: {
-        height: 75,
-        width: 75,
+        height: 60,
+        width: 60,
         tintColor: '#CFCFCF'
     },
     navigationText: {

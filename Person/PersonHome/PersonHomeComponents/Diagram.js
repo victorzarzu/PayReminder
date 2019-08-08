@@ -82,11 +82,11 @@ export default class Diagram extends Component{
             strokeWidth: 2
           }
           const data = [
-            { name: this.props.language == 'EN' ? 'bills' : 'facturi', number: this.state.expiredBillsNumber,price: this.state.expiredBillsPrice, color: '#D34354', legendFontColor: '#7F7F7F', legendFontSize: 27 - String(this.state.expiredBillsNumber).length},
-            { name: this.props.language == 'EN' ? 'bills' : 'facturi', number: this.state.lt3BillsNumber,price: this.state.lt3BillsPrice, color: '#D67FA3', legendFontColor: '#7F7F7F', legendFontSize: 27 - String(this.state.lt3BillsNumber).length },
-            { name: this.props.language == 'EN' ? 'bills' : 'facturi', number: this.state.mt3BillsNumber,price: this.state.mt3BillsPrice, color: '#6A62C6', legendFontColor: '#7F7F7F', legendFontSize: 27 - String(this.state.mt3BillsNumber).length },
-            { name: this.props.language == 'EN' ? 'bills' : 'facturi', number: this.state.mt7BillsNumber,price: this.state.mt7BillsPrice, color: '#98C2E9', legendFontColor: '#7F7F7F', legendFontSize: 27 - String(this.state.mt7BillsNumber).length },
-            { name: this.props.language == 'EN' ? 'bills' : 'facturi', number: this.state.paidBillsNumber,price: this.state.paidBillsPrice, color: '#28B463', legendFontColor: '#7F7F7F', legendFontSize: 27- String(this.state.paidBillsNumber).length }
+            { name: this.props.language == 'EN' ? 'bill(s)' : 'facturi', number: this.state.expiredBillsNumber,price: this.state.expiredBillsPrice, color: '#D34354', legendFontColor: '#7F7F7F', legendFontSize: 27 - String(this.state.expiredBillsNumber).length},
+            { name: this.props.language == 'EN' ? 'bill(s)' : 'facturi', number: this.state.lt3BillsNumber,price: this.state.lt3BillsPrice, color: '#D67FA3', legendFontColor: '#7F7F7F', legendFontSize: 27 - String(this.state.lt3BillsNumber).length },
+            { name: this.props.language == 'EN' ? 'bill(s)' : 'facturi', number: this.state.mt3BillsNumber,price: this.state.mt3BillsPrice, color: '#6A62C6', legendFontColor: '#7F7F7F', legendFontSize: 27 - String(this.state.mt3BillsNumber).length },
+            { name: this.props.language == 'EN' ? 'bill(s)' : 'facturi', number: this.state.mt7BillsNumber,price: this.state.mt7BillsPrice, color: '#98C2E9', legendFontColor: '#7F7F7F', legendFontSize: 27 - String(this.state.mt7BillsNumber).length },
+            { name: this.props.language == 'EN' ? 'bill(s)' : 'facturi', number: this.state.paidBillsNumber,price: this.state.paidBillsPrice, color: '#28B463', legendFontColor: '#7F7F7F', legendFontSize: 27- String(this.state.paidBillsNumber).length }
           ]
           const data1 = [
             { name: `${this.props.currency}`, number: this.state.expiredBillsNumber,price: this.state.expiredBillsPrice, color: '#D34354', legendFontColor: '#7F7F7F', legendFontColor: '#7F7F7F', legendFontSize: 27 - String(this.state.expiredBillsPrice).length },

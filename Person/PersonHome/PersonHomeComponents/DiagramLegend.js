@@ -5,7 +5,7 @@ export default class DiagramLegend extends Component{
     render(){
         const language = this.props.language == 'EN'
         return(
-            <View style = {{marginTop: '3%'}}>
+            <View style = {{marginTop: '3%', justifyContent: 'center', alignContent: 'center'}}>
                 <View style = {[styles.legendView, {justifyContent: 'space-around', alignItems: 'center'}]}>
                     <View style = {styles.itemView}>
                         <View style = {[styles.circleView, {backgroundColor: '#D34354'}]}></View>
@@ -20,7 +20,7 @@ export default class DiagramLegend extends Component{
                         <Text style = {language == 'EN' ? styles.legendTextEng : styles.legendTextRo}>{language ? 'More then 3 days left' : 'Mai mult de 3 zile ramase'}</Text>
                     </View>
                 </View>
-                <View style = {[styles.legendView, {justifyContent: 'center', alignItems: 'center'}]}>
+                <View style = {[styles.legendView, {justifyContent: 'center', alignItems: 'center', alignSelf: 'center', alignContent: 'center'}]}>
                     <View style = {styles.itemView}>
                             <View style = {[styles.circleView, {backgroundColor: '#98C2E9'}]}></View>
                             <Text style = {language == 'EN' ? styles.legendTextEng : styles.legendTextRo}>{language ? 'More then 7 days left' : 'Mai mult de 7 zile ramase'}</Text>
@@ -39,14 +39,14 @@ const styles = StyleSheet.create({
     legendView: {
         flexDirection: 'row',
         height: 12,
-        alignSelf: 'flex-end',
-        marginBottom: 10
+        alignSelf: 'flex-start',
+        marginBottom: '5%',
     },
     itemView: {
         alignItems: 'center',
         flexDirection: 'row',
         justifyContent: 'center',
-        flex: 1,
+        marginHorizontal: '5%'
     },
     circleView: {
         width: 12,

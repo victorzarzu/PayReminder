@@ -87,18 +87,18 @@ export const paidAllBills = () => new Promise((resolve, reject) => { //functia p
     Realm.open(databaseOptions)
         .then(realm => {
             let allBills = realm.objects('Bill')
-            let allBillsPrice = 0
+            let allPrice = 0
+            allBills.forEach(bill => {
+                allPrice += bill.price
+            })
             queryProfile().then(profile => {
-                allBills.forEach(bill => {
-                    allBillsPrice += bill.price
-                })
-                const price = profile.currency === 'Fr' ? allBillsPrice + '\xa0' + profile.currency : profile.currency === 'Lei' ? allBillsPrice + '\xa0' + profile.currency : profile.currency + '\xa0' + allBillsPrice
-                if(allBillsPrice === 0){
+                const price = profile.currency === 'Fr' ? allPrice + '\xa0' + profile.currency : profile.currency === 'Lei' ? allPrice + '\xa0' + profile.currency : profile.currency + '\xa0' + allPrice
+                if(allBills.length == 0){
                     alert(profile.language == 'EN' ? 'You do not have any unpaid bills!' : 'Nu exista nicio factura neplatita!')
-                } else {
+                }else{
                     Alert.alert(
                         profile.language == 'EN' ? `Pay all bills` : 'Plateste toate facturile',
-                        profile.language == 'EN' ? `Are you sure you want to pay all your bills? It will reduce your funds with ${price}!` : `Esti sigur ca vrei sa platesti toate facturile? Fondurile o sa se reduca cu ${currency + '\xa0' + allBillsPrice}!`,
+                        profile.language == 'EN' ? `Are you sure you want to pay all your bills? It will reduce your funds with ${price}!` : `Esti sigur ca vrei sa platesti toate facturile? Fondurile o sa se reduca cu ${price}!`,
                         [
                             {
                                 text: profile.language == 'EN' ? 'No' : 'Nu',
@@ -117,7 +117,6 @@ export const paidAllBills = () => new Promise((resolve, reject) => { //functia p
                     )
                 }
             }).catch(error => {})
-
             resolve()
         }).catch(error => reject(error))
 })
@@ -140,18 +139,18 @@ export const deleteAllBills = () => new Promise((resolve, reject) => { //sterger
                 }).catch(error => {})
                 let allBills = realm.objects('Bill')
                 if(allBills.length == 0){
-                    alert(language == 'EN' ? 'You do not have any unpaid bills!' : 'Nu exista nicio factura neplatita!')
+                    alert(profile.language == 'EN' ? 'You do not have any unpaid bills!' : 'Nu exista nicio factura neplatita!')
                 }else{
                     Alert.alert(
-                        language == 'EN' ? `Delete all bills` : 'Sterge toate facturile',
-                        language == 'EN' ? `Are you sure you want to delete all your unpaid bills?` : 'Esti sigur ca vrei sa stergi toate facturile?',
+                        profile.language == 'EN' ? `Delete all bills` : 'Sterge toate facturile',
+                        profile.language == 'EN' ? `Are you sure you want to delete all your unpaid bills?` : 'Esti sigur ca vrei sa stergi toate facturile?',
                         [
                             {
-                                text: language == 'EN' ? 'No' : 'Nu',
+                                text: profile.language == 'EN' ? 'No' : 'Nu',
                                 onPress: () => {}
                             },
                             {
-                                text: language == 'EN' ? 'Yes' : 'Da',
+                                text: profile.language == 'EN' ? 'Yes' : 'Da',
                                 onPress: () => {
                                     allBills.forEach(bill => {
                                         deleteBill(bill).then().catch(error => {})

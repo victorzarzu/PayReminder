@@ -22,7 +22,7 @@ class PersonProfile extends React.Component {
             incomeAmount: 0,
             currency: '€',
             language: 'EN',
-            languageLoaded: 'EN'
+            languageLoaded: 'EN',
         }
         this.handleGenderForm = this.handleGenderForm.bind(this)
     }

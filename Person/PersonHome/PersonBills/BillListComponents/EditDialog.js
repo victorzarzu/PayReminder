@@ -44,7 +44,7 @@ export default class EditDialog extends Component{
             this.setState({ payDateYear: year, payDateMonth: month, payDateDay: day  });
           }
         } catch ({ code, message }) {
-          console.warn('Cannot open date picker', message);
+          alert('Cannot open date picker', message);
         }
     };
 
@@ -62,7 +62,7 @@ export default class EditDialog extends Component{
              });
           }
         } catch ({ code, message }) {
-          console.warn('Cannot open time picker', message);
+          alert('Cannot open time picker', message);
         }
       };
 

@@ -49,7 +49,7 @@ export default class AddBill extends Component{
             });
           }
         } catch ({ code, message }) {
-          console.warn('Cannot open date picker', message);
+          alert('Cannot open date picker', message);
         }
       };
 
@@ -67,7 +67,7 @@ export default class AddBill extends Component{
              });
           }
         } catch ({ code, message }) {
-          console.warn('Cannot open time picker', message);
+          alert('Cannot open time picker', message);
         }
       };
 
@@ -162,8 +162,7 @@ export default class AddBill extends Component{
                                     }else if(this.state.payDateHour == null){ //verificarea orei pentru factura
                                         alert(this.props.language == 'EN' ? 'Please choose a pay time!' : 'Adauga ora de plata')
                                     }else if(this.state.barcodeValue == null){
-                                        alert(this.props.language == 'EN' ? "Please scan the bill's barcode'" : 'Nu uita sa scanezi codul de bare al facturii')
-                                        alert()
+                                        alert(this.props.language == 'EN' ? "Please scan the bill's barcode" : 'Nu uita sa scanezi codul de bare al facturii')
                                     }else {
                                         //adaugarea facturii in baza de date
                                         addBill(newBill).then().catch(error => {})
