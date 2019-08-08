@@ -12,7 +12,8 @@ export const ProfileSchema = { //crearea schemei pentru profil
         incomeAmount: {type:'double', default: 0},
         currency: {type: 'string', default: '€'},
         funds: {type: 'double', default: 0},
-        incomeGiven: {type: 'bool', default: false}
+        incomeGiven: {type: 'bool', default: false},
+        language: {type: 'string', default: 'EN'}
     }
 }
 
@@ -45,16 +46,7 @@ export const addIncome = () => new Promise((resolve, reject) => { //functia de a
             realm.write(() => {
                 const nowDate = new Date()
                 let updatingProfile = realm.objectForPrimaryKey('Profile', 1)
-                if(nowDate.getDate() < updatingProfile.incomeDay && updatingProfile.incomeGiven === true){
-                    updatingProfile.incomeGiven = false
-                    realm.create('Profile', updatingProfile, true)
-                }
-                else if(nowDate.getDate() > updatingProfile.incomeDay && updatingProfile.incomeGiven === false){
-                    updatingProfile.funds += updatingProfile.incomeAmount
-                    updatingProfile.incomeGiven = true
-                    realm.create('Profile', updatingProfile, true)
-                }
-                else if(updatingProfile.incomeGiven === false && nowDate.getDate() == updatingProfile.incomeDay ){
+                if(updatingProfile.incomeGiven === false && nowDate.getDate() == updatingProfile.incomeDay ){
                     updatingProfile.funds += updatingProfile.incomeAmount
                     updatingProfile.incomeGiven = true
                     realm.create('Profile', updatingProfile, true)

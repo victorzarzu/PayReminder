@@ -82,11 +82,11 @@ export default class Diagram extends Component{
             strokeWidth: 2
           }
           const data = [
-            { name: 'bills', number: this.state.expiredBillsNumber,price: this.state.expiredBillsPrice, color: '#D34354', legendFontColor: '#7F7F7F', legendFontSize: 27 - String(this.state.expiredBillsNumber).length},
-            { name: 'bills', number: this.state.lt3BillsNumber,price: this.state.lt3BillsPrice, color: '#D67FA3', legendFontColor: '#7F7F7F', legendFontSize: 27 - String(this.state.lt3BillsNumber).length },
-            { name: 'bills', number: this.state.mt3BillsNumber,price: this.state.mt3BillsPrice, color: '#6A62C6', legendFontColor: '#7F7F7F', legendFontSize: 27 - String(this.state.mt3BillsNumber).length },
-            { name: 'bills', number: this.state.mt7BillsNumber,price: this.state.mt7BillsPrice, color: '#98C2E9', legendFontColor: '#7F7F7F', legendFontSize: 27 - String(this.state.mt7BillsNumber).length },
-            { name: 'bills', number: this.state.paidBillsNumber,price: this.state.paidBillsPrice, color: '#28B463', legendFontColor: '#7F7F7F', legendFontSize: 27- String(this.state.paidBillsNumber).length }
+            { name: this.props.language == 'EN' ? 'bills' : 'facturi', number: this.state.expiredBillsNumber,price: this.state.expiredBillsPrice, color: '#D34354', legendFontColor: '#7F7F7F', legendFontSize: 27 - String(this.state.expiredBillsNumber).length},
+            { name: this.props.language == 'EN' ? 'bills' : 'facturi', number: this.state.lt3BillsNumber,price: this.state.lt3BillsPrice, color: '#D67FA3', legendFontColor: '#7F7F7F', legendFontSize: 27 - String(this.state.lt3BillsNumber).length },
+            { name: this.props.language == 'EN' ? 'bills' : 'facturi', number: this.state.mt3BillsNumber,price: this.state.mt3BillsPrice, color: '#6A62C6', legendFontColor: '#7F7F7F', legendFontSize: 27 - String(this.state.mt3BillsNumber).length },
+            { name: this.props.language == 'EN' ? 'bills' : 'facturi', number: this.state.mt7BillsNumber,price: this.state.mt7BillsPrice, color: '#98C2E9', legendFontColor: '#7F7F7F', legendFontSize: 27 - String(this.state.mt7BillsNumber).length },
+            { name: this.props.language == 'EN' ? 'bills' : 'facturi', number: this.state.paidBillsNumber,price: this.state.paidBillsPrice, color: '#28B463', legendFontColor: '#7F7F7F', legendFontSize: 27- String(this.state.paidBillsNumber).length }
           ]
           const data1 = [
             { name: `${this.props.currency}`, number: this.state.expiredBillsNumber,price: this.state.expiredBillsPrice, color: '#D34354', legendFontColor: '#7F7F7F', legendFontColor: '#7F7F7F', legendFontSize: 27 - String(this.state.expiredBillsPrice).length },
@@ -101,7 +101,7 @@ export default class Diagram extends Component{
                 <PieChart
                     data = {this.state.option === 'number' ? data : data1 /* se selecteaza modul diagramei in functie de modul selectat */}
                     width={this.props.width}
-                    height={220}
+                    height={200}
                     chartConfig={chartConfig}
                     accessor= {this.state.option}
                     backgroundColor="transparent"
@@ -112,15 +112,18 @@ export default class Diagram extends Component{
                     onValueChange = {option => this.setState({option}) /* se selecteaza modul de analizare a diagramei */}
                     style = {{width: 150}}
                 >
-                    <Picker.Item label = 'Number' value = 'number'/>
-                    <Picker.Item label = 'Price' value = 'price'/>
+                    <Picker.Item label = {this.props.language == 'EN' ? 'Number' : 'Numar'} value = 'number'/>
+                    <Picker.Item label = {this.props.language == 'EN' ? 'Price' : 'Pret'} value = 'price'/>
                 </Picker>
-                <DiagramLegend />
+                <DiagramLegend 
+                    language = {this.props.language}
+                />
             </View>
                  : 
-            <View style = {{justifyContent: 'center', alignItems: 'center'}}>
-                <Text style = {{color: '#BABABA', fontSize: 24}}> No information given </Text>
-                <Text style = {{color: '#BABABA', fontSize: 12}}> You need to have more than 2 different submitted bills </Text>
+            <View style = {{justifyContent: 'center', alignItems: 'center', marginTop: '30%'}}>
+                <Text style = {{color: '#BABABA', fontSize: 24}}> {this.props.language == 'EN' ? 'No information given' : 'Nicio informatie'} </Text>
+                <Text style = {{color: '#BABABA', fontSize: 12}}> {this.props.language == 'EN' ? 'You need to have more than 2 different submitted bills as tag' : 'Trebuie sa existe cel putin 2 diferite ca eticheta'} </Text>
+                <Text style = {{color: '#BABABA', fontSize: 20}}> {this.props.language == 'EN' ? "There's a pie chart" : 'Aici este o diagrama de tip cerc'} </Text>
             </View> 
         )
     }

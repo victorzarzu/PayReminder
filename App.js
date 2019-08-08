@@ -3,7 +3,6 @@ import {AppState} from 'react-native'
 
 
 import {addIncome, saveProfile, queryProfile} from './databases/profileSchemas'
-import {saveCurrency} from './databases/currencySchemas'
 import LoadingScreen from './Person/LoadingScreen'
 import Person from './Person/Person'
 
@@ -14,7 +13,7 @@ export default class App extends Component {
     super(props)
     this.state = {
       isLoading: true,
-      appState: AppState.currentState
+      appState: AppState.currentState,
     }
   }
 
@@ -22,8 +21,7 @@ export default class App extends Component {
     //daca nu este salvata nicio valuta, in baza de date este implicit euro. Se salveaza
     queryProfile().then(profile => {
       if(profile == null){
-        saveProfile({id: 1,currency: '€', funds: 0, lastMonthIncomeGiven: new Date().getMonth()})
-        saveCurrency({id: 1,currency: '€'}).then().catch(error => alert(`Can not load your currency: ${error}`))
+        saveProfile({id: 1,currency: '€', funds: 0, lastMonthIncomeGiven: new Date().getMonth(), language: 'EN'})
       }
     })
   }

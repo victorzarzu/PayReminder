@@ -8,40 +8,43 @@ export default class Bill extends Component{
     constructor(props){
         super(props)
         this.state = {
-            currency: '€'
+            currency: '€',
+            language: ''
         }
+        this.reloadData = this.reloadData.bind(this)
     }
 
     componentWillMount(){
         this.reloadData()
-        profileRealm.addListener('change', () => this.reloadData()) // se adauag un listener pentru a actualiza in timp real valuta
+        profileRealm.addListener('change', this.reloadData) // se adauag un listener pentru a actualiza in timp real valuta
     }
 
     reloadData() {
         //se incarca valuta din baza de date in state
         queryProfile().then(profile => {
-            this.setState({currency: profile.currency})
+            this.setState({currency: profile.currency, language: profile.language})
         }).catch(error => alert(`Can not change your currency preference: ${error}`))
     }
 
     componentWillUnmount(){
-        profileRealm.removeAllListeners() //se sterge listener-ul
+        profileRealm.removeListener('change', this.reloadData)
     }
     render(){
+        const price = this.state.currency === 'Fr' ? this.props.bill.price + '\xa0' + this.state.currency : this.state.currency === 'Lei' ? this.props.bill.price + '\xa0' + this.state.currency : this.state.currency + '\xa0' + this.props.bill.price
         return(
             <View style = {styles.billView}>
                 <View style = {{height: 20, backgroundColor: '#28B463'}}></View>
                 <View>
                     <View style = {{flexDirection: 'row'}}>
                         <View style = {{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-                            <Text>Name:</Text>
-                            <Text>Price:</Text>
-                            <Text>Pay date:</Text>
+                            <Text>{this.state.language == 'EN' ? 'Name:' : 'Nume:'}</Text>
+                            <Text>{this.state.language == 'EN' ? 'Price:' : 'Pret'}</Text>
+                            <Text>{this.state.language == 'EN' ? 'Pay date:' : 'Data platii:'}</Text>
                         </View>
                         <View style = {{justifyContent: 'center', alignItems: 'center', flex: 1}}>
                             <Text> {this.props.bill.name} </Text>
-                            <Text> {this.state.currency + '\xa0' + this.props.bill.price} </Text>
-                            <Text> {`${this.props.bill.paidDate.getDate()}/${this.props.bill.paidDate.getMonth() + 1}/${this.props.bill.paidDate.getFullYear()}  ${this.props.bill.paidDate.getHours()}:${this.props.bill.paidDate.getMinutes() <= 9 ? String('0' + this.props.bill.paidDate.getMinutes()) : this.props.bill.paidDate.getMinutes()}`} </Text>
+                            <Text> {price} </Text>
+                                <Text> {`${this.props.bill.paidDate.getDate() > '9' ? this.props.bill.paidDate.getDate() : '0' + this.props.bill.paidDate.getDate() }/${this.props.bill.paidDate.getMonth() + 1 > 9 ? this.props.bill.paidDate.getMonth() + 1 : '0' + (this.props.bill.paidDate.getMonth() + 1)}/${this.props.bill.paidDate.getFullYear()}  ${this.props.bill.paidDate.getHours()}:${this.props.bill.paidDate.getMinutes() <= 9 ? String('0' + this.props.bill.paidDate.getMinutes()) : this.props.bill.paidDate.getMinutes()}`} </Text>
                         </View>
                     </View>
                     <View style = {styles.buttonView}>
@@ -63,6 +66,7 @@ export default class Bill extends Component{
                                     { cancelable: true }
                                 )
                             }}
+                            style = {{marginRight: '3%'}}
                         >
                             <Image 
                                 source = {require('../images/delete-icon.png')}

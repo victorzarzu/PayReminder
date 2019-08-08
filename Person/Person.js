@@ -9,18 +9,19 @@ import PersonProfile from './PersonProfile/PersonProfile'
 import PersonHomeStack from './PersonHome/PersonHomeStack'
 
 // crearea unui bottom tab navigator pentru a naviga intre Profile si Home switch navigator
+
+import {queryProfile} from '../databases/profileSchemas'
+
 const PersonTab = createMaterialBottomTabNavigator({
     Home: {
         screen: PersonHomeStack,
         navigationOptions: {
-            tabBarLabel: 'Home',
             tabBarIcon: ({tintColor}) => <Icon name={'home'} size = {28} color = {tintColor} />
         }
     },
     Profile: {
         screen: PersonProfile,
         navigationOptions: {
-            tabBarLabel: 'Profile',
             tabBarIcon: ({tintColor}) => <Ionicon name = {Platform.OS == 'android' ? 'md-person' : 'ios-person'} size = {28} color = {tintColor} />
         }
     },
@@ -32,7 +33,7 @@ const PersonTab = createMaterialBottomTabNavigator({
     barStyle: { 
         backgroundColor: '#DDE8F2',
     },
-    shifting: true
+    labeled: false
 })
 
 export default createAppContainer(PersonTab)

@@ -5,7 +5,7 @@ export default class IncomeDayPicker extends Component {
     render() {
         return(
             <View style={styles.dayPickerView}>
-                <Text style={{color: '#0489B1', fontSize: 20, fontWeight: 'bold'}}> Income day:  </Text>
+                <Text style={{color: '#0489B1', fontSize: 20, fontWeight: 'bold'}}> {this.props.language == 'EN' ? 'Income day: ' : 'Ziua de salariu: '}  </Text>
                 <Picker {...this.props} style={styles.dayInput}>
                     <Picker.Item label = "1" value = "1"  />
                     <Picker.Item label = "2" value = "2"  />
@@ -50,6 +50,7 @@ const styles = StyleSheet.create ({
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
+        marginTop: 5,
     },
     dayInput: {
         width: 85

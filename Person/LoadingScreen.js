@@ -1,8 +1,21 @@
 import React, {Component} from 'react'
 import {View, Image, Text, StyleSheet, ActivityIndicator} from 'react-native'
 import Fontisto from 'react-native-vector-icons/Fontisto'
+import {queryProfile} from '../databases/profileSchemas'
 
 export default class LoadingScreen extends Component{
+    constructor(props){
+        super(props)
+        this.state = {
+            language: 'EN'
+        }
+    }
+
+    componentWillMount(){
+        queryProfile().then(profile => {
+            this.setState({language: profile.language})
+        }).catch(error => {})
+    }
     render(){
         return(
             <View style = {{justifyContent: 'center', alignItems: 'center', flex: 1}}>
@@ -12,7 +25,7 @@ export default class LoadingScreen extends Component{
                 />
                 <ActivityIndicator size="large" color="#0489B1" />
                 <View style = {{alignItems: 'center', justifyContent: 'space-around', flexDirection: 'row'}}>
-                    <Text style = {{color: '#76ADD2', fontSize: 12, marginRight: 5}}>Do not forget to pay the bills before the deadline</Text>
+                    <Text style = {{color: '#76ADD2', fontSize: 13, marginRight: 5}}>{this.state.language == 'EN' ? 'Do not forget to pay the bills before the deadline' : 'Nu uita sa iti platest facturile inainte de data scadenta'}</Text>
                     <Fontisto name = 'wink' color = '#76ADD2' size = {14}  />
                 </View>
             </View>

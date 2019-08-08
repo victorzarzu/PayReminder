@@ -3,28 +3,33 @@ import {View, Text, StyleSheet} from 'react-native'
 
 export default class DiagramLegend extends Component{
     render(){
+        const language = this.props.language == 'EN'
         return(
-            <View style = {styles.legendView}>
-                <View style = {styles.itemView}>
-                    <View style = {[styles.circleView, {backgroundColor: '#D34354'}]}>
+            <View style = {{marginTop: '3%'}}>
+                <View style = {[styles.legendView, {justifyContent: 'space-around', alignItems: 'center'}]}>
+                    <View style = {styles.itemView}>
+                        <View style = {[styles.circleView, {backgroundColor: '#D34354'}]}></View>
+                        <Text style = {language == 'EN' ? styles.legendTextEng : styles.legendTextRo}>{language ? 'Time expired' : 'Timp expirat'}</Text>
                     </View>
-                    <Text style = {styles.legendText}>Time expired</Text>
-                </View>
-                <View style = {styles.itemView}>
-                    <View style = {[styles.circleView, {backgroundColor: '#D67FA3'}]}>
+                    <View style = {styles.itemView}>
+                        <View style = {[styles.circleView, {backgroundColor: '#D67FA3'}]}></View>
+                        <Text style = {language == 'EN' ? styles.legendTextEng : styles.legendTextRo}>{language ? 'Less then 3 days left' : 'Mai putin de 3 zile ramase'}</Text>
                     </View>
-                    <Text style = {styles.legendText}>Less then 3 days left</Text>
-                </View>
-                <View style = {styles.itemView}>
-                    <View style = {[styles.circleView, {backgroundColor: '#6A62C6'}]}>
+                    <View style = {styles.itemView}>
+                        <View style = {[styles.circleView, {backgroundColor: '#6A62C6'}]}></View>
+                        <Text style = {language == 'EN' ? styles.legendTextEng : styles.legendTextRo}>{language ? 'More then 3 days left' : 'Mai mult de 3 zile ramase'}</Text>
                     </View>
-                    <Text style = {styles.legendText}>More then 3 days left</Text>
                 </View>
-                <View style = {styles.itemView}>
-                    <View style = {[styles.circleView, {backgroundColor: '#98C2E9'}]}>
+                <View style = {[styles.legendView, {justifyContent: 'center', alignItems: 'center'}]}>
+                    <View style = {styles.itemView}>
+                            <View style = {[styles.circleView, {backgroundColor: '#98C2E9'}]}></View>
+                            <Text style = {language == 'EN' ? styles.legendTextEng : styles.legendTextRo}>{language ? 'More then 7 days left' : 'Mai mult de 7 zile ramase'}</Text>
                     </View>
-                    <Text style = {styles.legendText}>More then 7 days left</Text>
-                </View>
+                    <View style = {styles.itemView}>
+                            <View style = {[styles.circleView, {backgroundColor: '#28B463'}]}></View>
+                            <Text style = {language == 'EN' ? styles.legendTextEng : styles.legendTextRo}>{language ? 'Paid bill' : 'Facturi platite'}</Text>
+                    </View>
+                 </View>
             </View>
         )
     }
@@ -32,24 +37,28 @@ export default class DiagramLegend extends Component{
 
 const styles = StyleSheet.create({
     legendView: {
-        alignItems: 'center',
         flexDirection: 'row',
-        justifyContent: 'space-around',
-        height: 15,
-        alignSelf: 'flex-end'
+        height: 12,
+        alignSelf: 'flex-end',
+        marginBottom: 10
     },
     itemView: {
         alignItems: 'center',
         flexDirection: 'row',
-        justifyContent: 'space-around',
+        justifyContent: 'center',
         flex: 1,
     },
     circleView: {
-        width: 10,
-        height: 10,
+        width: 12,
+        height: 12, 
         borderRadius: 50,
     },
-    legendText: {
-        fontSize: 8
+    legendTextEng: {
+        fontSize: 10,
+        marginLeft: '3%'
+    },
+    legendTextRo: {
+        fontSize: 9,
+        marginLeft: '2%'
     }
 })

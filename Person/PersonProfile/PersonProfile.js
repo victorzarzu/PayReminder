@@ -1,14 +1,14 @@
 import React from 'react'
-import {View, Text, StyleSheet, Image, KeyboardAvoidingView, AppState, ScrollView } from 'react-native'
+import {View, Text, StyleSheet, Image, KeyboardAvoidingView, ScrollView } from 'react-native'
 
-import NameTextInput from './components/inputs/NameTextInput';
-import GenderForm from './components/GenderForm';
+import NameTextInput from './components/inputs/NameTextInput'
+import GenderForm from './components/inputs/GenderForm'
 import SubmitButton from './components/SubmitButton'
-import IncomeDayPicker from './components/inputs/IncomeDayPicker';
+import IncomeDayPicker from './components/inputs/IncomeDayPicker'
 import IncomeAmountInput from './components/inputs/IncomeAmountInput'
 import {saveProfile, queryProfile, addIncome} from '../../databases/profileSchemas'
-import {saveCurrency} from '../../databases/currencySchemas'
-import CurrencyPicker from './components/inputs/CurrencyPicker';
+import CurrencyPicker from './components/inputs/CurrencyPicker'
+import LanguagePicker from './components/inputs/LanguagePicker'
 
 class PersonProfile extends React.Component {
     constructor(props) {
@@ -21,7 +21,8 @@ class PersonProfile extends React.Component {
             incomeDay: '1',
             incomeAmount: 0,
             currency: '€',
-            appState: AppState.currentState,
+            language: 'EN',
+            languageLoaded: 'EN'
         }
         this.handleGenderForm = this.handleGenderForm.bind(this)
     }
@@ -40,7 +41,9 @@ class PersonProfile extends React.Component {
                 gender: profile.gender,
                 incomeDay: profile.incomeDay,
                 incomeAmount: profile.incomeAmount,
-                currency: profile.currency
+                currency: profile.currency,
+                language: profile.language,
+                languageLoaded: profile.language
             })
         }).catch(error => {
             this.setState({
@@ -50,7 +53,8 @@ class PersonProfile extends React.Component {
                 gender: 'Male',
                 incomeDay: '1',
                 incomeAmount: 0,
-                currency: '€'
+                currency: '€',
+                language: 'EN'
             })
         })
     }
@@ -70,50 +74,60 @@ class PersonProfile extends React.Component {
             incomeAmount: parseFloat(this.state.incomeAmount),
             currency: this.state.currency,
             lastMonthIncomeGiven: new Date().getMonth(),
-            saved: true
+            language: this.state.language
         }
+        this.setState({languageLoaded: this.state.language})
         saveProfile(newProfile).then().catch(error => alert(`Can not save the profile: ${error}`))
     }
 
     render() {
         return(
-            <ScrollView>
+            <ScrollView style = {{backgroundColor: '#DFDFDF', flex: 1}}>
                 <KeyboardAvoidingView style = {styles.personView} enabled>
                         <Image style={styles.profileImage} source={this.state.gender === 'Female' ? require('./components/femaleAvatar.png')  : require('./components/maleAvatar.png')} />
                         <NameTextInput
                             value = {this.state.firstName}
                             onChangeText = {firstName => this.setState({firstName}) /* schimbare in state a datelor introduse (prenume) */}
-                            placeholder = "First name"
+                            placeholder = {this.state.languageLoaded == 'EN' ? "First name" : 'Prenume'}
                         />
                         <NameTextInput
                             value = {this.state.lastName}
                             onChangeText = {lastName => this.setState({lastName}) /* schimbare in state a datelor introduse (nume de familie) */}
-                            placeholder = "Last name"
+                            placeholder = {this.state.languageLoaded == 'EN' ? "Last name" : 'Nume'}
                         />
                         <GenderForm 
                             onValueChange = {gender => this.setState({gender}) /* schimbare in state a datelor introduse (gen) */}
-                            selectedValue = {this.state.gender} 
+                            selectedValue = {this.state.gender}
+                            language = {this.state.languageLoaded} 
+                        />
+                        <LanguagePicker 
+                            onValueChange = {language => this.setState({language})}
+                            selectedValue = {this.state.language}
+                            language = {this.state.languageLoaded}
                         />
                         <IncomeDayPicker 
                             selectedValue = {this.state.incomeDay}
                             onValueChange = {incomeDay => this.setState({incomeDay}) /* schimbare in state a datelor introduse (ziua de salariu) */ }
+                            language = {this.state.languageLoaded}
                         />
-                        <CurrencyPicker 
-                            selectedValue = {this.state.currency}
-                            onValueChange = {currency => this.setState({currency}) /* schimbare in state a datelor introduse (valuta) */}
-                            />
                         <View style = {{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around'}}>
-                            <Text style = {{marginRight: 10, color: '#0489B1', fontSize: 20, fontWeight: 'bold'}}>Income amount:</Text>
+                            <Text style = {{marginRight: 10, color: '#0489B1', fontSize: 20, fontWeight: 'bold'}}>{this.state.languageLoaded == 'EN' ? 'Income amount: ' : 'Salariu: ' }</Text>
                             <IncomeAmountInput
                                 value = {String(this.state.incomeAmount)}
                                 onChangeText = {incomeAmount => this.setState({incomeAmount}) /* schimbare in state a datelor introduse (suma salariului) */}
+                                language = {this.state.languageLoaded}
                             />
                             <Text style = {{color: '#113961',fontSize: 16, marginLeft: 4}}>{this.state.currency}</Text>
                         </View>
+                        <CurrencyPicker 
+                            selectedValue = {this.state.currency}
+                            onValueChange = {currency => this.setState({currency}) /* schimbare in state a datelor introduse (valuta) */}
+                            language = {this.state.languageLoaded}
+                        />
                         <SubmitButton
+                            language = {this.state.languageLoaded}
                             onPress = {() => {
                                 this.saveProfile()
-                                saveCurrency({id: 1, currency: this.state.currency}).then().catch(error => alert('Can not save your currency'))
                                 addIncome().then().catch(error => {})
                             }}
                         />
@@ -127,10 +141,11 @@ export default PersonProfile
 
 const styles = StyleSheet.create({
     personView:{
-        flex: 9,
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 10
+        marginTop: 10,
+        backgroundColor: '#DFDFDF'
     },
     profileImage: {
         width: 100,

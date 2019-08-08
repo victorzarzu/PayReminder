@@ -22,15 +22,20 @@ export default class IncomeAmountInput extends Component{
                     keyboardType = "numeric"
                     textAlign = 'center'
                     textAlignVertical = 'center'
-                    placeholder = "Enter amount"
+                    placeholder = {this.props.language == 'EN' ? 'Enter amount' : 'Introdu suma'}
                 />
                 <TouchableOpacity
                     onPress = {() => {
                         addFunds(parseFloat(this.state.funds)).then().catch(error => alert(`Can not add your funds: ${error}`)) //se adauga fonduri in baza de date
                         this.setState({funds: ''})
                     }}
+                    style = {{marginLeft: '5%'}}
                 >
-                    <Icon name = "add-box" size = {36} color = '#A3B9D5' />
+                    <Icon 
+                        name = "add-box" 
+                        size = {36} 
+                        color = '#5A94DA' 
+                    />
                 </TouchableOpacity>
             </View>
         )
@@ -40,10 +45,10 @@ export default class IncomeAmountInput extends Component{
 const styles = StyleSheet.create({
     view: {
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     addfunds: {
-        width: 150,
+        width: '50%',
         height: 40
     },
     button: {

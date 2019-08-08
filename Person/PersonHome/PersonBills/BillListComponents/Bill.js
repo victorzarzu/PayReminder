@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {View, Text, TouchableOpacity, StyleSheet, Alert, Image, Modal} from 'react-native'
 
 import {deleteBill, paidBill} from '../../../../databases/billSchemas.js'
-import currencyRealm, {queryCurrency} from '../../../../databases/currencySchemas'
+import profileRealm, {queryProfile} from '../../../../databases/profileSchemas' 
 import Barcode from 'react-native-barcode-builder';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
@@ -15,28 +15,29 @@ export default class Bill extends Component{
         this.state = {
             isEditing: true,
             currency: '€',
-            barcodeVisible: false
+            barcodeVisible: false,
+            language: 'EN'
         }
+        this.reloadData = this.reloadData.bind(this)
     }
 
-
-
     reloadData() {
-        queryCurrency().then(currency => { //atribuirea componentului valuta din baza de date
-            if(this.state.currency !== currency.currency){
-                this.setState({currency: currency.currency})
+        queryProfile().then(profile => { //atribuirea componentului valuta din baza de date
+            if(this.state.currency !== profile.currency){
+                this.setState({currency: profile.currency})
             }
         }).catch(error => alert(`Can not change your currency preference: ${error}`))
     }
 
     componentWillMount(){
         this.reloadData()
-        currencyRealm.addListener('change', () => this.reloadData())
+        profileRealm.addListener('change',  this.reloadData)
     }
 
     componentWillUnmount(){
-        currencyRealm.removeAllListeners()
+        profileRealm.removeListener('change', this.reloadData)
     }
+    
     render(){
         const leftDays = (this.props.bill.payDate - new Date())/86400000
         const price = this.state.currency === 'Fr' ? this.props.bill.price + '\xa0' + this.state.currency : this.state.currency === 'Lei' ? this.props.bill.price + '\xa0' + this.state.currency : this.state.currency + '\xa0' + this.props.bill.price
@@ -56,7 +57,7 @@ export default class Bill extends Component{
                         <View style = {{justifyContent: 'center', alignItems: 'center', flex: 4}}>
                             <Text style = {styles.infoText}> {this.props.bill.name} </Text>
                             <Text style = {styles.infoText}> {price} </Text>
-                            <Text style = {styles.infoText}> {`${this.props.bill.payDate.getDate()}/${this.props.bill.payDate.getMonth() + 1}/${this.props.bill.payDate.getFullYear()}  ${this.props.bill.payDate.getHours()}:${this.props.bill.payDate.getMinutes() <= 9 ? String('0' + this.props.bill.payDate.getMinutes()) : this.props.bill.payDate.getMinutes()}`} </Text>
+                            <Text style = {styles.infoText}> {`${this.props.bill.payDate.getDate() > 9 ? this.props.bill.payDate.getDate() : '0' + this.props.bill.payDate.getDate()}/${this.props.bill.payDate.getMonth() + 1 > 9 ? this.props.bill.payDate.getMonth() + 1 : '0' + (this.props.bill.payDate.getMonth() + 1)}/${this.props.bill.payDate.getFullYear()}  ${this.props.bill.payDate.getHours()}:${this.props.bill.payDate.getMinutes() <= 9 ? String('0' + this.props.bill.payDate.getMinutes()) : this.props.bill.payDate.getMinutes()}`} </Text>
                         </View>
                     </View>
                     <View style = {styles.buttonView}>
@@ -79,7 +80,7 @@ export default class Bill extends Component{
                                         <Barcode 
                                             value = {this.props.bill.barcode.value}
                                             format = {format}
-                                            width = {format.includes('CODE') ? 1.9 : 3}
+                                            width = {format.includes('CODE') ? 1.9 : 3.1}
                                             flat
                                             text = {this.props.bill.barcode.value}
                                         />

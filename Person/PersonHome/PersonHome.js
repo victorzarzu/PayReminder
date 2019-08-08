@@ -17,7 +17,8 @@ export default class PersonHome extends React.Component {
             height: 0,
             currency: '€',
             funds: 0,
-            size: 54
+            size: 54,
+            language: 'EN'
         }
         this.onLayoutChange = this.onLayoutChange.bind(this)
     }
@@ -32,7 +33,8 @@ export default class PersonHome extends React.Component {
             this.setState({
                 currency: profile.currency,
                 funds: profile.funds,
-                size: 46 - String(profile.funds).length
+                size: 46 - String(profile.funds).length,
+                language: profile.language
             })
         }).catch(error => {
             alert(`Could not load your funds data: ${error}`)
@@ -50,19 +52,19 @@ export default class PersonHome extends React.Component {
 
     render() {
         return(
-            <ScrollView onLayout={this.onLayoutChange}>
+            <ScrollView onLayout={this.onLayoutChange} style = {{flex: 1, backgroundColor: '#DFDFDF'}}>
                 <KeyboardAvoidingView style = {styles.homeView}>
-                    <View style = {{flexDirection: 'row', width: this.state.width, justifyContent: 'space-around', height: 100, marginVertical: 10}}>
+                    <View style = {{flexDirection: 'row', width: this.state.width, justifyContent: 'space-around', height: 100, marginBottom: 10}}>
                             <View style = {[styles.navigationPart, {backgroundColor: '#5F81B7'}]}>
                                 <TouchableOpacity onPress = {() => this.props.navigation.navigate('Bills') /* navigarea din Home in pagina de facturi neplatite */} style = {{alignItems: 'center', justifyContent: 'center'}}>
                                     <Image source = {require('./PersonHomeComponents/images/bills-icon.png')} style = {styles.image} />
-                                    <Text style = {styles.navigationText}>Unpaid bills</Text>
+                                    <Text style = {styles.navigationText}>{this.state.language == 'EN' ? 'Unpaid bills' : 'Facturi neplatite'}</Text>
                                 </TouchableOpacity>
                             </View>
                             <View style = {[styles.navigationPart, {backgroundColor: '#5F93D5'}]}>
                                 <TouchableOpacity onPress = {() => this.props.navigation.navigate('PaidBills') /* navigarea din Home in pagina de facturi platite */} style = {{alignItems: 'center', justifyContent: 'center'}}>
                                     <Image source = {require('./PersonHomeComponents/images/paid-bills-icon.png')} style = {styles.image} />
-                                    <Text style = {styles.navigationText}>Paid bills</Text>
+                                    <Text style = {styles.navigationText}>{this.state.language == 'EN' ? 'Paid bills' : 'Facturi platite'}</Text>
                                 </TouchableOpacity>                               
                             </View>
                     </View>
@@ -71,10 +73,13 @@ export default class PersonHome extends React.Component {
                         funds = {this.state.funds}
                         size = {this.state.size}
                     />
-                    <AddFunds/>
+                    <AddFunds
+                        language = {this.state.language}
+                    />
                     <Diagram 
                         width = {this.state.width}
                         currency = {this.state.currency}
+                        language = {this.state.language}
                     />
                 </KeyboardAvoidingView>
             </ScrollView>
@@ -87,6 +92,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: '#DFDFDF',
     },
     navigationPart: {
         flex: 1,

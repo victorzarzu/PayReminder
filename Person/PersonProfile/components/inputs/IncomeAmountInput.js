@@ -11,7 +11,7 @@ export default class IncomeAmountInput extends Component{
                     style = {styles.textInput}
                     textAlign = 'center'
                     textAlignVertical = 'center'
-                    placeholder = "Income amount"
+                    placeholder = {this.props.language ? "Income amount" : 'Salariu'}
                 />
         )
     }
@@ -28,6 +28,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: '#C8C8C8',
         color: 'black',
-        marginVertical: 5
+        marginVertical: 10
     }
 })

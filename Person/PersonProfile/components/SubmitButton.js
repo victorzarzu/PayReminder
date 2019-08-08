@@ -9,7 +9,7 @@ export default class SubmitButton extends Component {
                 {...this.props}
                 style = {styles.submitButton}
             >
-                <Text style={styles.submitButtonText}> Save </Text>
+                <Text style={styles.submitButtonText}> {this.props.language == 'EN' ? 'Save' : 'Salveaza'} </Text>
                 <FontAwesome 
                     color = '#3E7C98'
                     size = {25}
@@ -28,7 +28,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         flexDirection: 'row',
         alignSelf: 'center',
-        marginTop: 15
+        marginTop: 2,
+        marginBottom: '2%'
     },
     submitButtonText: {
         alignSelf: 'center',
