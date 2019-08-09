@@ -6,12 +6,12 @@ export default class IncomeAmountInput extends Component{
         return(
                 <TextInput
                     {...this.props}
-                    maxLength = {20}
+                    maxLength = {12}
                     keyboardType = "numeric"
                     style = {styles.textInput}
                     textAlign = 'center'
                     textAlignVertical = 'center'
-                    placeholder = {this.props.language ? "Income amount" : 'Salariu'}
+                    placeholder = {this.props.language ? "Salary amount" : 'Salariu'}
                 />
         )
     }
@@ -19,15 +19,11 @@ export default class IncomeAmountInput extends Component{
 
 const styles = StyleSheet.create({
     textInput: {
-        borderColor: 'gray',
-        borderWidth: 1,
-        borderRadius: 11,
         height: 40,
-        width: 150,
+        width: '30%',
         alignContent: 'center',
         justifyContent: 'center',
-        backgroundColor: '#C8C8C8',
         color: 'black',
-        marginVertical: 10
+        marginVertical: '2%'
     }
 })

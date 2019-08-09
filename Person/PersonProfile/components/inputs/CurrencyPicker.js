@@ -6,7 +6,7 @@ export default class CurrencyPicker extends Component {
         return(
             <View style = {{flexDirection: 'row', alignItems: 'center', marginTop: 5}}>
                 <Text style = {{marginRight: 10, color: '#0489B1', fontSize: 20, fontWeight: 'bold'}}> {this.props.language == 'EN' ? 'Currency: ' : 'Valuta: '} </Text>
-                <Picker {...this.props} style = {{width: 100}} mode = 'dropdown'>
+                <Picker {...this.props} style = {{width: '30%'}} mode = 'dropdown'>
                     <Picker.Item label = 'CHF' value = 'Fr' key = 'Fr' />
                     <Picker.Item label = 'EUR' value = '€' key = '€' />
                     <Picker.Item label = 'GBP' value = '£' key = '£' />

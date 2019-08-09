@@ -5,13 +5,15 @@ import Funds from '../PersonHome/PersonHomeComponents/Funds'
 import AddFunds from '../PersonHome/PersonHomeComponents/AddFunds'
 import Diagram from './PersonHomeComponents/Diagram';
 import profileRealm, {queryProfile} from '../../databases/profileSchemas'
+import { PieChart } from 'react-native-svg-charts'
+import { Circle, G, Line } from 'react-native-svg'
 
 export default class PersonHome extends React.Component {
     static navigationOptions = {
         headerTitle: "Home"
     }
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = {
             width: 0,
             height: 0,
@@ -42,7 +44,7 @@ export default class PersonHome extends React.Component {
         })
     }
 
-    componentWillMount(){
+    componentDidMount(){
         this.loadData()
         this.setState({isViewed: true})
         profileRealm.addListener('change', () => this.loadData())
@@ -55,9 +57,9 @@ export default class PersonHome extends React.Component {
 
     render() {
         return(
-            <ScrollView onLayout={this.onLayoutChange} style = {{flex: this.state.isViewed ? 1 : 0, backgroundColor: '#DFDFDF'}}>
+            <ScrollView onLayout={this.onLayoutChange} style = {{backgroundColor: '#DFDFDF'}}>
                 <KeyboardAvoidingView style = {styles.homeView}>
-                    <View style = {{flexDirection: 'row', width: this.state.width, justifyContent: 'space-around', height: 80, marginBottom: 10}}>
+                    <View style = {{flexDirection: 'row', width: this.state.width, justifyContent: 'space-around', height: '50%', marginBottom: 10}}>
                             <View style = {[styles.navigationPart, {backgroundColor: '#5F81B7'}]}>
                                 <TouchableOpacity onPress = {() => this.props.navigation.navigate('Bills') /* navigarea din Home in pagina de facturi neplatite */} style = {{alignItems: 'center', justifyContent: 'center'}}>
                                     <Image source = {require('./PersonHomeComponents/images/bills-icon.png')} style = {styles.image} />
@@ -79,12 +81,11 @@ export default class PersonHome extends React.Component {
                     <AddFunds
                         language = {this.state.language}
                     />
-                    <Diagram 
-                        width = {this.state.width}
-                        currency = {this.state.currency}
-                        language = {this.state.language}
-                    />
                 </KeyboardAvoidingView>
+                <Diagram
+                    currency = {this.state.currency} 
+                    language = {this.state.language}
+                />
             </ScrollView>
         )
     }

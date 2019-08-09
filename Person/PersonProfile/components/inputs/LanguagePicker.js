@@ -33,6 +33,6 @@ export default class GenderForm extends Component {
 const styles = StyleSheet.create({
     languageForm: {
         marginTop: 3,
-        width: 140
+        width: '40%'
     }
 })

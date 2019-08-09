@@ -59,7 +59,7 @@ class PersonProfile extends React.Component {
         })
     }
 
-    componentWillMount(){
+    componentDidMount(){
         this.reloadData()
     }
 
@@ -88,7 +88,10 @@ class PersonProfile extends React.Component {
 
     render() {
         return(
-            <ScrollView style = {{backgroundColor: '#DFDFDF', flex: 1}}>
+            <ScrollView 
+                style = {{backgroundColor: '#DFDFDF', flex: 1, height: '100%'}}
+                contentContainerStyle = {{height: '100%', justifyContent: 'space-around'}}
+            >
                 <KeyboardAvoidingView style = {styles.personView} enabled>
                         <Image style={styles.profileImage} source={this.state.gender === 'Female' ? require('./components/femaleAvatar.png')  : require('./components/maleAvatar.png')} />
                         <NameTextInput
@@ -149,9 +152,10 @@ const styles = StyleSheet.create({
     personView:{
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center',
-        marginTop: 10,
-        backgroundColor: '#DFDFDF'
+        justifyContent: 'space-between',
+        marginTop: '2%',
+        backgroundColor: '#DFDFDF',
+        height: '100%'
     },
     profileImage: {
         width: 100,

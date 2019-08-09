@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
-import {View, StyleSheet, Text, Picker} from 'react-native'
-import {PieChart} from 'react-native-chart-kit'
+import {View, Picker, Text} from 'react-native'
+import { PieChart } from 'react-native-svg-charts'
 
 import {queryAllPaidBills} from '../../../databases/paidbillSchema'
-import {queryAllBills, paidBill} from '../../../databases/billSchemas'
+import {queryAllBills} from '../../../databases/billSchemas'
 import DiagramLegend from './DiagramLegend'
 
 export default class Diagram extends Component{
@@ -36,7 +36,7 @@ export default class Diagram extends Component{
         //se adauga in state numarul si pretul facturilor de fiecare fel
         queryAllBills().then(bills => {
             bills.forEach(bill => {
-                const leftDays = (bill.payDate - new Date())/86400000
+                const leftDays = (bill.payDate.getDate() - new Date().getDate())
                 if(leftDays >= 7){
                     this.setState(prevState => ({
                         mt7BillsNumber: prevState.mt7BillsNumber + 1,
@@ -55,7 +55,7 @@ export default class Diagram extends Component{
                         lt3BillsPrice: prevState.lt3BillsPrice + bill.price
                     }))
                 }
-                if(leftDays <= 0){
+                if(leftDays < 0){
                     this.setState(prevState => ({
                         expiredBillsNumber: prevState.expiredBillsNumber + 1,
                         expiredBillsPrice: prevState.expiredBillsPrice + bill.price
@@ -74,56 +74,54 @@ export default class Diagram extends Component{
     }
 
     render(){
-        const shouldReturn = (this.state.expiredBillsNumber + this.state.lt3BillsNumber + this.state.mt7BillsNumber + this.state.mt3BillsNumber + this.state.paidBillsNumber >= 2) && ((this.state.expiredBillsNumber >= 1 && this.state.lt3BillsNumber >= 1) || (this.state.expiredBillsNumber >= 1 && this.state.mt3BillsNumber >= 1) || (this.state.expiredBillsNumber >= 1 && this.state.mt7BillsNumber >= 1) || (this.state.expiredBillsNumber >= 1 && this.state.paidBillsNumber >= 1) || (this.state.lt3BillsNumber >= 1 && this.state.mt3BillsNumber >= 1) || (this.state.lt3BillsNumber >= 1 && this.state.mt7BillsNumber >= 1) || (this.state.lt3BillsNumber >= 1 && this.state.paidBillsNumber >= 1) || (this.state.mt3BillsNumber >= 1 && this.state.mt7BillsNumber >= 1) || (this.state.mt3BillsNumber >= 1 && this.state.paidBillsNumber >= 1) || (this.state.mt7BillsNumber >= 1 && this.state.paidBillsNumber >= 1)) //se verifica daca este necesar ca diagrama sa fie vizibila
-        const chartConfig = {
-            backgroundGradientFrom: '#1E2923',
-            backgroundGradientTo: '#08130D',
-            color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-            strokeWidth: 2
-          }
-          const data = [
-            { name: this.props.language == 'EN' ? 'bill(s)' : 'facturi', number: this.state.expiredBillsNumber,price: this.state.expiredBillsPrice, color: '#D34354', legendFontColor: '#7F7F7F', legendFontSize: 27 - String(this.state.expiredBillsNumber).length},
-            { name: this.props.language == 'EN' ? 'bill(s)' : 'facturi', number: this.state.lt3BillsNumber,price: this.state.lt3BillsPrice, color: '#D67FA3', legendFontColor: '#7F7F7F', legendFontSize: 27 - String(this.state.lt3BillsNumber).length },
-            { name: this.props.language == 'EN' ? 'bill(s)' : 'facturi', number: this.state.mt3BillsNumber,price: this.state.mt3BillsPrice, color: '#6A62C6', legendFontColor: '#7F7F7F', legendFontSize: 27 - String(this.state.mt3BillsNumber).length },
-            { name: this.props.language == 'EN' ? 'bill(s)' : 'facturi', number: this.state.mt7BillsNumber,price: this.state.mt7BillsPrice, color: '#98C2E9', legendFontColor: '#7F7F7F', legendFontSize: 27 - String(this.state.mt7BillsNumber).length },
-            { name: this.props.language == 'EN' ? 'bill(s)' : 'facturi', number: this.state.paidBillsNumber,price: this.state.paidBillsPrice, color: '#28B463', legendFontColor: '#7F7F7F', legendFontSize: 27- String(this.state.paidBillsNumber).length }
-          ]
-          const data1 = [
-            { name: `${this.props.currency}`, number: this.state.expiredBillsNumber,price: this.state.expiredBillsPrice.toFixed(2), color: '#D34354', legendFontColor: '#7F7F7F', legendFontColor: '#7F7F7F', legendFontSize: 27 - String(this.state.expiredBillsPrice).length },
-            { name: `${this.props.currency}`, number: this.state.lt3BillsNumber,price: this.state.lt3BillsPrice.toFixed(2), color: '#D67FA3', legendFontColor: '#7F7F7F', legendFontSize: 27 - String(this.state.lt3BillsPrice).length },
-            { name: `${this.props.currency}`, number: this.state.mt3BillsNumber,price: this.state.mt3BillsPrice.toFixed(2), color: '#6A62C6', legendFontColor: '#7F7F7F', legendFontSize: 27 - String(this.state.mt3BillsPrice).length },
-            { name: `${this.props.currency}`, number: this.state.mt7BillsNumber,price: this.state.mt7BillsPrice.toFixed(2), color: '#98C2E9', legendFontColor: '#7F7F7F', legendFontSize: 27 - String(this.state.mt7BillsPrice).length },
-            { name: `${this.props.currency}`, number: this.state.paidBillsNumber,price: this.state.paidBillsPrice.toFixed(2), color: '#28B463', legendFontColor: '#7F7F7F', legendFontSize: 27 - String(this.state.paidBillsPrice).length }
-          ]
+        let shouldReturn = (this.state.expiredBillsNumber + this.state.lt3BillsNumber + this.state.mt3BillsNumber + this.state.mt7BillsNumber + this.state.paidBillsNumber) > 0
+        const dataNumber = [ this.state.expiredBillsNumber, this.state.lt3BillsNumber, this.state.mt3BillsNumber, this.state.mt7BillsNumber, this.state.paidBillsNumber ]
+        const dataPrice = [ this.state.expiredBillsPrice, this.state.lt3BillsPrice, this.state.mt3BillsPrice, this.state.mt7BillsPrice, this.state.paidBillsPrice ]
+        
+        const pieDataNumber = dataNumber
+            .map((value, index) => ({
+                value,
+                svg: { fill: index == 0 ? '#D34354' : index == 1 ? '#D67FA3' : index == 2 ? '#6A62C6' : index == 3 ? '#98C2E9' : '#28B463' },
+                key: `pie-${index}`,
+            }))
+            const pieDataPrice = dataPrice
+            .map((value, index) => ({
+                value,
+                svg: { fill: index == 0 ? '#D34354' : index == 1 ? '#D67FA3' : index == 2 ? '#6A62C6' : index == 3 ? '#98C2E9' : '#28B463' },
+                key: `pie-${index}`,
+            }))
         return(
-             shouldReturn ?
-             <View style = {{justifyContent: 'center', alignItems: 'center', alignSelf: 'flex-end'}}>
-                <PieChart
-                    data = {this.state.option === 'number' ? data : data1 /* se selecteaza modul diagramei in functie de modul selectat */}
-                    width={this.props.width}
-                    height={200}
-                    chartConfig={chartConfig}
-                    accessor= {this.state.option}
-                    backgroundColor="transparent"
-                    absolute
-                />
-                <Picker
-                    selectedValue = {this.state.option}
-                    onValueChange = {option => this.setState({option}) /* se selecteaza modul de analizare a diagramei */}
-                    style = {{width: 150}}
-                >
-                    <Picker.Item label = {this.props.language == 'EN' ? 'Number' : 'Numar'} value = 'number'/>
-                    <Picker.Item label = {this.props.language == 'EN' ? 'Price' : 'Pret'} value = 'price'/>
-                </Picker>
-                <DiagramLegend 
-                    language = {this.props.language}
-                />
+            shouldReturn ?
+                <View style = {{flex: 1, justifyContent: 'center', marginTop: '5%'}}>
+                    <PieChart
+                        style = { { height: 200 } }
+                        data = { this.state.option == 'number' ? pieDataNumber : pieDataPrice }
+                        innerRadius = { '30%' }
+                        outerRadius = { '100%' }
+                        labelRadius = { '100%' }
+                    >
+                    </PieChart>
+                    <View style = {{justifyContent: 'center', alignItems: 'center'}}>
+                        <Picker
+                            selectedValue = {this.state.option}
+                            onValueChange = {option => this.setState({option}) /* se selecteaza modul de analizare a diagramei */}
+                            style = {{width: '40%'}}
+                        >
+                            <Picker.Item label = {this.props.language == 'EN' ? 'Number' : 'Numar'} value = 'number'/>
+                            <Picker.Item label = {this.props.language == 'EN' ? 'Price' : 'Pret'} value = 'price'/>
+                        </Picker>
+                        <DiagramLegend 
+                            language = {this.props.language}
+                            data = {this.state.option == 'number' ? dataNumber : dataPrice}
+                            option = {this.state.option}
+                            currency = {this.props.currency}
+                        />
+                    </View>
             </View>
-                 : 
-            <View style = {{justifyContent: 'center', alignItems: 'center', marginTop: '30%'}}>
+            :
+            <View style = {{alignItems: 'center', flex: 1, marginTop: '30%'}}>
                 <Text style = {{color: '#BABABA', fontSize: 24}}> {this.props.language == 'EN' ? 'No information given' : 'Nicio informatie'} </Text>
-                <Text style = {{color: '#BABABA', fontSize: 12}}> {this.props.language == 'EN' ? 'You need to have more than 2 different submitted bills as tag' : 'Trebuie sa existe cel putin 2 diferite ca eticheta'} </Text>
-                <Text style = {{color: '#BABABA', fontSize: 20}}> {this.props.language == 'EN' ? "There's a pie chart" : 'Aici este o diagrama de tip cerc'} </Text>
+                <Text style = {{color: '#BABABA', fontSize: 12}}> {this.props.language == 'EN' ? 'You need to have at least one bill to see the pie chart' : 'Trebuie sa existe cel putin o factura pentru a vedea diagrama'} </Text>
             </View> 
         )
     }

@@ -19,9 +19,9 @@ export default class Bill extends Component{
     }
     
     render(){
-        const leftDays = (this.props.bill.payDate - new Date())/86400000
+        const leftDays = (this.props.bill.payDate.getDate() - new Date().getDate())
         const price = this.props.currency === 'Fr' ? this.props.bill.price + '\xa0' + this.props.currency : this.props.currency === 'Lei' ? this.props.bill.price + '\xa0' + this.props.currency : this.props.currency + '\xa0' + this.props.bill.price
-        const color = leftDays <= 0 ? '#D34354' : leftDays>=7 ? '#98C2E9' : leftDays>=3 ?  '#6A62C6' : '#D67FA3'
+        const color = leftDays < 0 ? '#D34354' : leftDays>=7 ? '#98C2E9' : leftDays>=3 ?  '#6A62C6' : '#D67FA3'
         const formatDB = this.props.bill.barcode.format
         const format = formatDB.replace(/[^a-zA-Z0-9]/g, '')
         return(
@@ -78,7 +78,7 @@ export default class Bill extends Component{
                         </TouchableOpacity>
                         <EditDialog 
                             bill = {this.props.bill} 
-                            color = {leftDays<=0 ? '#D34354' : color}
+                            color = {leftDays < 0 ? '#D34354' : color}
                             language = {this.props.language}
                             currency = {this.props.currency}
                         />
@@ -140,7 +140,7 @@ export default class Bill extends Component{
 const styles = StyleSheet.create({
     swipeoutStyle1: {
         borderRadius: 25, 
-        marginVertical: 5,
+        marginVertical: 3,
     },
     billView: {
         height: 127,

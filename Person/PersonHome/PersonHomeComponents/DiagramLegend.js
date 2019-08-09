@@ -5,60 +5,84 @@ export default class DiagramLegend extends Component{
     render(){
         const language = this.props.language == 'EN'
         return(
-            <View style = {{marginTop: '3%', justifyContent: 'center', alignContent: 'center'}}>
-                <View style = {[styles.legendView, {justifyContent: 'space-around', alignItems: 'center'}]}>
+            <View style = {{marginTop: '4%', justifyContent: 'center', alignContent: 'center', width: '100%', height: '10%', marginBottom: '5%'}}>
                     <View style = {styles.itemView}>
                         <View style = {[styles.circleView, {backgroundColor: '#D34354'}]}></View>
-                        <Text style = {language == 'EN' ? styles.legendTextEng : styles.legendTextRo}>{language ? 'Time expired' : 'Timp expirat'}</Text>
+                        <Text style = {language == 'EN' ? styles.legendTextEng : styles.legendTextRo}>{
+                            this.props.option == 'number' ?
+                                language ? `Bills exceeding deadline: ${this.props.data[0]}` : `Facturi trecute de data scadenta: ${this.props.data[0]}` 
+                            :
+                                language ? `Bills exceeding deadline: ${this.props.currency === 'Fr' ? this.props.data[0] + '\xa0' + this.props.currency : this.props.currency === 'Lei' ? this.props.data[0] + '\xa0' + this.props.currency : this.props.currency + '\xa0' + this.props.data[0]}`
+                                : `Facturi care au trecut de data scadenta: ${this.props.currency === 'Fr' ? this.props.data[0] + '\xa0' + this.props.currency : this.props.currency === 'Lei' ? this.props.data[0] + '\xa0' + this.props.currency : this.props.currency + '\xa0' + this.props.data[0]}`
+                            }</Text>
                     </View>
                     <View style = {styles.itemView}>
                         <View style = {[styles.circleView, {backgroundColor: '#D67FA3'}]}></View>
-                        <Text style = {language == 'EN' ? styles.legendTextEng : styles.legendTextRo}>{language ? 'Less then 3 days left' : 'Mai putin de 3 zile ramase'}</Text>
+                        <Text style = {language == 'EN' ? styles.legendTextEng : styles.legendTextRo}>{
+                            this.props.option == 'number' ?
+                                language ? `Bills that have less than 3 days left: ${this.props.data[1]}` : `Facturi care au mai putin de 3 zile ramase: ${this.props.data[1]}` 
+                            :
+                                language ? 
+                                    `Bills that have less than 3 days left: ${this.props.currency === 'Fr' ? this.props.data[1] + '\xa0' + this.props.currency : this.props.currency === 'Lei' ? this.props.data[1] + '\xa0' + this.props.currency : this.props.currency + '\xa0' + this.props.data[1]}`
+                                    : `Facturi care au mai putin de 3 zile ramase: ${this.props.currency === 'Fr' ? this.props.data[1] + '\xa0' + this.props.currency : this.props.currency === 'Lei' ? this.props.data[1] + '\xa0' + this.props.currency : this.props.currency + '\xa0' + this.props.data[1]}`
+                                }</Text>
+                    </View>
+                    <View style = {styles.itemView}>
+                            <View style = {[styles.circleView, {backgroundColor: '#98C2E9'}]}></View>
+                            <Text style = {language == 'EN' ? styles.legendTextEng : styles.legendTextRo}>{
+                            this.props.option == 'number' ?
+                                language ? `Bills that have more than 3 days left: ${this.props.data[2]}` : `Facturi care au mai mult de 3 zile ramase: ${this.props.data[2]}` 
+                            :
+                                language ? 
+                                    `Bills that have more than 3 days left: ${this.props.currency === 'Fr' ? this.props.data[2] + '\xa0' + this.props.currency : this.props.currency === 'Lei' ? this.props.data[2] + '\xa0' + this.props.currency : this.props.currency + '\xa0' + this.props.data[2]}`
+                                    : `Facturi care au mai mult de 3 zile ramase: ${this.props.currency === 'Fr' ? this.props.data[2] + '\xa0' + this.props.currency : this.props.currency === 'Lei' ? this.props.data[2] + '\xa0' + this.props.currency : this.props.currency + '\xa0' + this.props.data[2]}`
+                                }</Text>
                     </View>
                     <View style = {styles.itemView}>
                         <View style = {[styles.circleView, {backgroundColor: '#6A62C6'}]}></View>
-                        <Text style = {language == 'EN' ? styles.legendTextEng : styles.legendTextRo}>{language ? 'More then 3 days left' : 'Mai mult de 3 zile ramase'}</Text>
-                    </View>
-                </View>
-                <View style = {[styles.legendView, {justifyContent: 'center', alignItems: 'center', alignSelf: 'center', alignContent: 'center'}]}>
-                    <View style = {styles.itemView}>
-                            <View style = {[styles.circleView, {backgroundColor: '#98C2E9'}]}></View>
-                            <Text style = {language == 'EN' ? styles.legendTextEng : styles.legendTextRo}>{language ? 'More then 7 days left' : 'Mai mult de 7 zile ramase'}</Text>
+                        <Text style = {language == 'EN' ? styles.legendTextEng : styles.legendTextRo}>{
+                            this.props.option == 'number' ?
+                                language ? `Bills that have more than 7 days left: ${this.props.data[3]}` : `Facturi care au mai mult de 7 zile ramase: ${this.props.data[3]}` 
+                            :
+                                language ? 
+                                    `Bills that have more than 7 days left: ${this.props.currency === 'Fr' ? this.props.data[3] + '\xa0' + this.props.currency : this.props.currency === 'Lei' ? this.props.data[3] + '\xa0' + this.props.currency : this.props.currency + '\xa0' + this.props.data[3]}`
+                                    : `Facturi care au mai mult de 7 zile ramase: ${this.props.currency === 'Fr' ? this.props.data[3] + '\xa0' + this.props.currency : this.props.currency === 'Lei' ? this.props.data[3] + '\xa0' + this.props.currency : this.props.currency + '\xa0' + this.props.data[3]}`
+                                }</Text>
                     </View>
                     <View style = {styles.itemView}>
                             <View style = {[styles.circleView, {backgroundColor: '#28B463'}]}></View>
-                            <Text style = {language == 'EN' ? styles.legendTextEng : styles.legendTextRo}>{language ? 'Paid bill' : 'Facturi platite'}</Text>
+                            <Text style = {language == 'EN' ? styles.legendTextEng : styles.legendTextRo}>{
+                            this.props.option == 'number' ?
+                                language ? `Paid bills: ${this.props.data[4]}` : `Facturi platite: ${this.props.data[4]}` 
+                            :
+                                language ? 
+                                    `Paid bills: ${this.props.currency === 'Fr' ? this.props.data[4] + '\xa0' + this.props.currency : this.props.currency === 'Lei' ? this.props.data[4] + '\xa0' + this.props.currency : this.props.currency + '\xa0' + this.props.data[4]}`
+                                    : `Facturi platite: ${this.props.currency === 'Fr' ? this.props.data[4] + '\xa0' + this.props.currency : this.props.currency === 'Lei' ? this.props.data[4] + '\xa0' + this.props.currency : this.props.currency + '\xa0' + this.props.data[4]}`
+                                }</Text>
                     </View>
-                 </View>
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    legendView: {
-        flexDirection: 'row',
-        height: 12,
-        alignSelf: 'flex-start',
-        marginBottom: '5%',
-    },
     itemView: {
         alignItems: 'center',
         flexDirection: 'row',
-        justifyContent: 'center',
-        marginHorizontal: '5%'
+        marginHorizontal: '10%',
+        alignSelf: 'center'
     },
     circleView: {
-        width: 12,
-        height: 12, 
+        width: 30,
+        height: '75%', 
         borderRadius: 50,
     },
     legendTextEng: {
-        fontSize: 10,
+        fontSize: 11,
         marginLeft: '3%'
     },
     legendTextRo: {
-        fontSize: 9,
+        fontSize: 11,
         marginLeft: '2%'
     }
 })
