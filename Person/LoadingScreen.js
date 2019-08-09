@@ -23,8 +23,8 @@ export default class LoadingScreen extends Component{
                     source = {require('./images/logo-image.png')}
                     style = {styles.loadingImage} 
                 />
-                <ActivityIndicator size="large" color="#0489B1" />
-                <View style = {{alignItems: 'center', justifyContent: 'space-around', flexDirection: 'row'}}>
+                <ActivityIndicator size = 'small' color="#0489B1" />
+                <View style = {{alignItems: 'center', justifyContent: 'space-around', flexDirection: 'row', marginTop: '7%'}}>
                     <Text style = {{color: '#76ADD2', fontSize: 13, marginRight: 5}}>{this.state.language == 'EN' ? 'Do not forget to pay the bills before the deadline' : 'Nu uita sa iti platest facturile inainte de data scadenta'}</Text>
                     <Fontisto name = 'wink' color = '#76ADD2' size = {14}  />
                 </View>

@@ -4,7 +4,7 @@ import {View, Text, Picker} from 'react-native'
 export default class CurrencyPicker extends Component {
     render(){
         return(
-            <View style = {{flexDirection: 'row', alignItems: 'center', marginTop: 5}}>
+            <View style = {{flexDirection: 'row', alignItems: 'center', marginTop: 3}}>
                 <Text style = {{marginRight: 10, color: '#0489B1', fontSize: 20, fontWeight: 'bold'}}> {this.props.language == 'EN' ? 'Currency: ' : 'Valuta: '} </Text>
                 <Picker {...this.props} style = {{width: '30%'}} mode = 'dropdown'>
                     <Picker.Item label = 'CHF' value = 'Fr' key = 'Fr' />

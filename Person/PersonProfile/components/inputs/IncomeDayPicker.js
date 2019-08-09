@@ -50,7 +50,7 @@ const styles = StyleSheet.create ({
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
-        marginVertical: '2%',
+        marginVertical: 3,
         width: '50%'
     },
     dayInput: {
