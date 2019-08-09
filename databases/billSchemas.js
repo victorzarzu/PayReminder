@@ -92,7 +92,7 @@ export const paidAllBills = () => new Promise((resolve, reject) => { //functia p
                 allPrice += bill.price
             })
             queryProfile().then(profile => {
-                const price = profile.currency === 'Fr' ? allPrice + '\xa0' + profile.currency : profile.currency === 'Lei' ? allPrice + '\xa0' + profile.currency : profile.currency + '\xa0' + allPrice
+                const price = profile.currency === 'Fr' ? allPrice.toFixed(2) + '\xa0' + profile.currency : profile.currency === 'Lei' ? allPrice.toFixed(2) + '\xa0' + profile.currency : profile.currency + '\xa0' + allPrice.toFixed(2)
                 if(allBills.length == 0){
                     alert(profile.language == 'EN' ? 'You do not have any unpaid bills!' : 'Nu exista nicio factura neplatita!')
                 }else{
@@ -133,34 +133,32 @@ export const deleteAllBills = () => new Promise((resolve, reject) => { //sterger
     Realm.open(databaseOptions)
         .then(realm => {
             realm.write(() => {
-                let language = ''
-                queryProfile().then(profile => {
-                    language = profile.language
-                }).catch(error => {})
                 let allBills = realm.objects('Bill')
-                if(allBills.length == 0){
-                    alert(profile.language == 'EN' ? 'You do not have any unpaid bills!' : 'Nu exista nicio factura neplatita!')
-                }else{
-                    Alert.alert(
-                        profile.language == 'EN' ? `Delete all bills` : 'Sterge toate facturile',
-                        profile.language == 'EN' ? `Are you sure you want to delete all your unpaid bills?` : 'Esti sigur ca vrei sa stergi toate facturile?',
-                        [
-                            {
-                                text: profile.language == 'EN' ? 'No' : 'Nu',
-                                onPress: () => {}
-                            },
-                            {
-                                text: profile.language == 'EN' ? 'Yes' : 'Da',
-                                onPress: () => {
-                                    allBills.forEach(bill => {
-                                        deleteBill(bill).then().catch(error => {})
-                                    })
+                queryProfile().then(profile => {
+                    if(allBills.length == 0){
+                        alert(profile.language == 'EN' ? 'You do not have any unpaid bills!' : 'Nu exista nicio factura neplatita!')
+                    }else{
+                        Alert.alert(
+                            profile.language == 'EN' ? `Delete all bills` : 'Sterge toate facturile',
+                            profile.language == 'EN' ? `Are you sure you want to delete all your unpaid bills?` : 'Esti sigur ca vrei sa stergi toate facturile?',
+                            [
+                                {
+                                    text: profile.language == 'EN' ? 'No' : 'Nu',
+                                    onPress: () => {}
+                                },
+                                {
+                                    text: profile.language == 'EN' ? 'Yes' : 'Da',
+                                    onPress: () => {
+                                        allBills.forEach(bill => {
+                                            deleteBill(bill).then().catch(error => {})
+                                        })
+                                    }
                                 }
-                            }
-                        ],
-                        { cancelable: true }
-                    )
-                }
+                            ],
+                            { cancelable: true }
+                        )
+                    }
+                }).catch(error => {})
                 resolve()
             })
         }).catch(error => reject(error))

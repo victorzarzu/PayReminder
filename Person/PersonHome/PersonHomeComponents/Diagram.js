@@ -89,11 +89,11 @@ export default class Diagram extends Component{
             { name: this.props.language == 'EN' ? 'bill(s)' : 'facturi', number: this.state.paidBillsNumber,price: this.state.paidBillsPrice, color: '#28B463', legendFontColor: '#7F7F7F', legendFontSize: 27- String(this.state.paidBillsNumber).length }
           ]
           const data1 = [
-            { name: `${this.props.currency}`, number: this.state.expiredBillsNumber,price: this.state.expiredBillsPrice, color: '#D34354', legendFontColor: '#7F7F7F', legendFontColor: '#7F7F7F', legendFontSize: 27 - String(this.state.expiredBillsPrice).length },
-            { name: `${this.props.currency}`, number: this.state.lt3BillsNumber,price: this.state.lt3BillsPrice, color: '#D67FA3', legendFontColor: '#7F7F7F', legendFontSize: 27 - String(this.state.lt3BillsPrice).length },
-            { name: `${this.props.currency}`, number: this.state.mt3BillsNumber,price: this.state.mt3BillsPrice, color: '#6A62C6', legendFontColor: '#7F7F7F', legendFontSize: 27 - String(this.state.mt3BillsPrice).length },
-            { name: `${this.props.currency}`, number: this.state.mt7BillsNumber,price: this.state.mt7BillsPrice, color: '#98C2E9', legendFontColor: '#7F7F7F', legendFontSize: 27 - String(this.state.mt7BillsPrice).length },
-            { name: `${this.props.currency}`, number: this.state.paidBillsNumber,price: this.state.paidBillsPrice, color: '#28B463', legendFontColor: '#7F7F7F', legendFontSize: 27 - String(this.state.paidBillsPrice).length }
+            { name: `${this.props.currency}`, number: this.state.expiredBillsNumber,price: this.state.expiredBillsPrice.toFixed(2), color: '#D34354', legendFontColor: '#7F7F7F', legendFontColor: '#7F7F7F', legendFontSize: 27 - String(this.state.expiredBillsPrice).length },
+            { name: `${this.props.currency}`, number: this.state.lt3BillsNumber,price: this.state.lt3BillsPrice.toFixed(2), color: '#D67FA3', legendFontColor: '#7F7F7F', legendFontSize: 27 - String(this.state.lt3BillsPrice).length },
+            { name: `${this.props.currency}`, number: this.state.mt3BillsNumber,price: this.state.mt3BillsPrice.toFixed(2), color: '#6A62C6', legendFontColor: '#7F7F7F', legendFontSize: 27 - String(this.state.mt3BillsPrice).length },
+            { name: `${this.props.currency}`, number: this.state.mt7BillsNumber,price: this.state.mt7BillsPrice.toFixed(2), color: '#98C2E9', legendFontColor: '#7F7F7F', legendFontSize: 27 - String(this.state.mt7BillsPrice).length },
+            { name: `${this.props.currency}`, number: this.state.paidBillsNumber,price: this.state.paidBillsPrice.toFixed(2), color: '#28B463', legendFontColor: '#7F7F7F', legendFontSize: 27 - String(this.state.paidBillsPrice).length }
           ]
         return(
              shouldReturn ?
