@@ -185,84 +185,84 @@ export default class EditDialog extends Component{
                                 </TouchableOpacity>
                             </View>
                             {this.props.bill.barcode.value == '' ? null :
-                            <View style = {{justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row'}}>
-                                <Text style = {{fontSize: 14, color:'#05295B'}}>{this.props.language == 'EN' ? "Bill's barcode:" : 'Codul de bare:'}</Text>
-                                <Modal
-                                    visible = {this.state.barcodeVisible}
-                                    onRequestClose = {() => this.setState({barcodeVisible: false})}
-                                >
-                                    <View style = {{flex: 1}}>
-                                            <TouchableOpacity
-                                                onPress = {() => this.setState({barcodeVisible: false})}
-                                                style = {{margin: 10}}
-                                            >
-                                                <AntDesign 
-                                                    name = 'close'
-                                                    size = {25}
-                                                    color = 'black'
-                                                />
-                                            </TouchableOpacity>
-                                            <View style = {{justifyContent: 'center', alignItems: 'center', flex: 9}}>
-                                                <Barcode 
-                                                    value = {this.state.barcodeValue}
-                                                    format = {this.state.barcodeFormat}
-                                                    width = {this.state.barcodeFormat.includes('CODE') ? 1.9 : 2.5}
-                                                    flat
-                                                    text = {this.state.barcodeValue}
-                                                />
-                                            </View>
-                                    </View>
-                                </Modal>
-                                <TouchableOpacity
-                                    onPress = {() => this.setState({barcodeVisible: true})}
-                                >
-                                        <Barcode 
-                                            value = {this.state.barcodeValue}
-                                            format = {this.state.barcodeFormat}
-                                            width = {this.state.barcodeFormat.includes('CODE') ? 0.4 : 0.6}
-                                            height = {25}
-                                            flat
-                                            background = '#D4E6FF'
-                                        />
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    onPress = {() => {
-                                        this.setState({scanVisible: true})
-                                    }}
-                                >
-                                    <Text style = {{color: '#0489B1', fontSize: 14}}>{this.props.language == 'EN' ? "Modify" : 'Modifica'}</Text>
-                                </TouchableOpacity>
-                                <Modal
-                                        visible = {this.state.scanVisible}
-                                        onRequestClose = {() => this.setState({scanVisible: false})}
-                                        animationType = 'slide'
+                                <View style = {{justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row'}}>
+                                    <Text style = {{fontSize: 14, color:'#05295B'}}>{this.props.language == 'EN' ? "Bill's barcode:" : 'Codul de bare:'}</Text>
+                                    <Modal
+                                        visible = {this.state.barcodeVisible}
+                                        onRequestClose = {() => this.setState({barcodeVisible: false})}
                                     >
-                                        <View style={styles.container}>
-                                            <RNCamera
-                                                ref={ref => {
-                                                    this.camera = ref;
-                                                }}
-                                                defaultTouchToFocus
-                                                flashMode={this.state.camera.flashMode}
-                                                mirrorImage={false}
-                                                onBarCodeRead={this.onBarCodeRead.bind(this)}
-                                                style={styles.preview}
-                                                type={this.state.camera.type}
-                                            />
-                                            <View style={[styles.overlay, styles.topOverlay]}>
+                                        <View style = {{flex: 1}}>
                                                 <TouchableOpacity
-                                                    onPress = {() => this.setState({scanVisible: false})}
+                                                    onPress = {() => this.setState({barcodeVisible: false})}
+                                                    style = {{margin: 10}}
                                                 >
                                                     <AntDesign 
                                                         name = 'close'
                                                         size = {25}
-                                                        color ='white'
+                                                        color = 'black'
                                                     />
                                                 </TouchableOpacity>
-                                            </View>
+                                                <View style = {{justifyContent: 'center', alignItems: 'center', flex: 9}}>
+                                                    <Barcode 
+                                                        value = {this.state.barcodeValue}
+                                                        format = {this.state.barcodeFormat}
+                                                        width = {this.state.barcodeFormat.includes('CODE') ? 1.9 : 2.5}
+                                                        flat
+                                                        text = {this.state.barcodeValue}
+                                                    />
+                                                </View>
                                         </View>
                                     </Modal>
-                            </View>
+                                    <TouchableOpacity
+                                        onPress = {() => this.setState({barcodeVisible: true})}
+                                    >
+                                            <Barcode 
+                                                value = {this.state.barcodeValue}
+                                                format = {this.state.barcodeFormat}
+                                                width = {this.state.barcodeFormat.includes('CODE') ? 0.4 : 0.6}
+                                                height = {25}
+                                                flat
+                                                background = '#D4E6FF'
+                                            />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity
+                                        onPress = {() => {
+                                            this.setState({scanVisible: true})
+                                        }}
+                                    >
+                                        <Text style = {{color: '#0489B1', fontSize: 14}}>{this.props.language == 'EN' ? "Modify" : 'Modifica'}</Text>
+                                    </TouchableOpacity>
+                                    <Modal
+                                            visible = {this.state.scanVisible}
+                                            onRequestClose = {() => this.setState({scanVisible: false})}
+                                            animationType = 'slide'
+                                        >
+                                            <View style={styles.container}>
+                                                <RNCamera
+                                                    ref={ref => {
+                                                        this.camera = ref;
+                                                    }}
+                                                    defaultTouchToFocus
+                                                    flashMode={this.state.camera.flashMode}
+                                                    mirrorImage={false}
+                                                    onBarCodeRead={this.onBarCodeRead.bind(this)}
+                                                    style={styles.preview}
+                                                    type={this.state.camera.type}
+                                                />
+                                                <View style={[styles.overlay, styles.topOverlay]}>
+                                                    <TouchableOpacity
+                                                        onPress = {() => this.setState({scanVisible: false})}
+                                                    >
+                                                        <AntDesign 
+                                                            name = 'close'
+                                                            size = {25}
+                                                            color ='white'
+                                                        />
+                                                    </TouchableOpacity>
+                                                </View>
+                                            </View>
+                                        </Modal>
+                                </View>
                             }
                         </KeyboardAvoidingView>
                     </DialogContent>
