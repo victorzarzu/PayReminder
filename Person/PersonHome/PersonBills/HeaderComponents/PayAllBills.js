@@ -7,7 +7,7 @@ export default class PayAllBills extends Component{
     render(){
         return(
             <TouchableOpacity
-                style = {{paddingRight: 10}}    
+                style = {{marginRight: '5%'}}    
                 onPress = {() => paidAllBills().then().catch(error => alert(`Can not pay all your bills: ${error}`))} //platirea tuturor facturilor
             >
                 <Image 

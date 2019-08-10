@@ -7,7 +7,7 @@ export default class DeleteAllBills extends Component{
         return(
                 <TouchableOpacity
                     onPress = {() => deleteAllBills().then().catch(error => alert(`Deleting all bills failed: ${error}`))} //stergerea tuturor facturilor
-                    style = {{paddingRight: 10}}
+                    style = {{marginRight: '5%'}}
                 >
                     <Image source = {require('../images/delete-all-icon.png')} style = {styles.deleteImage } />
                 </TouchableOpacity>

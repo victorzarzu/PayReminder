@@ -138,13 +138,10 @@ export default class Bill extends Component{
 }
 
 const styles = StyleSheet.create({
-    swipeoutStyle1: {
-        borderRadius: 25, 
-        marginVertical: 3,
-    },
     billView: {
         height: 127,
-        marginBottom: 10
+        marginBottom: 10,
+        width: '100%'
     },
     contentBillView: {
         backgroundColor: '#EFEBEB'

@@ -28,9 +28,8 @@ export default class AddBill extends Component{
             camera: {
                 type: RNCamera.Constants.Type.back,
                 flashMode: RNCamera.Constants.FlashMode.auto,
-              }
+            }
         }
-        this.onLayoutChange = this.onLayoutChange.bind(this)
     }
 
     setDateAndroid = async () => { //alegerea datei pentru plata facturii
@@ -71,10 +70,6 @@ export default class AddBill extends Component{
         }
       };
 
-      onLayoutChange(event) { //dimensiunile in functie de modul de orientare a ecranului
-        const {width, height} = event.nativeEvent.layout;
-        this.setState({width,height})
-    }
 
     onBarCodeRead(scanResult) {
         this.setState({barcodeValue: scanResult.data, barcodeFormat: scanResult.type, scanVisible: false})
@@ -82,10 +77,9 @@ export default class AddBill extends Component{
 
     render() {
         return(
-            <View onLayout={this.onLayoutChange} style = {{justifyContent: 'center', alignItems: 'center'}}>
+            <View style = {{justifyContent: 'center', alignItems: 'center', marginRight: '5%'}}>
                 <TouchableOpacity
                     onPress = {() => this.setState({addVisible: true}) /* deschiderea modului de adaugare a facturii */}
-                    style = {{marginRight: 10}}
                 >
                     <Image 
                         source = {require('../images/add-icon.png')}
@@ -98,6 +92,7 @@ export default class AddBill extends Component{
                         slideFrom: 'top',
                     })}
                     width = {0.85}
+                    height = {100}
                     rounded
                     onTouchOutside = {() => this.setState({addVisible: false})}
                     dialogStyle = {styles.addDialog}

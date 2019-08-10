@@ -4,7 +4,6 @@ import profileRealm, {queryProfile} from '../../../databases/profileSchemas'
 
 import BillList from './BillList'
 import BillHeader from './BillHeader'
-import BillLegend from './BillLegend'
 
 export default class PersonBills extends React.Component {
     constructor(props){
@@ -36,9 +35,6 @@ export default class PersonBills extends React.Component {
             <View style={styles.billsView}>
                 <BillHeader 
                     navigateToHome = {() => this.props.navigation.navigate('Home')} /* navigarea din bills in home */ 
-                    language = {this.state.language}
-                />
-                <BillLegend 
                     language = {this.state.language}
                 />
                 <BillList
