@@ -94,6 +94,7 @@ export default class EditDialog extends Component{
                         textStyle = {{color: '#05295B', fontSize: 14}} 
                         bordered = {false} 
                         style = {{backgroundColor: '#D4E6FF'}}
+                        hasTitleBar = {false}
                     />}
                     footer={
                         <DialogFooter

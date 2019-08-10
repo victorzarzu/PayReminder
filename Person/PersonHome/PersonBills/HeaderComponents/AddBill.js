@@ -100,6 +100,7 @@ export default class AddBill extends Component{
                         textStyle = {{color: '#05295B'}}
                         bordered = {false} 
                         style = {{backgroundColor: '#D4E6FF'}}
+                        hasTitleBar = {false}
                          />}
                     footer={
                         <DialogFooter
