@@ -28,7 +28,7 @@ export default class DiagramLegend extends Component{
                                 }</Text>
                     </View>
                     <View style = {styles.itemView}>
-                            <View style = {[styles.circleView, {backgroundColor: '#98C2E9'}]}></View>
+                            <View style = {[styles.circleView, {backgroundColor: '#6A62C6'}]}></View>
                             <Text style = {language == 'EN' ? styles.legendTextEng : styles.legendTextRo}>{
                             this.props.option == 'number' ?
                                 language ? `Bills that have more than 3 days left: ${this.props.data[2]}` : `Facturi care au mai mult de 3 zile ramase: ${this.props.data[2]}` 
@@ -39,7 +39,7 @@ export default class DiagramLegend extends Component{
                                 }</Text>
                     </View>
                     <View style = {styles.itemView}>
-                        <View style = {[styles.circleView, {backgroundColor: '#6A62C6'}]}></View>
+                        <View style = {[styles.circleView, {backgroundColor: '#98C2E9'}]}></View>
                         <Text style = {language == 'EN' ? styles.legendTextEng : styles.legendTextRo}>{
                             this.props.option == 'number' ?
                                 language ? `Bills that have more than 7 days left: ${this.props.data[3]}` : `Facturi care au mai mult de 7 zile ramase: ${this.props.data[3]}` 

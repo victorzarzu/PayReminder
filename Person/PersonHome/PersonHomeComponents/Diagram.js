@@ -49,7 +49,7 @@ export default class Diagram extends Component{
                         mt3BillsPrice: prevState.mt3BillsPrice + bill.price
                     }))
                 }
-                if(leftDays < 3 && leftDays > 0){
+                if(leftDays < 3 && leftDays >= 0){
                     this.setState(prevState => ({
                         lt3BillsNumber: prevState.lt3BillsNumber + 1,
                         lt3BillsPrice: prevState.lt3BillsPrice + bill.price
