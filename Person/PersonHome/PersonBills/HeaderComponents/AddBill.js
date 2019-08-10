@@ -77,9 +77,10 @@ export default class AddBill extends Component{
 
     render() {
         return(
-            <View style = {{justifyContent: 'center', alignItems: 'center', marginRight: '5%'}}>
+            <View style = {{justifyContent: 'center', alignItems: 'center'}}>
                 <TouchableOpacity
                     onPress = {() => this.setState({addVisible: true}) /* deschiderea modului de adaugare a facturii */}
+                    style = {{paddingRight: 10}}
                 >
                     <Image 
                         source = {require('../images/add-icon.png')}
@@ -92,7 +93,6 @@ export default class AddBill extends Component{
                         slideFrom: 'top',
                     })}
                     width = {0.85}
-                    height = {100}
                     rounded
                     onTouchOutside = {() => this.setState({addVisible: false})}
                     dialogStyle = {styles.addDialog}

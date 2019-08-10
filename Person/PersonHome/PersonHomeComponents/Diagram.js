@@ -92,7 +92,7 @@ export default class Diagram extends Component{
             }))
         return(
             shouldReturn ?
-                <View style = {{flex: 1, justifyContent: 'center', marginTop: '5%'}}>
+                <View style = {{flex: 1, justifyContent: 'center'}}>
                     <PieChart
                         style = { { height: 200 } }
                         data = { this.state.option == 'number' ? pieDataNumber : pieDataPrice }

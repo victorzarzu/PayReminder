@@ -89,31 +89,6 @@ const styles = StyleSheet.create({
     },
     legendText: {
         fontSize: 11,
-        marginBottom: '3%'
+        marginBottom: '2.5%'
     }
 })
-
-/* 
-                        <View style = {{justifyContent: 'center', alignItems: 'center'}}>
-                            <View style = {[styles.itemView, {flex: 2}]}>
-                                <View style = {[styles.circleView, {backgroundColor: '#D34354'}]}>
-                                </View>
-                                <Text style = {styles.legendText}>{this.props.language == 'EN' ? 'Time expired' : 'Timp expirat'}</Text>
-                            </View>
-                            <View style = {[styles.itemView, {flex: 2}]}>
-                                <View style = {[styles.circleView, {backgroundColor: '#D67FA3'}]}>
-                                </View>
-                                <Text style = {styles.legendText}>{this.props.language == 'EN' ? 'Less then 3 days left' : 'Mai putin de 3 zile ramase'}</Text>
-                            </View>
-                            <View style = {[styles.itemView, {flex: 2}]}>
-                                <View style = {[styles.circleView, {backgroundColor: '#6A62C6'}]}>
-                                </View>
-                                <Text style = {styles.legendText}>{this.props.language == 'EN' ? 'More then 3 days left' : 'Mai mult de 3 zile ramase'}</Text>
-                            </View>
-                            <View style = {[styles.itemView, {flex: 2}]}>
-                                <View style = {[styles.circleView, {backgroundColor: '#98C2E9'}]}>
-                                </View>
-                                <Text style = {styles.legendText}>{this.props.language == 'EN' ? 'More then 7 days left' : 'Mai mult de 7 zile ramase'}</Text>
-                            </View>
-                        </View>
-*/

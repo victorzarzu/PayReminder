@@ -35,7 +35,7 @@ export default class PersonHome extends React.Component {
             this.setState({
                 currency: profile.currency,
                 funds: profile.funds,
-                size: 46 - String(profile.funds).length,
+                size: 45 - String(profile.funds).length,
                 language: profile.language,
                 isViewed: true
             })
