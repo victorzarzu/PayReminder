@@ -90,7 +90,6 @@ class PersonProfile extends React.Component {
         return(
             <ScrollView 
                 style = {{backgroundColor: '#DFDFDF', flex: 1, height: '100%'}}
-                contentContainerStyle = {{height: '100%', justifyContent: 'space-around'}}
             >
                 <KeyboardAvoidingView style = {styles.personView} enabled>
                         <Image style={styles.profileImage} source={this.state.gender === 'Female' ? require('./components/femaleAvatar.png')  : require('./components/maleAvatar.png')} />
