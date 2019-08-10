@@ -20,33 +20,33 @@ export default class DiagramLegend extends Component{
                         <View style = {[styles.circleView, {backgroundColor: '#D67FA3'}]}></View>
                         <Text style = {language == 'EN' ? styles.legendTextEng : styles.legendTextRo}>{
                             this.props.option == 'number' ?
-                                language ? `Bills that have less than 3 days left: ${this.props.data[1]}` : `Facturi care au mai putin de 3 zile ramase: ${this.props.data[1]}` 
+                                language ? `Bills with deadline under 3 days: ${this.props.data[1]}` : `Facturi scadente in mai putin de 3 zile: ${this.props.data[1]}` 
                             :
                                 language ? 
-                                    `Bills that have less than 3 days left: ${this.props.currency === 'Fr' ? this.props.data[1] + '\xa0' + this.props.currency : this.props.currency === 'Lei' ? this.props.data[1] + '\xa0' + this.props.currency : this.props.currency + '\xa0' + this.props.data[1]}`
-                                    : `Facturi care au mai putin de 3 zile ramase: ${this.props.currency === 'Fr' ? this.props.data[1] + '\xa0' + this.props.currency : this.props.currency === 'Lei' ? this.props.data[1] + '\xa0' + this.props.currency : this.props.currency + '\xa0' + this.props.data[1]}`
+                                    `Bills with deadline under 3 days: ${this.props.currency === 'Fr' ? this.props.data[1] + '\xa0' + this.props.currency : this.props.currency === 'Lei' ? this.props.data[1] + '\xa0' + this.props.currency : this.props.currency + '\xa0' + this.props.data[1]}`
+                                    : `Facturi scadente in mai putin de 3 zile: ${this.props.currency === 'Fr' ? this.props.data[1] + '\xa0' + this.props.currency : this.props.currency === 'Lei' ? this.props.data[1] + '\xa0' + this.props.currency : this.props.currency + '\xa0' + this.props.data[1]}`
                                 }</Text>
                     </View>
                     <View style = {styles.itemView}>
                             <View style = {[styles.circleView, {backgroundColor: '#6A62C6'}]}></View>
                             <Text style = {language == 'EN' ? styles.legendTextEng : styles.legendTextRo}>{
                             this.props.option == 'number' ?
-                                language ? `Bills that have more than 3 days left: ${this.props.data[2]}` : `Facturi care au mai mult de 3 zile ramase: ${this.props.data[2]}` 
+                                language ? `Bills with deadline over 3 days: ${this.props.data[2]}` : `Facturi scadente in mai mult de 3 zile: ${this.props.data[2]}` 
                             :
                                 language ? 
-                                    `Bills that have more than 3 days left: ${this.props.currency === 'Fr' ? this.props.data[2] + '\xa0' + this.props.currency : this.props.currency === 'Lei' ? this.props.data[2] + '\xa0' + this.props.currency : this.props.currency + '\xa0' + this.props.data[2]}`
-                                    : `Facturi care au mai mult de 3 zile ramase: ${this.props.currency === 'Fr' ? this.props.data[2] + '\xa0' + this.props.currency : this.props.currency === 'Lei' ? this.props.data[2] + '\xa0' + this.props.currency : this.props.currency + '\xa0' + this.props.data[2]}`
+                                    `Bills with deadline over 3 days: ${this.props.currency === 'Fr' ? this.props.data[2] + '\xa0' + this.props.currency : this.props.currency === 'Lei' ? this.props.data[2] + '\xa0' + this.props.currency : this.props.currency + '\xa0' + this.props.data[2]}`
+                                    : `Facturi scadente in mai mult de 3 zile: ${this.props.currency === 'Fr' ? this.props.data[2] + '\xa0' + this.props.currency : this.props.currency === 'Lei' ? this.props.data[2] + '\xa0' + this.props.currency : this.props.currency + '\xa0' + this.props.data[2]}`
                                 }</Text>
                     </View>
                     <View style = {styles.itemView}>
                         <View style = {[styles.circleView, {backgroundColor: '#98C2E9'}]}></View>
                         <Text style = {language == 'EN' ? styles.legendTextEng : styles.legendTextRo}>{
                             this.props.option == 'number' ?
-                                language ? `Bills that have more than 7 days left: ${this.props.data[3]}` : `Facturi care au mai mult de 7 zile ramase: ${this.props.data[3]}` 
+                                language ? `Bills with deadline over 7 days: ${this.props.data[3]}` : `Facturi scadente in mai mult de 7 zile: ${this.props.data[3]}` 
                             :
                                 language ? 
-                                    `Bills that have more than 7 days left: ${this.props.currency === 'Fr' ? this.props.data[3] + '\xa0' + this.props.currency : this.props.currency === 'Lei' ? this.props.data[3] + '\xa0' + this.props.currency : this.props.currency + '\xa0' + this.props.data[3]}`
-                                    : `Facturi care au mai mult de 7 zile ramase: ${this.props.currency === 'Fr' ? this.props.data[3] + '\xa0' + this.props.currency : this.props.currency === 'Lei' ? this.props.data[3] + '\xa0' + this.props.currency : this.props.currency + '\xa0' + this.props.data[3]}`
+                                    `Bills with deadline over 7 days: ${this.props.currency === 'Fr' ? this.props.data[3] + '\xa0' + this.props.currency : this.props.currency === 'Lei' ? this.props.data[3] + '\xa0' + this.props.currency : this.props.currency + '\xa0' + this.props.data[3]}`
+                                    : `Facturi scadente in mai mult de 7 zile: ${this.props.currency === 'Fr' ? this.props.data[3] + '\xa0' + this.props.currency : this.props.currency === 'Lei' ? this.props.data[3] + '\xa0' + this.props.currency : this.props.currency + '\xa0' + this.props.data[3]}`
                                 }</Text>
                     </View>
                     <View style = {styles.itemView}>
