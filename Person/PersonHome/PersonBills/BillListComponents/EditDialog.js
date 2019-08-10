@@ -91,7 +91,7 @@ export default class EditDialog extends Component{
                     dialogStyle = {styles.editDialog}
                     dialogTitle = {<DialogTitle 
                         title = {this.props.language == "EN" ? `Edit ${this.props.bill.name} bill` : `Editeaza factura ${this.props.bill.name}`} 
-                        textStyle = {{color: '#05295B', fontSize: 16}} 
+                        textStyle = {{color: '#05295B', fontSize: 14}} 
                         bordered = {false} 
                         style = {{backgroundColor: '#D4E6FF'}}
                     />}
@@ -146,7 +146,7 @@ export default class EditDialog extends Component{
                     <DialogContent>
                         <KeyboardAvoidingView style = {styles.editModal}>
                             <View style = {[styles.editRowView]}>
-                                <Text style = {{fontSize: 16, color:'#05295B'}}> {this.props.language == 'EN' ? "Bill's name:" : 'Numele facturii:'} </Text>
+                                <Text style = {{fontSize: 14, color:'#05295B'}}> {this.props.language == 'EN' ? "Bill's name:" : 'Numele facturii:'} </Text>
                                 <TextInput
                                     placeholder = {this.props.language == 'EN' ? "Type a name..." : 'Introdu un nume...'}
                                     textAlign = 'center'
@@ -154,10 +154,12 @@ export default class EditDialog extends Component{
                                     maxLength = {18} 
                                     value = {this.state.name}
                                     onChangeText = {name => this.setState({name})}
+                                    textAlign = 'center'
+                                    textAlignVertical = 'center'
                                 />
                             </View>
                             <View style = {[styles.editRowView]}>
-                                <Text style = {{fontSize: 16, color:'#05295B'}}>{this.props.language == 'EN' ? "Bill's price:" : 'Pretul facturii:'}</Text>
+                                <Text style = {{fontSize: 14, color:'#05295B'}}>{this.props.language == 'EN' ? "Bill's price:" : 'Pretul facturii:'}</Text>
                                 <TextInput
                                     placeholder = {this.props.language == 'EN' ? "Type a price...": 'Introdu un pret...'}
                                     textAlign = 'center'
@@ -166,23 +168,25 @@ export default class EditDialog extends Component{
                                     keyboardType = 'numeric'
                                     value = {String(this.state.price)}
                                     onChangeText = {price => this.setState({price})}
+                                    textAlign = 'center'
+                                    textAlignVertical = 'center'
                                 />
                                 <Text>{this.props.currency}</Text>
                             </View>
                             <View style = {[styles.editRowView, {marginVertical: 5}]}>
-                                <Text style = {{fontSize: 16, color:'#05295B'}}>{this.props.language == 'EN' ? "Deadline:" : 'Data scandenta:'} {`${this.state.payDateDay}/${this.state.payDateMonth}/${this.state.payDateYear}`}</Text>
+                                <Text style = {{fontSize: 14, color:'#05295B'}}>{this.props.language == 'EN' ? "Deadline:" : 'Data scandenta:'} {`${this.state.payDateDay}/${this.state.payDateMonth}/${this.state.payDateYear}`}</Text>
                                 <TouchableOpacity onPress = {this.setDateAndroid}>
-                                    <Text style = {{color: '#0489B1', fontSize: 16}}>{this.props.language == 'EN' ? "Change deadline" : 'Schimba'}</Text>
+                                    <Text style = {{color: '#0489B1', fontSize: 14}}>{this.props.language == 'EN' ? "Change deadline" : 'Schimba'}</Text>
                                 </TouchableOpacity>
                             </View>
                             <View style = {[styles.editRowView, {marginVertical: 5}]}>
-                                <Text style = {{fontSize: 16, color:'#05295B'}}>{this.props.language == 'EN' ? "Pay time:" : 'Ora de plata:'} {`${this.state.payDateHour}:${this.state.payDateMinute <= 9 ? String('0' + this.state.payDateMinute) : this.state.payDateMinute}`}</Text>
+                                <Text style = {{fontSize: 14, color:'#05295B'}}>{this.props.language == 'EN' ? "Pay time:" : 'Ora de plata:'} {`${this.state.payDateHour}:${this.state.payDateMinute <= 9 ? String('0' + this.state.payDateMinute) : this.state.payDateMinute}`}</Text>
                                 <TouchableOpacity onPress = {this.setTimeAndroid}>
-                                    <Text style = {{color: '#0489B1', fontSize: 16}}>{this.props.language == 'EN' ? "Change pay time" : 'Schimba ora'}</Text>
+                                    <Text style = {{color: '#0489B1', fontSize: 14}}>{this.props.language == 'EN' ? "Change pay time" : 'Schimba ora'}</Text>
                                 </TouchableOpacity>
                             </View>
                             <View style = {{justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row'}}>
-                                <Text style = {{fontSize: 16, color:'#05295B'}}>{this.props.language == 'EN' ? "Bill's barcode" : 'Codul de bare'}</Text>
+                                <Text style = {{fontSize: 14, color:'#05295B'}}>{this.props.language == 'EN' ? "Bill's barcode:" : 'Codul de bare:'}</Text>
                                 <Modal
                                     visible = {this.state.barcodeVisible}
                                     onRequestClose = {() => this.setState({barcodeVisible: false})}
@@ -226,7 +230,7 @@ export default class EditDialog extends Component{
                                         this.setState({scanVisible: true})
                                     }}
                                 >
-                                    <Text style = {{color: '#0489B1', fontSize: 16}}>{this.props.language == 'EN' ? "Modify" : 'Modifica'}</Text>
+                                    <Text style = {{color: '#0489B1', fontSize: 14}}>{this.props.language == 'EN' ? "Modify" : 'Modifica'}</Text>
                                 </TouchableOpacity>
                                 <Modal
                                         visible = {this.state.scanVisible}

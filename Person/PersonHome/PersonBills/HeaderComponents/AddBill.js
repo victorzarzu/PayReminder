@@ -186,22 +186,26 @@ export default class AddBill extends Component{
                         <View style = {[styles.modalView]}>
                             <View style = {styles.addFormView}>
                                 <View style = {{alignItems: 'center', justifyContent: 'space-around', flexDirection: 'row'}}>
-                                    <Text style = {{fontSize: 16, color:'#05295B', right: '40%'}}>{this.props.language == 'EN' ? "Bill's name:" : 'Numele facturii:'}</Text>
+                                    <Text style = {{fontSize: 14, color:'#05295B', right: '40%'}}>{this.props.language == 'EN' ? "Bill's name:" : 'Numele facturii:'}</Text>
                                     <TextInput
                                         value = {this.state.name} 
                                         placeholder = {this.props.language == 'EN' ? "Type a name..." : 'Introdu un nume...'}
                                         onChangeText = {name => this.setState({name})}
                                         maxLength = {21}
+                                        textAlign = 'center'
+                                        textAlignVertical = 'center'
                                     />
                                 </View>
                                 <View style = {{alignItems: 'center', justifyContent: 'space-evenly', flexDirection: 'row'}}>
-                                    <Text style = {{fontSize: 16, color:'#05295B', right: '40%'}}>{this.props.language == 'EN' ? "Bill's price:" : 'Pretul facturii:'}</Text>
+                                    <Text style = {{fontSize: 14, color:'#05295B', right: '40%'}}>{this.props.language == 'EN' ? "Bill's price:" : 'Pretul facturii:'}</Text>
                                     <TextInput
                                         keyboardType = "numeric"
                                         placeholder = {this.props.language == 'EN' ? "Type a price...": 'Introdu un pret...'}
                                         value = {this.state.price}
                                         onChangeText = {price => this.setState({price})}
                                         maxLength = {15}
+                                        textAlign = 'center'
+                                        textAlignVertical = 'center'
                                     />
                                 </View>
                                 <View style = {{flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center'}}>
