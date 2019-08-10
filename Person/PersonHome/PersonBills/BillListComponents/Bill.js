@@ -41,6 +41,7 @@ export default class Bill extends Component{
                         </View>
                     </View>
                     <View style = {styles.buttonView}>
+                    {this.props.bill.barcode.value == '' ? null :
                         <Modal
                             visible = {this.state.barcodeVisible}
                             onRequestClose = {() => this.setState({barcodeVisible: false})}
@@ -67,15 +68,18 @@ export default class Bill extends Component{
                                     </View>
                             </View>
                         </Modal>
-                        <TouchableOpacity
-                            onPress = {() => this.setState({barcodeVisible: true})}
-                        >
-                            <FontAwesome 
-                                color = {color}
-                                size = {33}
-                                name = 'barcode'
-                            />
-                        </TouchableOpacity>
+                        }
+                        {this.props.bill.barcode.value == '' ? null :
+                            <TouchableOpacity
+                                onPress = {() => this.setState({barcodeVisible: true})}
+                            >
+                                <FontAwesome 
+                                    color = {color}
+                                    size = {33}
+                                    name = 'barcode'
+                                />
+                            </TouchableOpacity>
+                        }
                         <EditDialog 
                             bill = {this.props.bill} 
                             color = {leftDays < 0 ? '#D34354' : color}

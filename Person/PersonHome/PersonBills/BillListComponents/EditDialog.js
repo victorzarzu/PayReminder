@@ -93,7 +93,7 @@ export default class EditDialog extends Component{
                         title = {this.props.language == "EN" ? `Edit ${this.props.bill.name} bill` : `Editeaza factura ${this.props.bill.name}`} 
                         textStyle = {{color: '#05295B', fontSize: 14}} 
                         bordered = {false} 
-                        style = {{backgroundColor: '#D4E6FF'}}
+                        style = {{backgroundColor: '#D4E6FF', height: 20}}
                         hasTitleBar = {false}
                     />}
                     footer={
@@ -124,10 +124,7 @@ export default class EditDialog extends Component{
                                     this.props.language == 'EN' ? alert('Please choose a deadline for the bill') : alert('Alege o data scadenta pentru factura')
                                 }else if(this.state.payDateHour != 0 && this.state.payDateHour == ''){  // se verifica ora de plata
                                     this.props.language == 'EN' ? alert('Please choose a pay time for the bill') : alert('Alege o ora de plata pentru factura')
-                                }else if(this.state.barcodeValue == null){
-                                    this.props.language == 'EN' ? alert('Please scan a valid barcode') : alert('Scaneaza un cod de bare valid')
-                                }
-                                else {
+                                }else {
                                     //se editeaza in baza de date si se inchide modul de editare
                                     this.setState({isVisible: false, barcodeVisible: false})
                                     const editbill = {
@@ -171,6 +168,7 @@ export default class EditDialog extends Component{
                                     onChangeText = {price => this.setState({price})}
                                     textAlign = 'center'
                                     textAlignVertical = 'center'
+                                    style = {{width: '25%'}}
                                 />
                                 <Text>{this.props.currency}</Text>
                             </View>
@@ -186,6 +184,7 @@ export default class EditDialog extends Component{
                                     <Text style = {{color: '#0489B1', fontSize: 14}}>{this.props.language == 'EN' ? "Change pay time" : 'Schimba ora'}</Text>
                                 </TouchableOpacity>
                             </View>
+                            {this.props.bill.barcode.value == '' ? null :
                             <View style = {{justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row'}}>
                                 <Text style = {{fontSize: 14, color:'#05295B'}}>{this.props.language == 'EN' ? "Bill's barcode:" : 'Codul de bare:'}</Text>
                                 <Modal
@@ -264,6 +263,7 @@ export default class EditDialog extends Component{
                                         </View>
                                     </Modal>
                             </View>
+                            }
                         </KeyboardAvoidingView>
                     </DialogContent>
                 </Dialog>

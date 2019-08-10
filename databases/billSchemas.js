@@ -7,8 +7,8 @@ import {Alert} from 'react-native'
 export const BarcodeSchema = {  // crearea schemei pentru imaginea facturii neplatite
     name: 'Barcode',
     properties: {
-        value: 'string',
-        format: 'string',
+        value: {type:'string', default: ''},
+        format: {type:'string', default: ''},
     }
 }
 
@@ -20,7 +20,7 @@ export const BillSchema = { // crearea schemei pentru factura neplatita
         name: {type: 'string', default: 'Bill', indexed: true},
         price: {type: 'double', default: 0},
         payDate: {type: 'date', default: new Date(), indexed: true},
-        barcode: 'Barcode'
+        barcode: 'Barcode?'
     }
 }
 

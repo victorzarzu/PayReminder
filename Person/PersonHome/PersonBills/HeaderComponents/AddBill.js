@@ -22,8 +22,8 @@ export default class AddBill extends Component{
             currency: '€',
             width: '',
             height: '',
-            barcodeValue: null,
-            barcodeFormat: null,
+            barcodeValue: '',
+            barcodeFormat: '',
             scanVisible: false,
             camera: {
                 type: RNCamera.Constants.Type.back,
@@ -99,7 +99,7 @@ export default class AddBill extends Component{
                         title = {this.props.language == 'EN' ? 'Add bill' : 'Adaugare factura'} 
                         textStyle = {{color: '#05295B'}}
                         bordered = {false} 
-                        style = {{backgroundColor: '#D4E6FF'}}
+                        style = {{backgroundColor: '#D4E6FF', height: 20}}
                         hasTitleBar = {false}
                          />}
                     footer={
@@ -156,8 +156,6 @@ export default class AddBill extends Component{
                                         alert(this.props.language == 'EN' ? 'Please choose enter deadline' : 'Alege data scadenta')
                                     }else if(this.state.payDateHour == null){ //verificarea orei pentru factura
                                         alert(this.props.language == 'EN' ? 'Please choose a pay time!' : 'Adauga ora de plata')
-                                    }else if(this.state.barcodeValue == null){
-                                        alert(this.props.language == 'EN' ? "Please scan the bill's barcode" : 'Nu uita sa scanezi codul de bare al facturii')
                                     }else {
                                         //adaugarea facturii in baza de date
                                         addBill(newBill).then().catch(error => {})
