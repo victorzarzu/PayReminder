@@ -140,7 +140,7 @@ export default class Bill extends Component{
 const styles = StyleSheet.create({
     billView: {
         height: 127,
-        marginBottom: 10,
+        marginBottom: '2%',
         width: '100%'
     },
     contentBillView: {

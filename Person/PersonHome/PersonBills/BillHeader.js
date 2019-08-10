@@ -12,17 +12,19 @@ export default class BillHeader extends Component{
     render(){
         return(
             <View style = {styles.billHeaderView}>
-                <View style = {{flexDirection: 'row-reverse', alignItems: 'center'}}>
+                <View style = {{flexDirection: 'row-reverse', alignItems: 'center', flex: 3}}>
                     <AddBill 
                         language = {this.props.language}
                     /> 
                     <DeleteAllBills />
                     <PayAllBills />
-                    <BillLegend 
-                        language = {this.props.language}
-                    />
                 </View>
-                    <NavigateToHome onPress = {this.props.navigateToHome} />
+                    <View style = {{flex: 1, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row-reverse'}}>
+                        <BillLegend 
+                                language = {this.props.language}
+                            />
+                        <NavigateToHome onPress = {this.props.navigateToHome} />
+                    </View>
             </View>
         )
     }

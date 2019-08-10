@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {View, Text, StyleSheet, TouchableOpacity, Modal} from 'react-native'
 import Dialog, { DialogFooter, DialogButton, DialogContent, DialogTitle, SlideAnimation } from 'react-native-popup-dialog';
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 export default class BillLegend extends Component{
     constructor(props){
         super(props)
@@ -15,8 +15,8 @@ export default class BillLegend extends Component{
                 <TouchableOpacity
                     onPress = {() => this.setState({legendVisible: true}) /* deschiderea modului de adaugare a facturii */}
                 >
-                    <FontAwesome
-                        name = "question"
+                    <MaterialIcons
+                        name = "color-lens"
                         size = {40}
                         color = '#0489B1'
                     />
@@ -40,26 +40,23 @@ export default class BillLegend extends Component{
                 >
                     <DialogContent
                         bordered = {false}
+                        style = {{justifyContent: 'center', alignItems: 'center'}}
                     >
-                        <View style = {{justifyContent: 'center', flexDirection: 'column'}}>
-                            <View style = {{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+                        <View style = {{justifyContent: 'space-around', flexDirection: 'row'}}>
+                            <View style = {{ alignItems: 'center', justifyContent: 'center'}}>
                                 <View style = {[styles.circleView, {backgroundColor: '#D34354'}]}>
                                 </View>
-                                <Text style = {styles.legendText}>{this.props.language == 'EN' ? 'Bills exceeding deadline' : 'Facturi trecute de data scadenta'}</Text>
-                            </View>
-                            <View style = {{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
                                 <View style = {[styles.circleView, {backgroundColor: '#D67FA3'}]}>
                                 </View>
-                                <Text style = {styles.legendText}>{this.props.language == 'EN' ? 'Bills with deadline under 3 days' : 'Facturi scadente in mai putin de 3 zile'}</Text>
-                            </View>
-                            <View style = {{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>    
                                 <View style = {[styles.circleView, {backgroundColor: '#6A62C6'}]}>
                                 </View>
-                                <Text style = {styles.legendText}>{this.props.language == 'EN' ? 'Bills with deadline over 3 days' : 'Facturi scadente in mai mult de 3 zile'}</Text>
-                            </View>
-                            <View style = {{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
                                 <View style = {[styles.circleView, {backgroundColor: '#98C2E9'}]}>
                                 </View>
+                            </View>
+                            <View style = {{ alignItems: 'flex-start', justifyContent: 'space-around', marginLeft: '10%'}}>
+                                <Text style = {styles.legendText}>{this.props.language == 'EN' ? 'Bills exceeding deadline' : 'Facturi trecute de data scadenta'}</Text>
+                                <Text style = {styles.legendText}>{this.props.language == 'EN' ? 'Bills with deadline under 3 days' : 'Facturi scadente in mai putin de 3 zile'}</Text>
+                                <Text style = {styles.legendText}>{this.props.language == 'EN' ? 'Bills with deadline over 3 days' : 'Facturi scadente in mai mult de 3 zile'}</Text>
                                 <Text style = {styles.legendText}>{this.props.language == 'EN' ? 'Bills with deadline over 7 days' : 'Facturi scadente in mai mult de 7 zile'}</Text>
                             </View>
                         </View>
@@ -86,12 +83,13 @@ const styles = StyleSheet.create({
     },
     circleView: {
         width: 30,
-        height: '75%', 
+        height: 15, 
         borderRadius: 50,
+        marginBottom: '9%'
     },
     legendText: {
-        fontSize: 13,
-        marginLeft: '10%'
+        fontSize: 11,
+        marginBottom: '3%'
     }
 })
 

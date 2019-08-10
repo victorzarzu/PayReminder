@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     circleView: {
-        width: 30,
+        width: 23,
         height: '75%', 
         borderRadius: 50,
     },
