@@ -124,7 +124,7 @@ export const paidAllBills = () => new Promise((resolve, reject) => { //functia p
 export const queryAllBills = () => new Promise((resolve,reject) => { //functia pentru interogarea tuturor facturilor existente in tabela pentru facturi
     Realm.open(databaseOptions)
         .then(realm => {
-            let allBills = realm.objects('Bill')
+            let allBills = realm.objects('Bill').sorted('id')
             resolve(allBills)
         }).catch(error => reject(error))
 })

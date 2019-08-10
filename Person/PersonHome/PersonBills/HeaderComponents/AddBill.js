@@ -77,10 +77,9 @@ export default class AddBill extends Component{
 
     render() {
         return(
-            <View style = {{justifyContent: 'center', alignItems: 'center'}}>
+            <View style = {{justifyContent: 'center', alignItems: 'center', paddingRight: 10}}>
                 <TouchableOpacity
                     onPress = {() => this.setState({addVisible: true}) /* deschiderea modului de adaugare a facturii */}
-                    style = {{paddingRight: 10}}
                 >
                     <Image 
                         source = {require('../images/add-icon.png')}

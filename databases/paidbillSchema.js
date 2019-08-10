@@ -60,8 +60,8 @@ export const deleteAllPaidBills = () => new Promise((resolve, reject) => { //ste
                                 {
                                     text: profile.language == 'EN' ? 'Yes' : 'Da',
                                     onPress: () => {
-                                        allBills.forEach(bill => {
-                                            deleteBill(bill).then().catch(error => {})
+                                        allPaidBills.forEach(bill => {
+                                            deletePaidBill(bill).then().catch(error => {})
                                         })
                                     }
                                 }
@@ -77,7 +77,7 @@ export const deleteAllPaidBills = () => new Promise((resolve, reject) => { //ste
 export const queryAllPaidBills = () => new Promise((resolve,reject) => { //interogarea tuturor facturilor din tabela facturilor platite
     Realm.open(databaseOptions)
         .then(realm => {
-            let allPaidBills = realm.objects('PaidBill')
+            let allPaidBills = realm.objects('PaidBill').sorted('id')
             resolve(allPaidBills)
         }).catch(error => reject(error))
 })

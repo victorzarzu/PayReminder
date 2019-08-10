@@ -14,7 +14,7 @@ export default class DiagramLegend extends Component{
                         <View style = {[styles.circleView, {backgroundColor: '#28B463'}]}></View>
 
                     </View>
-                    <View style = {[styles.itemView, {marginLeft: 10, alignItems: 'flex-start'}]}>
+                    <View style = {[styles.itemView, {marginLeft: 15, alignItems: 'flex-start'}]}>
                         <Text style = {styles.legendText}>{
                             this.props.option == 'number' ?
                                 language ? `Bills exceeding deadline: ${this.props.data[0]}` : `Facturi trecute de data scadenta: ${this.props.data[0]}` 
