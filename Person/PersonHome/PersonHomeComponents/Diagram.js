@@ -121,7 +121,7 @@ export default class Diagram extends Component{
             :
             <View style = {{alignItems: 'center', flex: 1, marginTop: '30%'}}>
                 <Text style = {{color: '#BABABA', fontSize: 24}}> {this.props.language == 'EN' ? 'No information given' : 'Nicio informatie'} </Text>
-                <Text style = {{color: '#BABABA', fontSize: 12}}> {this.props.language == 'EN' ? 'You need to have at least one bill to see the pie chart' : 'Trebuie sa existe cel putin o factura pentru a vedea diagrama'} </Text>
+                <Text style = {{color: '#BABABA', fontSize: 10}}> {this.props.language == 'EN' ? 'You need to have at least one bill to see the pie chart' : 'Trebuie sa existe cel putin o factura pentru a vedea diagrama'} </Text>
             </View> 
         )
     }

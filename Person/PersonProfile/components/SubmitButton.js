@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignSelf: 'center',
         marginTop: 2,
-        marginBottom: '2%'
+        marginBottom: '1%'
     },
     submitButtonText: {
         alignSelf: 'center',
