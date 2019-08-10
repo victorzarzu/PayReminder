@@ -125,7 +125,7 @@ class PersonProfile extends React.Component {
                                 onChangeText = {incomeAmount => this.setState({incomeAmount}) /* schimbare in state a datelor introduse (suma salariului) */}
                                 language = {this.state.languageLoaded}
                             />
-                            <Text style = {{color: 'black',fontSize: 16, marginLeft: '5%'}}>{this.state.currency}</Text>
+                            <Text style = {{color: 'black',fontSize: 16}}>{this.state.currency}</Text>
                         </View>
                         <CurrencyPicker 
                             selectedValue = {this.state.currency}

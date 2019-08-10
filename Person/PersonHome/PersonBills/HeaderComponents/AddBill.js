@@ -208,6 +208,7 @@ export default class AddBill extends Component{
                                         textAlign = 'center'
                                         textAlignVertical = 'center'
                                     />
+                                    <Text>{this.props.currency}</Text>
                                 </View>
                                 <View style = {{flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center'}}>
                                     <TouchableOpacity

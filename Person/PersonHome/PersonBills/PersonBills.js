@@ -36,6 +36,7 @@ export default class PersonBills extends React.Component {
                 <BillHeader 
                     navigateToHome = {() => this.props.navigation.navigate('Home')} /* navigarea din bills in home */ 
                     language = {this.state.language}
+                    currency = {this.state.currency}
                 />
                 <BillList
                     language = {this.state.language} 

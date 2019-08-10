@@ -15,6 +15,7 @@ export default class BillHeader extends Component{
                 <View style = {{flexDirection: 'row-reverse', alignItems: 'center', flex: 3}}>
                     <AddBill 
                         language = {this.props.language}
+                        currency = {this.props.currency}
                     /> 
                     <DeleteAllBills />
                     <PayAllBills />
