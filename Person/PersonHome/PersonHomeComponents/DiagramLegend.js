@@ -13,7 +13,7 @@ export default class DiagramLegend extends Component{
                                 language ? `Bills exceeding deadline: ${this.props.data[0]}` : `Facturi trecute de data scadenta: ${this.props.data[0]}` 
                             :
                                 language ? `Bills exceeding deadline: ${this.props.currency === 'Fr' ? this.props.data[0] + '\xa0' + this.props.currency : this.props.currency === 'Lei' ? this.props.data[0] + '\xa0' + this.props.currency : this.props.currency + '\xa0' + this.props.data[0]}`
-                                : `Facturi care au trecut de data scadenta: ${this.props.currency === 'Fr' ? this.props.data[0] + '\xa0' + this.props.currency : this.props.currency === 'Lei' ? this.props.data[0] + '\xa0' + this.props.currency : this.props.currency + '\xa0' + this.props.data[0]}`
+                                : `Facturi trecute de data scadenta: ${this.props.currency === 'Fr' ? this.props.data[0] + '\xa0' + this.props.currency : this.props.currency === 'Lei' ? this.props.data[0] + '\xa0' + this.props.currency : this.props.currency + '\xa0' + this.props.data[0]}`
                             }</Text>
                     </View>
                     <View style = {styles.itemView}>
