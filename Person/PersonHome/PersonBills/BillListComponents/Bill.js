@@ -83,8 +83,8 @@ export default class Bill extends Component{
                             >
                                 <FontAwesome 
                                     color = {color}
-                                    size = {33}
-                                    name = 'barcode'
+                                    size = {format.includes('QR') ? 35 : 33}
+                                    name = {format.includes('QR') ? 'qrcode' : 'barcode'}
                                 />
                             </TouchableOpacity>
                         }
