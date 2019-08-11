@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/Foundation'
 import Barcode from 'react-native-barcode-builder';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { RNCamera } from 'react-native-camera';
+import QRCode from 'react-native-qrcode';
 
 export default class EditDialog extends Component{
     constructor(props){
@@ -203,27 +204,43 @@ export default class EditDialog extends Component{
                                                     />
                                                 </TouchableOpacity>
                                                 <View style = {{justifyContent: 'center', alignItems: 'center', flex: 9}}>
-                                                    <Barcode 
-                                                        value = {this.state.barcodeValue}
-                                                        format = {this.state.barcodeFormat}
-                                                        width = {this.state.barcodeFormat.includes('CODE') ? 1.9 : 2.5}
-                                                        flat
-                                                        text = {this.state.barcodeValue}
-                                                    />
+                                                    {this.state.barcodeFormat.includes('QR') ? 
+                                                            <QRCode 
+                                                                value = {this.state.barcodeValue}
+                                                                size = {200}
+                                                            />
+                                                        : 
+                                                            <Barcode 
+                                                                value = {this.state.barcodeValue}
+                                                                format = {this.state.barcodeFormat}
+                                                                width = {this.state.barcodeFormat.includes('CODE') ? 1.9 : 2.5}
+                                                                flat
+                                                                text = {this.state.barcodeValue}
+                                                            />
+                                                    }
                                                 </View>
                                         </View>
                                     </Modal>
                                     <TouchableOpacity
                                         onPress = {() => this.setState({barcodeVisible: true})}
                                     >
-                                            <Barcode 
-                                                value = {this.state.barcodeValue}
-                                                format = {this.state.barcodeFormat}
-                                                width = {this.state.barcodeFormat.includes('CODE') ? 0.4 : 0.6}
-                                                height = {25}
-                                                flat
-                                                background = '#D4E6FF'
-                                            />
+                                            {this.state.barcodeFormat.includes('QR') ?
+                                                <QRCode 
+                                                    value = {this.state.barcodeValue}
+                                                    size = {30}
+                                                    bgColor = '#D4E6FF'
+                                                    fgColor = 'black'
+                                                />
+                                            :
+                                                <Barcode 
+                                                    value = {this.state.barcodeValue}
+                                                    format = {this.state.barcodeFormat}
+                                                    width = {this.state.barcodeFormat.includes('CODE') ? 0.4 : 0.6}
+                                                    height = {25}
+                                                    flat
+                                                    background = '#D4E6FF'
+                                                />
+                                            }
                                     </TouchableOpacity>
                                     <TouchableOpacity
                                         onPress = {() => {

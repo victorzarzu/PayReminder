@@ -6,6 +6,7 @@ import profileRealm, {queryProfile} from '../../../../databases/profileSchemas'
 import Barcode from 'react-native-barcode-builder';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import QRCode from 'react-native-qrcode';
 
 import EditDialog from './EditDialog'
 
@@ -57,14 +58,21 @@ export default class Bill extends Component{
                                             color = 'black'
                                         />
                                     </TouchableOpacity>
-                                    <View style = {{justifyContent: 'center', alignItems: 'center', flex: 9}}>
-                                        <Barcode 
-                                            value = {this.props.bill.barcode.value}
-                                            format = {format}
-                                            width = {format.includes('CODE') ? 1.9 : 3.1}
-                                            flat
-                                            text = {this.props.bill.barcode.value}
-                                        />
+                                    <View style = {{justifyContent: 'center', alignItems: 'center', flex: 8}}>
+                                        {format.includes('QR') ?
+                                             <QRCode 
+                                                value = {this.props.bill.barcode.value}
+                                                size = {200}
+                                             />
+                                             :
+                                            <Barcode 
+                                                value = {this.props.bill.barcode.value}
+                                                format = {format}
+                                                width = {format.includes('CODE') ? 1.9 : 3.1}
+                                                flat
+                                                text = {this.props.bill.barcode.value}
+                                            />
+                                        }
                                     </View>
                             </View>
                         </Modal>
