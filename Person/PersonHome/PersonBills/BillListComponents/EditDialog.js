@@ -1,10 +1,11 @@
 import React, {Component} from 'react'
-import {View,Text,Modal, Button, TouchableOpacity, TextInput,DatePickerAndroid, StyleSheet, KeyboardAvoidingView, TimePickerAndroid} from 'react-native'
-import realm, {editBill} from '../../../../databases/billSchemas.js'
+import {View,Text,Modal, Button, TouchableOpacity, TextInput,DatePickerAndroid, StyleSheet, KeyboardAvoidingView, TimePickerAndroid, Image} from 'react-native'
+import {editBill} from '../../../../databases/billSchemas.js'
 import Dialog, { DialogFooter, DialogButton, DialogContent, DialogTitle, SlideAnimation } from 'react-native-popup-dialog';
 import Icon from 'react-native-vector-icons/Foundation'
 import Barcode from 'react-native-barcode-builder';
 import AntDesign from 'react-native-vector-icons/AntDesign'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { RNCamera } from 'react-native-camera';
 import QRCode from 'react-native-qrcode';
 
@@ -225,11 +226,9 @@ export default class EditDialog extends Component{
                                         onPress = {() => this.setState({barcodeVisible: true})}
                                     >
                                             {this.state.barcodeFormat.includes('QR') ?
-                                                <QRCode 
-                                                    value = {this.state.barcodeValue}
-                                                    size = {30}
-                                                    bgColor = '#D4E6FF'
-                                                    fgColor = 'black'
+                                                <Image 
+                                                    source = {require('C:/Users/Zarzu Victor/payAssistant/Person/PersonHome/PersonBills/images/qrcode.png')}
+                                                    style = {{height: 30, width: 30, tintColor: 'black'}}
                                                 />
                                             :
                                                 <Barcode 
