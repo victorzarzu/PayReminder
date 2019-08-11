@@ -51,6 +51,13 @@ export const addIncome = () => new Promise((resolve, reject) => { //functia de a
                     updatingProfile.funds += updatingProfile.incomeAmount
                     updatingProfile.incomeGiven = true
                     realm.create('Profile', updatingProfile, true)
+                }else if(updatingProfile.incomeGiven === false && nowDate.getDate() > updatingProfile.incomeDay){
+                    updatingProfile.funds += updatingProfile.incomeAmount
+                    updatingProfile.incomeGiven = true
+                    realm.create('Profile', updatingProfile, true)
+                }else if(updatingProfile.incomeGiven === true && nowDate.getDate() < updatingProfile.incomeDay){
+                    updatingProfile.incomeGiven = false
+                    realm.create('Profile', updatingProfile, true)
                 }
                 resolve()
             })

@@ -125,8 +125,8 @@ export default class AddBill extends Component{
                                     currency: '€',
                                     width: '',
                                     height: '',
-                                    barcodeValue: null,
-                                    barcodeFormat: null,
+                                    barcodeValue: '',
+                                    barcodeFormat: '',
                                     scanVisible: false
                                 })
                             }}
@@ -171,8 +171,8 @@ export default class AddBill extends Component{
                                             currency: '€',
                                             width: '',
                                             height: '',
-                                            barcodeValue: null,
-                                            barcodeFormat: null,
+                                            barcodeValue: '',
+                                            barcodeFormat: '',
                                             scanVisible: false
                                         })
                                     }

@@ -77,10 +77,10 @@ class PersonProfile extends React.Component {
             language: this.state.language
         }
         this.setState({languageLoaded: this.state.language})
-        if(this.state.incomeAmount < 0){
-            {this.state.languageLoaded == "EN" ? alert('Please enter an income amount higher than 0') : alert('Introdu un salariu pozitiv')}
+        if(this.state.incomeAmount <= 0){
+            {this.state.languageLoaded == "EN" ? alert('Please enter an salary amount higher than 0') : alert('Introdu un salariu pozitiv')}
         }else if(isNaN(this.state.incomeAmount)){
-            {this.state.languageLoaded == 'EN' ? alert('Please enter a valid number for the income amount') : alert('Introdu o valoare valida pentru salariu')}
+            {this.state.languageLoaded == 'EN' ? alert('Please enter a valid number for the salary amount') : alert('Introdu o valoare valida pentru salariu')}
         }else{
             saveProfile(newProfile).then().catch(error => alert(`Can not save the profile: ${error}`))
         }
@@ -119,7 +119,7 @@ class PersonProfile extends React.Component {
                             language = {this.state.languageLoaded}
                         />
                         <View style = {{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around'}}>
-                            <Text style = {{marginRight: 10, color: '#0489B1', fontSize: 20, fontWeight: 'bold'}}>{this.state.languageLoaded == 'EN' ? 'Income amount: ' : 'Salariu: ' }</Text>
+                            <Text style = {{marginRight: 10, color: '#0489B1', fontSize: 20, fontWeight: 'bold'}}>{this.state.languageLoaded == 'EN' ? 'Salary amount: ' : 'Salariu: ' }</Text>
                             <IncomeAmountInput
                                 value = {String(this.state.incomeAmount)}
                                 onChangeText = {incomeAmount => this.setState({incomeAmount}) /* schimbare in state a datelor introduse (suma salariului) */}
