@@ -7,6 +7,7 @@ import Barcode from 'react-native-barcode-builder';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import QRCode from 'react-native-qrcode';
+var PushNotification = require('react-native-push-notification');
 
 import EditDialog from './EditDialog'
 
@@ -106,7 +107,10 @@ export default class Bill extends Component{
                                         },
                                         {
                                             text: this.props.language == 'EN' ? 'Yes' : 'Da',
-                                            onPress: () => deleteBill(this.props.bill).then().catch(error => alert(this.props.language == 'EN' ? `The bill wasn't deleted` : `Factura nu a fost stearsa`))
+                                            onPress: () => {
+                                                deleteBill(this.props.bill).then().catch(error => alert(this.props.language == 'EN' ? `The bill wasn't deleted` : `Factura nu a fost stearsa`))
+                                                PushNotification.cancelLocalNotifications({id: String(this.props.bill.id)});
+                                            }
                                         }
                                     ],
                                     { cancelable: true }
@@ -130,7 +134,10 @@ export default class Bill extends Component{
                                         },
                                         {
                                             text: this.props.language == 'EN' ? 'Yes' : 'Da',
-                                            onPress: () => {paidBill(this.props.bill).then().catch(error => alert(`The bill wasn't paid: ${error}`))}
+                                            onPress: () => {
+                                                paidBill(this.props.bill).then().catch(error => alert(this.props.language == 'EN' ? `The bill wasn't paid: ${error}` : `Factura nu a putut fi platita: ${error}`))
+                                                PushNotification.cancelLocalNotifications({id: String(this.props.bill.id)});
+                                            }
                                         }
                                     ],
                                     { cancelable: true }

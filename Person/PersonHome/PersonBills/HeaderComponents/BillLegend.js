@@ -11,7 +11,7 @@ export default class BillLegend extends Component{
     }
     render(){
         return(
-            <View style = {{justifyContent: 'center', alignItems: 'center',marginRight: '5%'}}>
+            <View style = {{justifyContent: 'center', alignItems: 'center',marginRight: '10%'}}>
                 <TouchableOpacity
                     onPress = {() => this.setState({legendVisible: true}) /* deschiderea modului de adaugare a facturii */}
                 >

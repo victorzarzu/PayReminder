@@ -5,6 +5,18 @@ import Ionicon from 'react-native-vector-icons/Ionicons'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import Dialog, { DialogFooter, DialogButton, DialogContent, DialogTitle, SlideAnimation } from 'react-native-popup-dialog';
 import { RNCamera } from 'react-native-camera';
+var PushNotification = require('react-native-push-notification');
+
+PushNotification.configure({
+    onRegister: function(token) {
+        console.log( 'TOKEN:', token );
+    },
+    onNotification: function(notification) {
+        console.log( 'NOTIFICATION:', notification );
+    },
+    popInitialNotification: true,
+    requestPermissions: true,
+});
 
 export default class AddBill extends Component{
     constructor(props) {
@@ -138,7 +150,7 @@ export default class AddBill extends Component{
                             textStyle = {{color: '#0489B1'}}
                             onPress = {() => {
                                 const newBill = {
-                                    id: Math.floor(Date.now() / 100),
+                                    id: parseInt(Math.floor(Date.now() / 1000)),
                                     name: this.state.name,
                                     price: parseFloat(this.state.price),
                                     payDate: new Date(this.state.payDateYear,this.state.payDateMonth,this.state.payDateDay,this.state.payDateHour,this.state.payDateMinute,0,0),
@@ -147,18 +159,58 @@ export default class AddBill extends Component{
                                     if(newBill.name == ''){ //verificarea numelui pentru factura
                                         alert(this.props.language == 'EN' ? 'Please enter the name for the bill' : 'Adauga numele facturii')
                                     }else if(newBill.price < 0){ //verificarea pretului pentru factura (sa fie un numar valid)
-                                        alert(this.props.language == 'EN' ? 'Please enter a price higher than 0' : 'Adauga un pret mai mare decat 0')
+                                        alert(this.props.language == 'EN' ? 'Please enter a positive price' : 'Adauga un pret mai mare decat 0')
                                     }else if(isNaN(newBill.price) == true){ //verificarea pretului pentru factura (sa fie un numar valid)
                                         alert(this.props.language == 'EN' ? 'Please enter a valid price' : 'Adauga un pret valid pentru factura')
-                                    }else if(newBill.price <= 0){ //verificarea pretului pentru factura (sa fie pozitiv)
-                                        alert(this.props.language == 'EN' ? 'Do not forget to enter a price higher than 0' : 'Nu uita sa adaugi un pret mai mare de 0')
                                     }else if(this.state.payDateDay == null){ //verificarea datei pentru factura
                                         alert(this.props.language == 'EN' ? 'Please choose enter deadline' : 'Alege data scadenta')
                                     }else if(this.state.payDateHour == null){ //verificarea orei pentru factura
                                         alert(this.props.language == 'EN' ? 'Please choose a pay time!' : 'Adauga ora de plata')
                                     }else {
                                         //adaugarea facturii in baza de date
+                                        const price = this.props.currency === 'Fr' ? newBill.price + '\xa0' + this.props.currency : this.props.currency === 'Lei' ? newBill.price + '\xa0' + this.props.currency : this.props.currency + '\xa0' + newBill.price
+                                        const monthNameEng = newBill.payDate.getMonth() + 1 == 1 ? 'January' : 
+                                            newBill.payDate.getMonth() + 1 == 2 ? 'February' : 
+                                            newBill.payDate.getMonth() + 1 == 3 ? 'March' : 
+                                            newBill.payDate.getMonth() + 1 == 4 ? 'April' : 
+                                            newBill.payDate.getMonth() + 1 == 5 ? 'May' : 
+                                            newBill.payDate.getMonth() + 1 == 6 ? 'June' : 
+                                            newBill.payDate.getMonth() + 1 == 7 ? 'July' : 
+                                            newBill.payDate.getMonth() + 1 == 8 ? 'August' : 
+                                            newBill.payDate.getMonth() + 1 == 9 ? 'September' : 
+                                            newBill.payDate.getMonth() + 1 == 10 ? 'October' : 
+                                            newBill.payDate.getMonth() + 1 == 11 ? 'November' : 
+                                            'December' 
+                                        const monthNameRo = newBill.payDate.getMonth() + 1 == 1 ? 'Ianuarie' : 
+                                            newBill.payDate.getMonth() + 1 == 2 ? 'Februarie' : 
+                                            newBill.payDate.getMonth() + 1 == 3 ? 'Martie' : 
+                                            newBill.payDate.getMonth() + 1 == 4 ? 'Aprilie' : 
+                                            newBill.payDate.getMonth() + 1 == 5 ? 'Mai' : 
+                                            newBill.payDate.getMonth() + 1 == 6 ? 'Iunie' : 
+                                            newBill.payDate.getMonth() + 1 == 7 ? 'Iulie' : 
+                                            newBill.payDate.getMonth() + 1 == 8 ? 'August' : 
+                                            newBill.payDate.getMonth() + 1 == 9 ? 'Septembrie' : 
+                                            newBill.payDate.getMonth() + 1 == 10 ? 'Octombrie' : 
+                                            newBill.payDate.getMonth() + 1 == 11 ? 'Noiembrie' : 
+                                            'December' 
+                                        const deadlineDate = `${newBill.payDate.getDate()} ${this.props.language == 'EN' ? monthNameEng : monthNameRo} ${newBill.payDate.getFullYear()}`
                                         addBill(newBill).then().catch(error => {})
+                                        var days = 7
+                                        for(var i = 7; i > 0; --i){
+                                            if(newBill.payDate - new Date() - i * 86400000 > 0){
+                                                days = i
+                                                break
+                                            }
+                                        }
+                                        PushNotification.localNotificationSchedule({
+                                            id: String(newBill.id),
+                                            message: this.props.language == 'EN' ? `Your ${newBill.name} bill in amount of ${price} has the deadline on ${deadlineDate}. Don't forget to pay it!` : `Factura ${newBill.name} in valoare de ${price} are data scadenta pe ${deadlineDate}. Nu uita sa o platesti!`,
+                                            date: new Date(newBill.payDate - days * 86400000), 
+                                            repeatType: 'day',
+                                            importance: 'high',
+                                            vibrate: false,
+                                            group: 'Pay Assistant',
+                                          });
                                         this.setState({
                                             name: '',
                                             price: '',

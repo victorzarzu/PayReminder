@@ -14,7 +14,7 @@ export const ProfileSchema = { //crearea schemei pentru profil
         currency: {type: 'string', default: '€'},
         funds: {type: 'double', default: 0},
         incomeGiven: {type: 'bool', default: false},
-        language: {type: 'string', default: 'EN'}
+        language: {type: 'string', default: 'EN'},
     }
 }
 
@@ -37,6 +37,7 @@ export const saveProfile = newProfile => new Promise((resolve,reject) => { //fun
         .then(realm => {
             realm.write(() => {
                 realm.create('Profile', newProfile, true)
+                resolve()
             })
         }).catch(error => reject(error))
 })
@@ -68,15 +69,17 @@ export const addFunds = amount => new Promise((resolve, reject) => { //functia p
     Realm.open(databaseOptions)
         .then(realm => {
             realm.write(() => {
-                if(isNaN(amount) === true){
-                    alert('Please enter a valid number')
-                }else if(amount <= 0){
-                    alert('Please enter a number higher than 0')
-                }else{
-                    let updatingProfile = realm.objectForPrimaryKey('Profile', 1)
-                    updatingProfile.funds += amount
-                    resolve(updatingProfile)
-                }
+                queryProfile().then(profile => {
+                    if(isNaN(amount) === true){
+                        profile.language ? alert('Please enter a valid number') : alert('Introdu un numar valid')
+                    }else if(amount <= 0){
+                        profile.language ? alert('Please enter a positive number') : alert('Introdu o valoare pozitiva')
+                    }else{
+                        let updatingProfile = realm.objectForPrimaryKey('Profile', 1)
+                        updatingProfile.funds += amount
+                        resolve(updatingProfile)
+                    }
+                }).catch(error => {})
             })
         }).catch(error => reject(error))
 })

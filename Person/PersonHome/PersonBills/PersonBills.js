@@ -10,14 +10,17 @@ export default class PersonBills extends React.Component {
         super(props)
         this.state = {
             currency: '€',
-            language: 'EN'
+            language: 'EN',
         }
         this.reload = this.reload.bind(this)
     }
 
     reload(){
         queryProfile().then(profile => {
-            this.setState({currency: profile.currency, language: profile.language})
+            this.setState({
+                currency: profile.currency, 
+                language: profile.language, 
+            })
         })
     }
 
@@ -37,6 +40,8 @@ export default class PersonBills extends React.Component {
                     navigateToHome = {() => this.props.navigation.navigate('Home')} /* navigarea din bills in home */ 
                     language = {this.state.language}
                     currency = {this.state.currency}
+                    sortCriteria = {this.state.sortCriteria}
+                    ascendingCriteria = {this.state.ascendingCriteria}
                 />
                 <BillList
                     language = {this.state.language} 

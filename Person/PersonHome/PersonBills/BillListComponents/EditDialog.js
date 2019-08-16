@@ -1,13 +1,13 @@
 import React, {Component} from 'react'
-import {View,Text,Modal, Button, TouchableOpacity, TextInput,DatePickerAndroid, StyleSheet, KeyboardAvoidingView, TimePickerAndroid, Image} from 'react-native'
+import {View,Text,Modal,TouchableOpacity, TextInput,DatePickerAndroid, StyleSheet, KeyboardAvoidingView, TimePickerAndroid, Image} from 'react-native'
 import {editBill} from '../../../../databases/billSchemas.js'
 import Dialog, { DialogFooter, DialogButton, DialogContent, DialogTitle, SlideAnimation } from 'react-native-popup-dialog';
 import Icon from 'react-native-vector-icons/Foundation'
 import Barcode from 'react-native-barcode-builder';
 import AntDesign from 'react-native-vector-icons/AntDesign'
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { RNCamera } from 'react-native-camera';
 import QRCode from 'react-native-qrcode';
+var PushNotification = require('react-native-push-notification');
 
 export default class EditDialog extends Component{
     constructor(props){
@@ -87,7 +87,7 @@ export default class EditDialog extends Component{
                     dialogAnimation={new SlideAnimation({
                         slideFrom: 'top',
                     })}
-                    width = {0.85}
+                    width = {this.state.scanVisible ? 0 : 0.85}
                     rounded
                     onTouchOutside = {() => this.setState({isVisible: false})}
                     dialogStyle = {styles.editDialog}
@@ -136,6 +136,48 @@ export default class EditDialog extends Component{
                                         payDate: new Date(this.state.payDateYear, this.state.payDateMonth, this.state.payDateDay, this.state.payDateHour, this.state.payDateMinute, 0, 0),
                                         barcode: {value: this.state.barcodeValue, format: this.state.barcodeFormat}
                                     }
+                                    const price = this.props.currency === 'Fr' ? editbill.price + '\xa0' + this.props.currency : this.props.currency === 'Lei' ? editbill.price + '\xa0' + this.props.currency : this.props.currency + '\xa0' + editbill.price
+                                    const monthNameEng = editbill.payDate.getMonth() + 1 == 1 ? 'January' : 
+                                    editbill.payDate.getMonth() + 1 == 2 ? 'February' : 
+                                    editbill.payDate.getMonth() + 1 == 3 ? 'March' : 
+                                    editbill.payDate.getMonth() + 1 == 4 ? 'April' : 
+                                    editbill.payDate.getMonth() + 1 == 5 ? 'May' : 
+                                    editbill.payDate.getMonth() + 1 == 6 ? 'June' : 
+                                    editbill.payDate.getMonth() + 1 == 7 ? 'July' : 
+                                    editbill.payDate.getMonth() + 1 == 8 ? 'August' : 
+                                    editbill.payDate.getMonth() + 1 == 9 ? 'September' : 
+                                    editbill.payDate.getMonth() + 1 == 10 ? 'October' : 
+                                    editbill.payDate.getMonth() + 1 == 11 ? 'November' : 
+                                    'December' 
+                                const monthNameRo = editbill.payDate.getMonth() + 1 == 1 ? 'Ianuarie' : 
+                                    editbill.payDate.getMonth() + 1 == 2 ? 'Februarie' : 
+                                    editbill.payDate.getMonth() + 1 == 3 ? 'Martie' : 
+                                    editbill.payDate.getMonth() + 1 == 4 ? 'Aprilie' : 
+                                    editbill.payDate.getMonth() + 1 == 5 ? 'Mai' : 
+                                    editbill.payDate.getMonth() + 1 == 6 ? 'Iunie' : 
+                                    editbill.payDate.getMonth() + 1 == 7 ? 'Iulie' : 
+                                    editbill.payDate.getMonth() + 1 == 8 ? 'August' : 
+                                    editbill.payDate.getMonth() + 1 == 9 ? 'Septembrie' : 
+                                    editbill.payDate.getMonth() + 1 == 10 ? 'Octombrie' : 
+                                    editbill.payDate.getMonth() + 1 == 11 ? 'Noiembrie' : 
+                                    'December' 
+                                const deadlineDate = `${editbill.payDate.getDate()} ${this.props.language == 'EN' ? monthNameEng : monthNameRo} ${editbill.payDate.getFullYear()}`
+                                var days = 7
+                                for(var i = 7; i > 0; --i){
+                                    if(editbill.payDate - new Date() - i * 86400000 > 0){
+                                        days = i
+                                        break
+                                    }
+                                }
+                                PushNotification.localNotificationSchedule({
+                                    id: String(editbill.id),
+                                    message: this.props.language == 'EN' ? `Your ${editbill.name} bill in amount of ${price} has the deadline on ${deadlineDate}. Don't forget to pay it!` : `Factura ${editbill.name} in valoare de ${price} are data scadenta pe ${deadlineDate}. Nu uita sa o platesti!`,
+                                    date: new Date(editbill.payDate - days * 86400000), 
+                                    repeatType: 'day',
+                                    importance: 'high',
+                                    vibrate: false,
+                                    group: 'Pay Assistant'
+                                  });
                                     editBill(editbill).then().catch(error => alert(`Could not edit the bill: ${error}`))
                                 }
                             }}
@@ -186,7 +228,47 @@ export default class EditDialog extends Component{
                                     <Text style = {{color: '#0489B1', fontSize: 14}}>{this.props.language == 'EN' ? "Change pay time" : 'Schimba ora'}</Text>
                                 </TouchableOpacity>
                             </View>
-                            {this.props.bill.barcode.value == '' ? null :
+                            {this.state.barcodeValue == '' ? 
+                                <View style = {{justifyContent: 'center', alignItems: 'center', marginTop: '1%'}}>
+                                <TouchableOpacity
+                                    onPress = {() => {
+                                        this.setState({scanVisible: true})
+                                    }}
+                                >
+                                    <Text style = {{color: '#0489B1', fontSize: 14}}>{this.props.language == 'EN' ? "Add the bar code" : 'Adauga codul de bare'}</Text>
+                                </TouchableOpacity>
+                                <Modal
+                                        visible = {this.state.scanVisible}
+                                        onRequestClose = {() => this.setState({scanVisible: false})}
+                                        animationType = 'slide'
+                                    >
+                                        <View style={styles.container}>
+                                            <RNCamera
+                                                ref={ref => {
+                                                    this.camera = ref;
+                                                }}
+                                                defaultTouchToFocus
+                                                flashMode={this.state.camera.flashMode}
+                                                mirrorImage={false}
+                                                onBarCodeRead={this.onBarCodeRead.bind(this)}
+                                                style={styles.preview}
+                                                type={this.state.camera.type}
+                                            />
+                                            <View style={[styles.overlay, styles.topOverlay]}>
+                                                <TouchableOpacity
+                                                    onPress = {() => this.setState({scanVisible: false})}
+                                                >
+                                                    <AntDesign 
+                                                        name = 'close'
+                                                        size = {25}
+                                                        color ='white'
+                                                    />
+                                                </TouchableOpacity>
+                                            </View>
+                                        </View>
+                                    </Modal>
+                            </View>
+                                    :
                                 <View style = {{justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row'}}>
                                     <Text style = {{fontSize: 14, color:'#05295B'}}>{this.props.language == 'EN' ? "Bill's barcode:" : 'Codul de bare:'}</Text>
                                     <Modal

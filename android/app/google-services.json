@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "305856568732",
+    "firebase_url": "https://pay-assistant.firebaseio.com",
+    "project_id": "pay-assistant",
+    "storage_bucket": "pay-assistant.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:305856568732:android:554bf514ff0147b3",
+        "android_client_info": {
+          "package_name": "com.payreminder1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "305856568732-7timu9et78ajq55n6q42caae691jvamv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkSsXWS79PMgpL7hp2haOV_GYzC9SJWbw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "305856568732-7timu9et78ajq55n6q42caae691jvamv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

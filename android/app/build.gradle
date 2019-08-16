@@ -105,8 +105,8 @@ android {
         applicationId "com.payreminder1"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 4
-        versionName "0.0.4"
+        versionCode 5
+        versionName "1.0.1"
         missingDimensionStrategy 'react-native-camera', 'mlkit'
     }
     signingConfigs {
@@ -150,9 +150,12 @@ android {
 }
 
 dependencies {
+    implementation 'com.google.firebase:firebase-core:17.0.0'
+    implementation 'com.google.android.gms:play-services-gcm:16.1.0'
     implementation project(':react-native-camera')
     implementation project(':react-native-vector-icons')
     implementation project(':react-native-gesture-handler')
+    implementation project(':react-native-push-notification')
     implementation project(':realm')
     implementation project(':react-native-svg')
     implementation fileTree(dir: "libs", include: ["*.jar"])
@@ -166,3 +169,5 @@ task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.compile
     into 'libs'
 }
+
+apply plugin: 'com.google.gms.google-services'

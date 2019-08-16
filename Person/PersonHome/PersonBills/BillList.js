@@ -1,7 +1,7 @@
 import React from 'react'
 import {View, Text, StyleSheet, ScrollView} from 'react-native'
 
-import billRealm, {queryAllBills, querySortedBills} from '../../../databases/billSchemas.js'
+import billRealm, {queryAllBills} from '../../../databases/billSchemas.js'
 import Bill from './BillListComponents/Bill'
 
 
@@ -11,10 +11,10 @@ export default class BillList extends React.Component {
         this.state = {
             bills: [],
         }
-        this.reloadData = this.reloadData.bind(this)
+        this.reloadBillsData = this.reloadBillsData.bind(this)
     }
 
-    reloadData = () => {
+    reloadBillsData = () => {
         //se atribuie variabilei bills din state-ul componentului toate facturile neplatite
         queryAllBills().then(bills => {
             this.setState({ bills });
@@ -24,12 +24,12 @@ export default class BillList extends React.Component {
     }
 
     componentWillMount(){
-        this.reloadData()
-        billRealm.addListener('change', this.reloadData) // se adauga un listener pentru a actualiza in timp real list facturilor neplatite
+        this.reloadBillsData()
+        billRealm.addListener('change', this.reloadBillsData) // se adauga un listener pentru a actualiza in timp real list facturilor neplatite
     }
 
     componentWillUnmount(){
-        billRealm.removeListener('change', this.reloadData) //eliminarea listenerului
+        billRealm.removeListener('change', this.reloadBillsData) //eliminarea listenerului
     }
 
     render() {
