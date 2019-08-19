@@ -37,11 +37,12 @@ const styles = StyleSheet.create({
     loadingView:{
         justifyContent: 'center',
         alignItems: 'center',
-        width: '100%'
+        width: '100%',
+        flex: 1
     },
     loadingImage: {
-        borderRadius: 15,
         height: 200,
-        width: 200
+        width: 200,
+        marginBottom: '3%'
     }
 })
