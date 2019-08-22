@@ -26,8 +26,15 @@ export default class IncomeAmountInput extends Component{
                 />
                 <TouchableOpacity
                     onPress = {() => {
-                        addFunds(parseFloat(this.state.funds)).then().catch(error => alert(`Can not add your funds: ${error}`)) //se adauga fonduri in baza de date
-                        this.setState({funds: ''})
+                        if(isNaN(this.state.funds) === true){
+                            this.props.language == 'EN' ? alert('Please enter a valid number'): alert('Introdu un numar valid')
+                        }else if(this.state.funds <= 0){
+                            this.props.language == 'EN' ? alert('Please enter a positive number') : alert('Introdu un numar pozitiv')
+                        }
+                        else{
+                            addFunds(parseFloat(this.state.funds)).then().catch(error => alert(`Can not add your funds: ${error}`)) //se adauga fonduri in baza de date
+                            this.setState({funds: ''})
+                        }
                     }}
                     style = {{marginLeft: '5%'}}
                 >

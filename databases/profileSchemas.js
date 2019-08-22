@@ -69,17 +69,9 @@ export const addFunds = amount => new Promise((resolve, reject) => { //functia p
     Realm.open(databaseOptions)
         .then(realm => {
             realm.write(() => {
-                queryProfile().then(profile => {
-                    if(isNaN(amount) === true){
-                        profile.language ? alert('Please enter a valid number') : alert('Introdu un numar valid')
-                    }else if(amount <= 0){
-                        profile.language ? alert('Please enter a positive number') : alert('Introdu o valoare pozitiva')
-                    }else{
                         let updatingProfile = realm.objectForPrimaryKey('Profile', 1)
                         updatingProfile.funds += amount
                         resolve(updatingProfile)
-                    }
-                }).catch(error => {})
             })
         }).catch(error => reject(error))
 })
