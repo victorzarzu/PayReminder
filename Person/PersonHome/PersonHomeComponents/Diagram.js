@@ -36,7 +36,7 @@ export default class Diagram extends Component{
         //se adauga in state numarul si pretul facturilor de fiecare fel
         queryAllBills().then(bills => {
             bills.forEach(bill => {
-                const leftDays = (bill.payDate.getDate() - new Date().getDate())
+                const leftDays = Math.floor((bill.payDate - new Date())/86400000);
                 if(leftDays >= 7){
                     this.setState(prevState => ({
                         mt7BillsNumber: prevState.mt7BillsNumber + 1,

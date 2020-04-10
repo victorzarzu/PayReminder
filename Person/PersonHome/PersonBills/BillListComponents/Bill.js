@@ -21,7 +21,7 @@ export default class Bill extends Component{
     }
     
     render(){
-        const leftDays = (this.props.bill.payDate.getDate() - new Date().getDate())
+        const leftDays = Math.floor((this.props.bill.payDate - new Date())/86400000);
         const price = this.props.currency === 'Fr' ? this.props.bill.price + '\xa0' + this.props.currency : this.props.currency === 'Lei' ? this.props.bill.price + '\xa0' + this.props.currency : this.props.currency + '\xa0' + this.props.bill.price
         const color = leftDays < 0 ? '#D34354' : leftDays>=7 ? '#98C2E9' : leftDays>=3 ?  '#6A62C6' : '#D67FA3'
         const formatDB = this.props.bill.barcode.format

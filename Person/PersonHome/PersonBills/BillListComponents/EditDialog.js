@@ -172,7 +172,7 @@ export default class EditDialog extends Component{
                                 PushNotification.localNotificationSchedule({
                                     id: String(editbill.id),
                                     message: this.props.language == 'EN' ? `Your ${editbill.name} bill in amount of ${price} has the deadline on ${deadlineDate}. Don't forget to pay it!` : `Factura ${editbill.name} in valoare de ${price} are data scadenta pe ${deadlineDate}. Nu uita sa o platesti!`,
-                                    date: new Date(editbill.payDate - days * 86400000), 
+                                    date: days >= 7 ? new Date(editbill.payDate - days * 86400000) : new Date(), 
                                     repeatType: 'day',
                                     importance: 'high',
                                     vibrate: false,
@@ -217,7 +217,7 @@ export default class EditDialog extends Component{
                                 <Text>{this.props.currency}</Text>
                             </View>
                             <View style = {[styles.editRowView, {marginVertical: 5}]}>
-                                <Text style = {{fontSize: 14, color:'#05295B'}}>{this.props.language == 'EN' ? "Deadline:" : 'Data scandenta:'} {`${this.state.payDateDay}/${this.state.payDateMonth}/${this.state.payDateYear}`}</Text>
+                                <Text style = {{fontSize: 14, color:'#05295B'}}>{this.props.language == 'EN' ? "Deadline:" : 'Data scandenta:'} {`${this.state.payDateDay}/${this.state.payDateMonth + 1}/${this.state.payDateYear}`}</Text>
                                 <TouchableOpacity onPress = {this.setDateAndroid}>
                                     <Text style = {{color: '#0489B1', fontSize: 14}}>{this.props.language == 'EN' ? "Change deadline" : 'Schimba'}</Text>
                                 </TouchableOpacity>
